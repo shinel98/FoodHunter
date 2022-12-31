@@ -11,6 +11,6 @@
     <title>방문 인증</title>
 </head>
 <body>
-방문 인증
+방문 인증 페이지
 </body>
 </html>
