@@ -24,16 +24,11 @@
             width: 491px;
             height: auto;
         }
-        /*방문인증버튼*/
-        .btn-visit {
-            background-color: #FF7B54;
-            padding: 3px;
-            border-radius: 20px;
-            padding: 10px 80px;
-        }
-        .btn-visit:hover {
-            background-color: #f55425;
-            font-weight: bold;
+
+        #content {
+            position: relative;
+            border: none;
+            top: 130px;
         }
 
         /*footer : 즐겨찾기, 방문인증하기*/
@@ -43,18 +38,6 @@
 
         footer {
             min-height: 80px;
-        }
-
-        .bi-heart, .bi-heart-fill {
-            margin: 10px;
-        }
-
-        .bi-chevron-left {
-            float: left;
-        }
-
-        .favoriteBtn {
-            color: #f55425;
         }
 
         #btn-back {
@@ -69,60 +52,90 @@
         #header{
             padding: 15px;
             border-radius: 0 0 20px 20px;
+            height: 86px;
         }
 
         #footer {
             border-radius: 20px 20px 0 0;
-        }
-
-        #ask-deletion i {
-            margin-right: 3px;
-        }
-
-        #share i {
-            margin-right: 10px;
-        }
-
-
-        #distance > i, #stars > i{
-            color: #f55425;
-            margin-right: 6px;
-            margin-left: 6px;
-        }
-
-        #monthly > p {
-            font-weight: 500;
-            font-size: larger;
-            margin-top: 8px;
+            padding-left: 15px;
+            padding-top: 30px;
         }
 
         h4 {
-            text-align: left;
-            margin-bottom:15px;
+            text-align: center;
+            position: absolute;
+            top: 40px;
+            left: 28%;
+            font-weight: 700;
         }
 
+        #map {
+            position: absolute;
+            top: 130px;
+            width: 80%;
+            height: 450px;
+            margin-left: 10%;
+            border-radius: 20px;
+            padding: 15px;
+        }
 
-        #dayList li {
-            float: left;
+        #name {
+            text-align: left;
+            font-size: 20px;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        #category {
+            text-align: left;
+        }
+
+        .categoryImg {
+            height: 50px;
+            width: auto;
+        }
+
+        #map-section {
+            height: 80%;
+        }
+
+        #my-location{
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
             width: 30px;
             height: 30px;
+            padding: 4px;
             border-radius: 50px;
-            border: 1px solid black;
+            background-color: white;
+            border: 1px solid #f55425;
+        }
+
+        #my-location i {
+            color: #FF7B54;
+        }
+
+        .progress>div>img {
+            position: absolute;
+            right: 13px;
+            top: 16px;
+        }
+        .progress {
+            width: 90%;
+        }
+
+        #left-distance {
+            position: absolute;
+            bottom: -10px;
+            left: 40%;
             color: black;
-            margin: 4px;
+            font-weight: 700;
         }
 
-        #payList li {
-            float: left;
-            margin-top: 12px;
-            margin-bottom: 8px;
-            margin-right: 50px;
-        }
-
-        .review-star-list li {
-            float: left;
-            margin: 3px;
-            color: #ffb700;
+        footer>p {
+            position: absolute;
+            top: -35px;
+            left: 70px;
         }
 
     </style>
@@ -133,32 +146,46 @@
         <div class="mobile-view">
             <hearder id="header" class="fixed-top border border-black mobile-view bg-white shadow">
                 <!--뒤로 가기 버튼-->
-                <div style="width: 10%; float: left;">
-                    <button type="button" class="col btn" onclick="back();"><i id="btn-back" class="bi bi-chevron-left"></i></button>
+                <div style="width: 10%; float: left; padding-top: 10px;">
+                    <button type="button" class="col btn" onclick="back();"><i id="btn-back" class="bi bi-x-lg"></i></button>
                 </div>
-                <!--카테고리 이미지-->
-                <div style="width: 80%; float:left; text-align: center;">
-                    <h4>방문 인증하기-수정예정</h4>
+                <div style="width: 80%; float:left; text-align: center; margin-top: 13px;">
+                    <h5>방문 인증하기</h5>
                 </div>
             </hearder>
+            <div id="content">
+                <h4>가게 근처에서<br>방문인증을 할 수 있어요!</h4>
+                <div id="map" class="card shadow">
+                    <div id="info" class="row">
+                        <div class="col-3" style="padding-top: 5px;padding-bottom:5px;">
+                            <img class="categoryImg" src="/img/category-fish-bread.png" alt="category image">
+                        </div>
+                        <div class="col-6">
+                            <p id="name">그할마 붕어빵</p>
+                            <p id="category">#붕어빵</p>
+                        </div>
+                    </div>
+                    <div id="map-section" class="card">
+                        <!--현재 내 위치로 이동 버튼-->
+                        <button id="my-location"><i class="bi bi-geo-alt"></i></button>
+                        지도 넣을 예정
+                    </div>
+                </div>
+            </div>
 
             <!--footer-->
             <footer id="footer" class="fixed-bottom border border-black mobile-view bg-white shadow">
-                <!--즐겨찾기-->
-                <div class="p-3" style="width: 40%;">
-                    <button type="button" class="btn favorite" onclick="favorite();">
-                        <i class="bi favoriteBtn bi-heart"></i>
-                        즐겨찾기
-                    </button>
-                </div>
-                <!--즐겨찾기-->
+                <p>5m이내에 접근하면 붕어빵 아이콘을 눌러서 인증하세요.</p>
                 <!--방문인증하기-->
-                <div class="p-3" style="width: 60%;">
-                    <button type="button" class="text-white btn btn-visit" onclick="visit();">방문인증하기</button>
+                <div class="progress">
+                    <!--남은 거리에 따라 width %로 진행 상황 표시-->
+                    <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
+                        <img class="categoryImg" src="/img/category-fish-bread.png" class="col" alt="category image" onclick="authenticate();">
+                        <!--Todo: 남은 거리 계산-->
+                        <p id="left-distance">인증까지 500m</p>
+                    </div>
                 </div>
-                <!--방문인증하기-->
             </footer>
-            <!--footer-->
         </div>
     </div>
 </div>
@@ -166,13 +193,30 @@
 
     /** header: "<" 뒤로가기 버튼 클릭 **/
     function back() {
-        /** Todo : 이전화면으로 돌아가기 **/
+        history.back();
     }
 
     /** footer: 방문인증하기 버튼 클릭 **/
     function visit() {
         /** Todo : 방문인증 페이지로 이동 **/
         location.href = "/visit";
+    }
+
+    function authenticate() {
+        // distance : 남은 거리 -> 임의로 설정 후 로직만 짜둠
+        //let distance = 4;
+        let distance = 10;
+        let answer;
+        if(distance > 5){
+            alert("5m 이내로 접근해야 인증할 수 있습니다.");
+        }
+        else {
+            answer = confirm("인증하시겠습니까?");
+            if(answer == true) {
+                alert("방문인증 되었습니다.")
+            }
+        }
+
     }
 
 </script>

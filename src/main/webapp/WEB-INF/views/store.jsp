@@ -475,7 +475,7 @@
 
         /** header: "<" 뒤로가기 버튼 클릭 **/
         function back() {
-            /** Todo : 이전화면으로 돌아가기 **/
+            history.back();
         }
 
         /** footer: 방문인증하기 버튼 클릭 **/
