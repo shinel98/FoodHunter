@@ -136,11 +136,11 @@
             margin-right: 3px;
         }
 
-        #my-location, #share i {
+        #my-location, #kakaotalk-sharing-btn i {
             color: #f55425;
         }
 
-        #share i {
+        #kakaotalk-sharing-btn i {
             margin-right: 10px;
         }
 
@@ -315,7 +315,7 @@
                             </div>
                         </div>
                         <div>
-                            <button id="share" type="button" class="btn" onclick="share();">
+                            <button id="kakaotalk-sharing-btn" href="javascript:;" type="button" class="btn">
                                 <i class="bi bi-share"></i>
                                 공유하기
                             </button>
@@ -446,6 +446,56 @@
             </div>
         </div>
     </div>
+    <!--카카오 공유 SDK-->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
+            integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous">
+    </script>
+    <!--카카오 공유 초기화-->
+    <script>
+        Kakao.init('453d03fdea794867e41a9d927cff2cac'); // 사용하려는 앱의 JavaScript 키 입력
+        console.log(Kakao.isInitialized());
+    </script>
+    <!--카카오 공유 버튼 생성-->
+    <script>
+        /**
+         * content->title == addressTitle
+         * 가게 이미지 -> 카테고리별 기본 이미지를 사용할 것인가? 가게 등록할 때 이미지를 넣도록 할 것인가?
+         * webUrl에 /store로 들어가면 해당 가게에 대한 정보 페이지로 넘어가는지 확인해야 함.
+         * **/
+        Kakao.Share.createDefaultButton({
+            container: '#kakaotalk-sharing-btn',
+            objectType: 'location',
+            address: '경기 성남시 분당구 판교역로 235', // 공유할 위치의 주소
+            addressTitle:'그할마 붕어빵', // 카카오 지도 내 지도 뷰에서 사용될 타이틀
+            content: {
+                title: '그할마 붕어빵',      // 가게 이름
+                description: '#붕어빵',    // 카테고리 태그
+                imageUrl:
+                    'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+                link: {
+                    // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
+                    mobileWebUrl: 'https://developers.kakao.com',
+                    webUrl: 'https://developers.kakao.com',
+                },
+            },
+            social: {
+                likeCount: 286, // 즐겨찾기 추가한 사람 수
+                commentCount: 45,   // 리뷰 수
+                // sharedCount: 845,    // 공유한 숫자는 넣을지 말지 고민
+            },
+            buttons: [
+                {
+                    title: '웹으로 보기',
+                    link: {
+                        // 모바일은 현재 localhost라 연결 안되는 상태. 배포 후에 점검해보기
+                        mobileWebUrl: 'http://localhost:8080/store',
+                        webUrl: 'http://localhost:8080/store',
+                    },
+                },
+                // 위치 보기 버튼은 자동 생성됨
+            ],
+        });
+    </script>
     <script>
         /** footer: 즐겨찾기 버튼 클릭 **/
         /** Todo : icon의 초기 값을 DB와 연동 및 수정 **/
@@ -465,12 +515,6 @@
 
                 }
             }
-        }
-
-        /** 공유하기 **/
-        /** Todo : 카카오 공유 기능 구현 **/
-        function share() {
-
         }
 
         /** header: "<" 뒤로가기 버튼 클릭 **/
