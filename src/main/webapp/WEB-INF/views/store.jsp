@@ -195,17 +195,8 @@
             margin-right: 50px;
         }
 
-        .payment-txt {
-            text-align: center;
-            margin-top: 4px;
-        }
-
         #info-card{
             padding: 10px;
-        }
-
-        .payIcon {
-            font-size: 19px;
         }
 
         #review-container {
@@ -215,7 +206,7 @@
 
         .review {
             position: relative;
-            height: 20%;
+            height: auto;
             width: 90%;
             align-self: center;
             margin-left: 17px;
@@ -271,7 +262,7 @@
         .review-text {
             text-align: left;
             margin: 4px;
-            height: 35px;
+            height: 50px;
             width: 80%;
             overflow: scroll;
         }
@@ -357,25 +348,6 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-3 subtitle" style="margin: auto 0; font-weight: 600;">결제 방식</div>
-                                <div class="col-8" style="padding-left: 40px;">
-                                    <ul id="payList">
-                                        <li>
-                                            <div class="row"><i class="bi bi-coin payIcon"></i></div>
-                                            <div class="row payment-txt">현금</div>
-                                        </li>
-                                        <li>
-                                            <div class="row"><i class="bi bi-credit-card payIcon"></i></div>
-                                            <div class="row payment-txt">카드</div>
-                                        </li>
-                                        <li>
-                                            <div class="row"><i class="bi bi-bank payIcon"></i></div>
-                                            <div class="row payment-txt">계좌이체</div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -406,23 +378,35 @@
                                     <p class="review-text">사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!</p>
                                     <!--Todo : trash icon 배치하기-->
                                 </div>
+                                <div class="row">
+                                    <!--Todo: 이미지 존재 여부에 따라 img 태그 삽입-->
+                                    <img class="review-img" src="/img/review-img-sample.jpg" height="300" width="300">
+                                </div>
                             </div>
                             <!--리뷰 카드-->
-
-                            <!--리뷰 카드 위의 구조 대로 반복 생성-->
-                            <div class="shadow border card review"></div>
-                            <div class="shadow border card review"></div>
-                            <div class="shadow border card review"></div>
-                            <div class="shadow border card review"></div>
-                            <div class="shadow border card review"></div>
-                            <div class="shadow border card review"></div>
-                            <div class="shadow border card review"></div>
-                            <div class="shadow border card review"></div>
-                            <div class="shadow border card review"></div>
-                            <div class="shadow border card review"></div>
-                            <div class="shadow border card review"></div>
+                            <div class="shadow border card review">
+                                <!--가게 리뷰 create 날짜-->
+                                <!--Todo : 리뷰 생성 날짜 DB 연동-->
+                                <span class="createDate-review">2022.12.31</span>
+                                <div class="row">
+                                    <ul class="review-star-list">
+                                        <li><i class="bi bi-star-fill"></i></li>
+                                        <li><i class="bi bi-star-fill"></i></li>
+                                        <li><i class="bi bi-star-fill"></i></li>
+                                        <li><i class="bi bi-star"></i></li>
+                                        <li><i class="bi bi-star"></i></li>
+                                        <li style="color: black;">yujin9747</li>
+                                    </ul>
+                                </div>
+                                <div class="row">
+                                    <p class="review-text"> 이미지 없는 경우</p>
+                                    <!--Todo : trash icon 배치하기-->
+                                </div>
+                                <div class="row">
+                                </div>
+                            </div>
+                            <!--리뷰 카드-->
                         </div>
-
 
                     </div>
                 </div>
