@@ -102,20 +102,33 @@
             height: 80%;
         }
 
-        #my-location{
+        #my-location, #kakao-location{
             position: absolute;
             bottom: 20px;
-            right: 20px;
             width: 30px;
             height: 30px;
             padding: 4px;
             border-radius: 50px;
+        }
+
+        #my-location{
+            right: 20px;
             background-color: white;
             border: 1px solid #f55425;
         }
 
+        #kakao-location{
+            right: 70px;
+            background-color: white;
+            border: 1px solid #ffa600;
+        }
+
         #my-location i {
             color: #FF7B54;
+        }
+
+        #kakao-location{
+            color: #ffb700;
         }
 
         .progress>div>img {
@@ -184,9 +197,73 @@
                         </div>
                     </div>
                     <div id="map-section" class="card">
+                        <!--카카오 지도 열기 & 길찾기
+                                link 마지막에 가게 이름, 위도, 경도 넣으면 도착지로 자동 설정할 수 있음.
+                            -->
+                        <a id="kakao-location" href="https://map.kakao.com/link/to/test,37.402056,127.108212" title="길찾기" style="z-index:3;"><i class="bi bi-map-fill"></i></a>
                         <!--현재 내 위치로 이동 버튼-->
-                        <button id="my-location"><i class="bi bi-geo-alt"></i></button>
-                        지도 넣을 예정
+                        <button id="my-location" onclick="mylocation();" style="z-index: 3;" title="현재 내 위치로 이동"><i class="bi bi-geo-alt-fill"></i></button>
+                        <script>
+                            /** Todo : 현재 위치에 마커 생성되도록 수정!! **/
+                            function mylocation(){
+                                const container = document.getElementById('map-section'); //지도를 담을 영역의 DOM 레퍼런스
+                                // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
+                                if (navigator.geolocation) {
+                                    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+                                    navigator.geolocation.getCurrentPosition(function(position) {
+
+                                        var lat = position.coords.latitude; // 위도
+                                        var lon = position.coords.longitude; // 경도
+
+                                        const options = { //지도를 생성할 때 필요한 기본 옵션
+                                            center: new kakao.maps.LatLng(lat, lon), //지도의 중심좌표.
+                                            level: 3 //지도의 레벨(확대, 축소 정도)
+                                        };
+                                        var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+                                        var message = '<div style="padding:5px;">현위치</div>'; // 인포윈도우에 표시될 내용입니다
+
+                                        // 마커와 인포윈도우를 표시합니다
+                                        displayMarker(map, message);
+                                    });
+                                }
+                            }
+
+                            // 지도에 마커와 인포윈도우를 표시하는 함수입니다
+                            function displayMarker(locPosition, message) {
+
+                                // 마커를 생성합니다
+                                var marker = new kakao.maps.Marker({
+                                    map: map,
+                                    position: locPosition
+                                });
+
+                                var iwContent = message, // 인포윈도우에 표시할 내용
+                                    iwRemoveable = true;
+
+                                // 인포윈도우를 생성합니다
+                                var infowindow = new kakao.maps.InfoWindow({
+                                    content : iwContent,
+                                    removable : iwRemoveable
+                                });
+
+                                // 인포윈도우를 마커위에 표시합니다
+                                infowindow.open(map, marker);
+
+                                // 지도 중심좌표를 접속위치로 변경합니다
+                                map.setCenter(locPosition);
+                            }
+                        </script>
+                        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=453d03fdea794867e41a9d927cff2cac"></script>
+                        <script>
+                            // 처음 위치는 가게 table에 저장된 위도, 경도로 설정
+                            const container = document.getElementById('map-section'); //지도를 담을 영역의 DOM 레퍼런스
+                            const options = { //지도를 생성할 때 필요한 기본 옵션
+                                center: new kakao.maps.LatLng(36.10367691445477, 129.38881155932162), //지도의 중심좌표.
+                                level: 3 //지도의 레벨(확대, 축소 정도)
+                            };
+                            const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+                        </script>
                     </div>
                 </div>
             </div>
