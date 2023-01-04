@@ -42,7 +42,7 @@
             <p class="h5 py-0">위치 검색</p>
           </div>
           <div class="item mb-4">
-            <input type="text" class="form-control" onkeyup="search(this.value)" placeholder="구, 동, 건물명, 역으로 검색하세요">
+            <input type="text" class="form-control" onkeyup="searchPlace(this.value)" placeholder="구, 동, 건물명, 역으로 검색하세요">
           </div>
         </div>
         <div id="search-result">
@@ -54,7 +54,14 @@
                   <p class="align-top text-start text-secondary ms-2 my-0">{address}</p>
               </div>
               <div class="d-flex my-auto">
-                <img src="/img/arrow_forward_ios_FILL0_wght400_GRAD0_opsz48.png" onclick="" alt="arrow" width="30" height="30">
+                <img id="place-select-button" src="/img/arrow_forward_ios_FILL0_wght400_GRAD0_opsz48.png" onclick="{placeSelect}" alt="arrow" width="30" height="30">
+              </div>
+            </div>
+          </template>
+          <template id="no-search-result-template">
+            <div class="py-5">
+              <div class="d-flex flex-column justify-content-center">
+                <p class="h5 text-center text-secondary my-0">검색 결과가 없습니다.</p>
               </div>
             </div>
           </template>
@@ -66,11 +73,75 @@
 </body>
 </html>
 
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=999dae6c70b0eaba00b7507d46323e18&libraries=services"></script>
 <script>
-  const searchResult = document.getElementById('search-result');
-  const searchResultTemplate = document.getElementById('search-result-template').innerHTML;
+  var searchResult = document.getElementById('search-result');
+  var searchResultTemplate = document.getElementById('search-result-template').innerHTML;
+  var noSearchResultTemplate = document.getElementById('no-search-result-template').innerHTML;
 
-  function search(searchText) {
-    // 검색 기능 구현
+  var ps = new kakao.maps.services.Places();
+
+  // Function for searching places by keyword
+  function searchPlace(searchText) {
+      var keyword = searchText;
+
+      console.log(keyword);
+
+      if (!keyword.replace(/^\s+|\s+$/g, '')) {
+          return false;
+      }
+
+      // Request a place search by keyword through the place search object
+      ps.keywordSearch(keyword, placesSearchCB);
+  }
+
+  // Call back function called when the place search is completed
+  function placesSearchCB(data, status, pagination) {
+      if (status === kakao.maps.services.Status.OK) {
+          // Display the search result on the map
+          displaySearchResult(data);
+      } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+          // Display a message when no search result is found
+          displayNoResult();
+      } else if (status === kakao.maps.services.Status.ERROR) {
+          // Display a message when an error occurs
+          alert('검색 결과 중 오류가 발생했습니다.');
+          return;
+      }
+  }
+
+  function removeAllChildNodes(element) {
+      while (element.hasChildNodes()) {
+          element.removeChild(element.lastChild);
+      }
+  }
+
+  function displaySearchResult(places) {
+      removeAllChildNodes(searchResult);
+
+      for (var i = 0; i < places.length; i++) {
+          var place = places[i];
+
+          var template = searchResultTemplate;
+          template = template.replace('{name}', place.place_name);
+          template = template.replace('{address}', place.address_name);
+          template = template.replace('{placeSelect}', 'selectPlace(' + place.y + ', ' + place.x + ')');
+
+          searchResult.insertAdjacentHTML('beforeend', template);
+      }
+  }
+
+  function displayNoResult() {
+      removeAllChildNodes(searchResult);
+
+      var template = noSearchResultTemplate;
+
+      searchResult.insertAdjacentHTML('beforeend', template);
+  }
+
+  function selectPlace(lat, lng) {
+      console.log(lat, lng);
+
+      // Passing Coordinates and Redirecting to the main page
   }
 </script>
