@@ -152,6 +152,10 @@
             top: 30px;
         }
 
+        .categoryImg{
+            margin-right: 6%;
+        }
+
     </style>
 </head>
 <body>
