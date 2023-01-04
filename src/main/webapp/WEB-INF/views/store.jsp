@@ -9,12 +9,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"> <!--icon-->
     <link href="/css/store.css" rel="stylesheet">
     <style>
+        body {
+            overflow: hidden;
+        }
         .mobile-view {
             /*중앙 배치*/
             float: none;
             margin: 0 auto;
             /*모바일 기준 너비 고정*/
-            width: 491px;
+            /*width: 491px;*/
+            width: 100%;
             height: auto;
         }
         /*방문인증버튼*/
@@ -70,15 +74,15 @@
         }
 
         #content-map {
-            height: 350px;
+            height: 600px;
         }
 
         #content-main-board {
             position: absolute;
-            top: 300px;
-            left: 50px;
+            top: 70%;
+            left: 10%;
             width: 80%;
-            height: 60%;
+            height: auto;
             padding: 15px;
         }
 
@@ -89,15 +93,15 @@
 
         #content-information {
             position: absolute;
-            top: 570px;
-            width: 100%;
+            top: 10px;
+            width: 30%;
             height: 40%;
             padding: 15px;
         }
 
         #content-review {
             position: absolute;
-            top: 800px;
+            top: 140px;
             width: 100%;
             height: 660px;
             padding: 15px;
@@ -174,7 +178,7 @@
             margin-bottom:15px;
         }
 
-        #dayList, #payList {
+        #dayList {
             list-style-type: none;
         }
 
@@ -197,10 +201,12 @@
 
         #info-card{
             padding: 10px;
+            width: 500px;
         }
 
         #review-container {
             height: 80%;
+            width: 500px;
             overflow: scroll;
         }
 
@@ -218,12 +224,17 @@
         #btn-review, #btn-edit {
             position: absolute;
             top: 0px;
-            right: 30px;
             color: white;
             background-color: #FF7B54;
             padding: 3px 0 3px 0;
             border-radius: 20px;
             padding: 10px 30px;
+        }
+        #btn-review{
+            right: 800px;
+        }
+        #btn-edit {
+            right: -120px;
         }
 
         #btn-review:hover, #btn-edit:hover {
@@ -267,10 +278,59 @@
             overflow: scroll;
         }
 
+        @media  screen and (min-width: 800px) {
+            #large-left{
+                position: relative;
+                float: left;
+                width: 70%;
+                height: auto;
+            }
+
+            #large-right{
+                positiion: relative;
+                float: left;
+                width: 30%;
+                height: auto;
+            }
+        }
+
+        @media screen and (max-width: 800px) {
+            body{
+                overflow: visible;
+            }
+            .mobile-view{
+                width: 491px;
+            }
+            #content-map{
+                height: 350px;
+            }
+            #content-main-board{
+                height: 60%;
+                left: 50px;
+                top: 300px;
+            }
+            #content-information{
+                width: 100%;
+                top: 570px;
+            }
+            #content-review{
+                top: 800px;
+            }
+            #info-card{
+                width: auto;
+            }
+            #review-container{
+                width: auto;
+            }
+            #btn-review, #btn-edit{
+                right: 30px;
+            }
+        }
+
     </style>
 </head>
 <body>
-    <div class="container p-0">
+    <div class="container p-0 m-0">
         <div id="main-row" class="row g-0 text-center min-vh-100">
             <div class="mobile-view">
                 <hearder id="header" class="fixed-top border border-black mobile-view bg-white shadow">
@@ -284,130 +344,272 @@
                     </div>
                 </hearder>
                 <div id="content">
-                    <!--지도-->
-                    <!--Todo: 지도 연결-->
-                    <div id="content-map" class="border-bottom">
-                        map
-                    </div>
-                    <!--메인 보드-->
-                    <div id="content-main-board" class="border card shadow">
-                        <!--현재 내 위치로 이동 버튼-->
-                        <button id="my-location"><i class="bi bi-geo-alt"></i></button>
-                        000 님의 제보
-                        <h2>그할마 붕어빵</h2>
-                        <div class="center">
-                            <div id="distance" type="button">
-                                <i class="bi bi-compass"></i>
-                                <span class="smallTxt">거리</span>
-                            </div>
-                            <div id="stars">
-                                <i class="bi bi-star-fill"></i>
-                                <span class="smallTxt">별점 평균</span>
-                            </div>
+                    <div id="large-left">
+                        <!--지도-->
+                        <!--Todo: 지도 연결-->
+                        <div id="content-map" class="border-bottom">
+                            map
                         </div>
-                        <div>
-                            <button id="kakaotalk-sharing-btn" href="javascript:;" type="button" class="btn">
-                                <i class="bi bi-share"></i>
-                                공유하기
+                        <!--메인 보드-->
+                        <div id="content-main-board" class="border card shadow">
+                            <!--현재 내 위치로 이동 버튼-->
+                            <button id="my-location"><i class="bi bi-geo-alt"></i></button>
+                            000 님의 제보
+                            <h2>그할마 붕어빵</h2>
+                            <div class="center">
+                                <div id="distance" type="button">
+                                    <i class="bi bi-compass"></i>
+                                    <span class="smallTxt">거리</span>
+                                </div>
+                                <div id="stars">
+                                    <i class="bi bi-star-fill"></i>
+                                    <span class="smallTxt">별점 평균</span>
+                                </div>
+                            </div>
+                            <div>
+                                <button id="kakaotalk-sharing-btn" href="javascript:;" type="button" class="btn">
+                                    <i class="bi bi-share"></i>
+                                    공유하기
+                                </button>
+                                <button type="button" class="btn favorite" onclick="favorite();">
+                                    <i class="bi favoriteBtn bi-heart"></i>
+                                    즐겨찾기
+                                </button>
+                            </div>
+                            <!-- Todo: 방문인증한 사람 수 DB 연동 -->
+                            <div id="monthly">
+                                <p>한 달 동안 0명이 다녀간 가게에요!</p>
+                            </div>
+                            <!--삭제 요청 버튼-->
+                            <button type="button" id="ask-deletion" class="btn" onclick="deletion();">
+                                <i class="bi bi-exclamation-circle"></i>
+                                <span class="smallTxt">삭제 요청</span>
                             </button>
-                            <button type="button" class="btn favorite" onclick="favorite();">
-                                <i class="bi favoriteBtn bi-heart"></i>
-                                즐겨찾기
-                            </button>
-                        </div>
-                        <!-- Todo: 방문인증한 사람 수 DB 연동 -->
-                        <div id="monthly">
-                            <p>한 달 동안 0명이 다녀간 가게에요!</p>
-                        </div>
-                        <!--삭제 요청 버튼-->
-                        <button type="button" id="ask-deletion" class="btn" onclick="deletion();">
-                            <i class="bi bi-exclamation-circle"></i>
-                            <span class="smallTxt">삭제 요청</span>
-                        </button>
-                    </div>
-                    <!--상세 정보-->
-                    <div id="content-information">
-                        <!--수정하기 버튼-->
-                        <button id="btn-edit" type="button" class="btn" onclick="infoEdit();">정보수정하기</button>
-                        <!--가게 정보 update 날짜-->
-                        <!--Todo : 업데이트 날짜 DB 연동-->
-                        <span id="updateInfo">2022.12.31 업데이트</span>
-                        <h4>가게 정보</h4>
-                        <div class="shadow border card" id="info-card">
-                            <div class="row">
-                                <div class="col-3 subtitle" style="margin: auto 0;font-weight: 600">출몰 시기</div>
-                                <div class="col-8" style="padding: 0;">
-                                    <ul id="dayList">
-                                        <li>일</li>
-                                        <li>월</li>
-                                        <li>화</li>
-                                        <li>수</li>
-                                        <li>목</li>
-                                        <li>금</li>
-                                        <li>토</li>
-                                    </ul>
-                                </div>
-                            </div>
                         </div>
                     </div>
-
-                    <!--리뷰-->
-                    <div id="content-review">
-                        <!--리뷰 작성하기 버튼-->
-                        <button id="btn-review" type="button" class="btn" onclick="reviewWrite();">리뷰작성하기</button>
-                        <!--Todo : 리뷰 총 개수 DB 연동-->
-                        <!--Todo : js로 동적으로 코드 생산하기-->
-                        <h4>리뷰 0개</h4>
-                        <div id="review-container">
-                            <!--리뷰 카드-->
-                            <div class="shadow border card review">
-                                <!--가게 리뷰 create 날짜-->
-                                <!--Todo : 리뷰 생성 날짜 DB 연동-->
-                                <span class="createDate-review">2022.12.31</span>
+                    <div id="large-right">
+                        <!--상세 정보-->
+                        <div id="content-information">
+                            <!--수정하기 버튼-->
+                            <button id="btn-edit" type="button" class="btn" onclick="infoEdit();">정보수정하기</button>
+                            <!--가게 정보 update 날짜-->
+                            <!--Todo : 업데이트 날짜 DB 연동-->
+                            <span id="updateInfo">2022.12.31 업데이트</span>
+                            <h4>가게 정보</h4>
+                            <div class="shadow border card" id="info-card">
                                 <div class="row">
-                                    <ul class="review-star-list">
-                                        <li><i class="bi bi-star-fill"></i></li>
-                                        <li><i class="bi bi-star-fill"></i></li>
-                                        <li><i class="bi bi-star-fill"></i></li>
-                                        <li><i class="bi bi-star"></i></li>
-                                        <li><i class="bi bi-star"></i></li>
-                                        <li style="color: black;">yujin9747</li>
-                                    </ul>
-                                </div>
-                                <div class="row">
-                                    <p class="review-text">사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!</p>
-                                    <!--Todo : trash icon 배치하기-->
-                                </div>
-                                <div class="row">
-                                    <!--Todo: 이미지 존재 여부에 따라 img 태그 삽입-->
-                                    <img class="review-img" src="/img/review-img-sample.jpg" height="300" width="300">
+                                    <div class="col-3 subtitle" style="margin: auto 0;font-weight: 600">출몰 시기</div>
+                                    <div class="col-8" style="padding: 0;">
+                                        <ul id="dayList">
+                                            <li>일</li>
+                                            <li>월</li>
+                                            <li>화</li>
+                                            <li>수</li>
+                                            <li>목</li>
+                                            <li>금</li>
+                                            <li>토</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                            <!--리뷰 카드-->
-                            <div class="shadow border card review">
-                                <!--가게 리뷰 create 날짜-->
-                                <!--Todo : 리뷰 생성 날짜 DB 연동-->
-                                <span class="createDate-review">2022.12.31</span>
-                                <div class="row">
-                                    <ul class="review-star-list">
-                                        <li><i class="bi bi-star-fill"></i></li>
-                                        <li><i class="bi bi-star-fill"></i></li>
-                                        <li><i class="bi bi-star-fill"></i></li>
-                                        <li><i class="bi bi-star"></i></li>
-                                        <li><i class="bi bi-star"></i></li>
-                                        <li style="color: black;">yujin9747</li>
-                                    </ul>
-                                </div>
-                                <div class="row">
-                                    <p class="review-text"> 이미지 없는 경우</p>
-                                    <!--Todo : trash icon 배치하기-->
-                                </div>
-                                <div class="row">
-                                </div>
-                            </div>
-                            <!--리뷰 카드-->
                         </div>
 
+                        <!--리뷰-->
+                        <div id="content-review">
+                            <!--리뷰 작성하기 버튼-->
+                            <button id="btn-review" type="button" class="btn" onclick="reviewWrite();">리뷰작성하기</button>
+                            <!--Todo : 리뷰 총 개수 DB 연동-->
+                            <!--Todo : js로 동적으로 코드 생산하기-->
+                            <h4>리뷰 0개</h4>
+                            <div id="review-container">
+                                <!--리뷰 카드-->
+                                <div class="shadow border card review">
+                                    <!--가게 리뷰 create 날짜-->
+                                    <!--Todo : 리뷰 생성 날짜 DB 연동-->
+                                    <span class="createDate-review">2022.12.31</span>
+                                    <div class="row">
+                                        <ul class="review-star-list">
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star"></i></li>
+                                            <li><i class="bi bi-star"></i></li>
+                                            <li style="color: black;">yujin9747</li>
+                                        </ul>
+                                    </div>
+                                    <div class="row">
+                                        <p class="review-text">사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!</p>
+                                        <!--Todo : trash icon 배치하기-->
+                                    </div>
+                                    <div class="row">
+                                        <!--Todo: 이미지 존재 여부에 따라 img 태그 삽입-->
+                                        <img class="review-img" src="/img/review-img-sample.jpg" height="300" width="300">
+                                    </div>
+                                </div>
+                                <!--리뷰 카드-->
+                                <div class="shadow border card review">
+                                    <!--가게 리뷰 create 날짜-->
+                                    <!--Todo : 리뷰 생성 날짜 DB 연동-->
+                                    <span class="createDate-review">2022.12.31</span>
+                                    <div class="row">
+                                        <ul class="review-star-list">
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star"></i></li>
+                                            <li><i class="bi bi-star"></i></li>
+                                            <li style="color: black;">yujin9747</li>
+                                        </ul>
+                                    </div>
+                                    <div class="row">
+                                        <p class="review-text"> 이미지 없는 경우</p>
+                                        <!--Todo : trash icon 배치하기-->
+                                    </div>
+                                    <div class="row">
+                                    </div>
+                                </div>
+                                <!--리뷰 카드-->
+                                <!--리뷰 카드-->
+                                <div class="shadow border card review">
+                                    <!--가게 리뷰 create 날짜-->
+                                    <!--Todo : 리뷰 생성 날짜 DB 연동-->
+                                    <span class="createDate-review">2022.12.31</span>
+                                    <div class="row">
+                                        <ul class="review-star-list">
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star"></i></li>
+                                            <li><i class="bi bi-star"></i></li>
+                                            <li style="color: black;">yujin9747</li>
+                                        </ul>
+                                    </div>
+                                    <div class="row">
+                                        <p class="review-text"> 이미지 없는 경우</p>
+                                        <!--Todo : trash icon 배치하기-->
+                                    </div>
+                                    <div class="row">
+                                    </div>
+                                </div>
+                                <!--리뷰 카드-->
+                                <!--리뷰 카드-->
+                                <div class="shadow border card review">
+                                    <!--가게 리뷰 create 날짜-->
+                                    <!--Todo : 리뷰 생성 날짜 DB 연동-->
+                                    <span class="createDate-review">2022.12.31</span>
+                                    <div class="row">
+                                        <ul class="review-star-list">
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star"></i></li>
+                                            <li><i class="bi bi-star"></i></li>
+                                            <li style="color: black;">yujin9747</li>
+                                        </ul>
+                                    </div>
+                                    <div class="row">
+                                        <p class="review-text"> 이미지 없는 경우</p>
+                                        <!--Todo : trash icon 배치하기-->
+                                    </div>
+                                    <div class="row">
+                                    </div>
+                                </div>
+                                <!--리뷰 카드-->
+                                <!--리뷰 카드-->
+                                <div class="shadow border card review">
+                                    <!--가게 리뷰 create 날짜-->
+                                    <!--Todo : 리뷰 생성 날짜 DB 연동-->
+                                    <span class="createDate-review">2022.12.31</span>
+                                    <div class="row">
+                                        <ul class="review-star-list">
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star"></i></li>
+                                            <li><i class="bi bi-star"></i></li>
+                                            <li style="color: black;">yujin9747</li>
+                                        </ul>
+                                    </div>
+                                    <div class="row">
+                                        <p class="review-text"> 이미지 없는 경우</p>
+                                        <!--Todo : trash icon 배치하기-->
+                                    </div>
+                                    <div class="row">
+                                    </div>
+                                </div>
+                                <!--리뷰 카드-->
+                                <!--리뷰 카드-->
+                                <div class="shadow border card review">
+                                    <!--가게 리뷰 create 날짜-->
+                                    <!--Todo : 리뷰 생성 날짜 DB 연동-->
+                                    <span class="createDate-review">2022.12.31</span>
+                                    <div class="row">
+                                        <ul class="review-star-list">
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star"></i></li>
+                                            <li><i class="bi bi-star"></i></li>
+                                            <li style="color: black;">yujin9747</li>
+                                        </ul>
+                                    </div>
+                                    <div class="row">
+                                        <p class="review-text"> 이미지 없는 경우</p>
+                                        <!--Todo : trash icon 배치하기-->
+                                    </div>
+                                    <div class="row">
+                                    </div>
+                                </div>
+                                <!--리뷰 카드-->
+                                <!--리뷰 카드-->
+                                <div class="shadow border card review">
+                                    <!--가게 리뷰 create 날짜-->
+                                    <!--Todo : 리뷰 생성 날짜 DB 연동-->
+                                    <span class="createDate-review">2022.12.31</span>
+                                    <div class="row">
+                                        <ul class="review-star-list">
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star"></i></li>
+                                            <li><i class="bi bi-star"></i></li>
+                                            <li style="color: black;">yujin9747</li>
+                                        </ul>
+                                    </div>
+                                    <div class="row">
+                                        <p class="review-text"> 이미지 없는 경우</p>
+                                        <!--Todo : trash icon 배치하기-->
+                                    </div>
+                                    <div class="row">
+                                    </div>
+                                </div>
+                                <!--리뷰 카드-->
+                                <!--리뷰 카드-->
+                                <div class="shadow border card review">
+                                    <!--가게 리뷰 create 날짜-->
+                                    <!--Todo : 리뷰 생성 날짜 DB 연동-->
+                                    <span class="createDate-review">2022.12.31</span>
+                                    <div class="row">
+                                        <ul class="review-star-list">
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star-fill"></i></li>
+                                            <li><i class="bi bi-star"></i></li>
+                                            <li><i class="bi bi-star"></i></li>
+                                            <li style="color: black;">yujin9747</li>
+                                        </ul>
+                                    </div>
+                                    <div class="row">
+                                        <p class="review-text"> 이미지 없는 경우</p>
+                                        <!--Todo : trash icon 배치하기-->
+                                    </div>
+                                    <div class="row">
+                                    </div>
+                                </div>
+                                <!--리뷰 카드-->
+                            </div>
+
+                        </div>
                     </div>
                 </div>
                 <!--footer-->
