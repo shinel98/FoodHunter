@@ -347,9 +347,11 @@
             border-color: #ffe49f;
             border-width: 4px;
             border-radius: 15px;
-            padding: 10px;
+            padding: 20px;
             width: 100%;
             height: 60%;
+            font-size: 20px;
+            line-height: 150%;
         }
 
         textarea:focus{
@@ -371,7 +373,7 @@
             .mobile-view{
                 width: 491px;
             }
-            #map{
+            #map-section{
                 height: 350px;
             }
             #content-main-board{
@@ -549,7 +551,10 @@
                         <!--리뷰-->
                         <div id="content-review">
                             <!--리뷰 작성하기 버튼-->
-                            <button id="btn-review" type="button" class="btn" onclick="reviewWrite();">리뷰작성하기</button>
+                            <a href="#main-row">
+                                <button id="btn-review" type="button" class="btn" onclick="reviewWrite();" >리뷰작성하기</button>
+                            </a>
+
                             <!--Todo : 리뷰 총 개수 DB 연동-->
                             <!--Todo : js로 동적으로 코드 생산하기-->
                             <h4>리뷰 0개</h4>
@@ -880,6 +885,7 @@
         function reviewWrite() {
             // black-bg 효과 안먹음. 수정하기
             document.getElementById("review-write-container").style.visibility = "visible";
+
         }
 
         /** 리뷰 작성 취소 **/
