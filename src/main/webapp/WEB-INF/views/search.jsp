@@ -88,6 +88,7 @@
       console.log(keyword);
 
       if (!keyword.replace(/^\s+|\s+$/g, '')) {
+          removeAllChildNodes(searchResult);
           return false;
       }
 
