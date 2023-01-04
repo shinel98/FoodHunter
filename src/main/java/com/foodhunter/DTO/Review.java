@@ -13,9 +13,18 @@ public class Review {
     private String reviewContent;
     private int score;
     private Date regiDate;
+    private String photo;
 
     private long usrId;
     private String userName;
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public long getReviewId() {
         return reviewId;
