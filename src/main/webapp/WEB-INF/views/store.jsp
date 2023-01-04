@@ -8,9 +8,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"> <!--icon-->
     <link href="/css/store.css" rel="stylesheet">
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
     <style>
         body {
             overflow: hidden;
+            overscroll-behavior-x: none;
         }
         .mobile-view {
             /*중앙 배치*/
@@ -70,11 +72,12 @@
         /*footer와 header 제외한 content 공간*/
         #content{
             position: relative;
-            top: 82px;
+            top: 75px;
         }
 
-        #content-map {
+        #map {
             height: 600px;
+            z-index: 0;
         }
 
         #content-main-board {
@@ -93,7 +96,7 @@
 
         #content-information {
             position: absolute;
-            top: 10px;
+            top: 30px;
             width: 30%;
             height: 40%;
             padding: 15px;
@@ -101,7 +104,7 @@
 
         #content-review {
             position: absolute;
-            top: 140px;
+            top: 160px;
             width: 100%;
             height: 660px;
             padding: 15px;
@@ -116,16 +119,25 @@
             border-radius: 20px 20px 0 0;
         }
 
-        #my-location{
+        #my-location, #kakao-location{
             position: absolute;
             top: -40px;
-            right: 5px;
             width: 30px;
             height: 30px;
             padding: 4px;
             border-radius: 50px;
+        }
+
+        #my-location{
+            right: 5px;
             background-color: white;
             border: 1px solid #f55425;
+        }
+
+        #kakao-location{
+            right: 50px;
+            background-color: white;
+            border: 1px solid #ffa600;
         }
 
         #ask-deletion {
@@ -142,6 +154,9 @@
 
         #my-location, #kakaotalk-sharing-btn i {
             color: #f55425;
+        }
+        #kakao-location i {
+            color: #ffa600;
         }
 
         #kakaotalk-sharing-btn i {
@@ -301,7 +316,7 @@
             .mobile-view{
                 width: 491px;
             }
-            #content-map{
+            #map{
                 height: 350px;
             }
             #content-main-board{
@@ -346,20 +361,82 @@
                 <div id="content">
                     <div id="large-left">
                         <!--지도-->
-                        <!--Todo: 지도 연결-->
-                        <div id="content-map" class="border-bottom">
-                            map
-                        </div>
+                        <div id="map-section" class="border-bottom"></div>
+                        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=453d03fdea794867e41a9d927cff2cac"></script>
+                        <script>
+                            // 처음 위치는 가게 table에 저장된 위도, 경도로 설정
+                            const container = document.getElementById('map-section'); //지도를 담을 영역의 DOM 레퍼런스
+                            const options = { //지도를 생성할 때 필요한 기본 옵션
+                                center: new kakao.maps.LatLng(36.10367691445477, 129.38881155932162), //지도의 중심좌표.
+                                level: 3 //지도의 레벨(확대, 축소 정도)
+                            };
+                            const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+                        </script>
                         <!--메인 보드-->
                         <div id="content-main-board" class="border card shadow">
+                            <!--카카오 지도 열기 & 길찾기
+                                link 마지막에 가게 이름, 위도, 경도 넣으면 도착지로 자동 설정할 수 있음.
+                            -->
+                            <a id="kakao-location" href="https://map.kakao.com/link/to/test,37.402056,127.108212" title="길찾기"><i class="bi bi-map-fill"></i></a>
                             <!--현재 내 위치로 이동 버튼-->
-                            <button id="my-location"><i class="bi bi-geo-alt"></i></button>
+                            <button id="my-location" onclick="mylocation();" title="현재 내 위치로 이동"><i class="bi bi-geo-alt-fill"></i></button>
+                            <script>
+                                /** Todo : 현재 위치에 마커 생성되도록 수정!! **/
+                                function mylocation(){
+                                    const container = document.getElementById('map-section'); //지도를 담을 영역의 DOM 레퍼런스
+                                    // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
+                                    if (navigator.geolocation) {
+                                        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+                                        navigator.geolocation.getCurrentPosition(function(position) {
+
+                                            var lat = position.coords.latitude; // 위도
+                                            var lon = position.coords.longitude; // 경도
+
+                                            const options = { //지도를 생성할 때 필요한 기본 옵션
+                                                center: new kakao.maps.LatLng(lat, lon), //지도의 중심좌표.
+                                                level: 3 //지도의 레벨(확대, 축소 정도)
+                                            };
+                                            var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+                                            var message = '<div style="padding:5px;">현위치</div>'; // 인포윈도우에 표시될 내용입니다
+
+                                            // 마커와 인포윈도우를 표시합니다
+                                            displayMarker(map, message);
+                                        });
+                                    }
+                                }
+
+                                // 지도에 마커와 인포윈도우를 표시하는 함수입니다
+                                function displayMarker(locPosition, message) {
+
+                                    // 마커를 생성합니다
+                                    var marker = new kakao.maps.Marker({
+                                        map: map,
+                                        position: locPosition
+                                    });
+
+                                    var iwContent = message, // 인포윈도우에 표시할 내용
+                                        iwRemoveable = true;
+
+                                    // 인포윈도우를 생성합니다
+                                    var infowindow = new kakao.maps.InfoWindow({
+                                        content : iwContent,
+                                        removable : iwRemoveable
+                                    });
+
+                                    // 인포윈도우를 마커위에 표시합니다
+                                    infowindow.open(map, marker);
+
+                                    // 지도 중심좌표를 접속위치로 변경합니다
+                                    map.setCenter(locPosition);
+                                }
+                            </script>
                             000 님의 제보
                             <h2>그할마 붕어빵</h2>
                             <div class="center">
                                 <div id="distance" type="button">
                                     <i class="bi bi-compass"></i>
-                                    <span class="smallTxt">거리</span>
+                                    <span id="distance-text" class="smallTxt"></span>
                                 </div>
                                 <div id="stars">
                                     <i class="bi bi-star-fill"></i>
@@ -710,7 +787,6 @@
 
         /** footer: 방문인증하기 버튼 클릭 **/
         function visit() {
-            /** Todo : 방문인증 페이지로 이동 **/
             location.href = "/visit";
         }
 
@@ -727,6 +803,40 @@
         /** 정보 수정하기 **/
         function infoEdit() {
 
+        }
+
+    </script>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <!--Todo: 새로 고침 시 말고는 0km로 나오는 문제 해결-->
+    <!--Todo: 위도 경도로 거리 계산하는 식 수정 -> m로 단위 환산-->
+    <script>
+        var distance;
+        var myLat, myLon;
+        var destLat, destLon;   // Todo : DB 연동해서 목적지 주소 넣기
+        // 목적지 -> 포항대학교로 테스트
+        destLat = 36.10367691445477;
+        destLon = 129.38881155932162;
+        var element = document.getElementById("distance-text");
+        $(document).ready(function(){
+            calculateDistance();
+        });
+        // 1초마다 계산한 거리 업데이트하기
+        function calculateDistance(){
+            setInterval(function(){
+                if (navigator.geolocation) {
+                    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+                    navigator.geolocation.getCurrentPosition(function(position) {
+
+                        myLat = position.coords.latitude; // 위도
+                        myLon = position.coords.longitude; // 경도
+                    });
+                }
+                var latGap = Math.abs(myLat-destLat);
+                var lonGap = Math.abs(myLon-destLon);
+                var distance = Math.sqrt(latGap^2 + lonGap^2);
+                distance += "km";
+                element.innerHTML = distance;
+            }, 1000);
         }
     </script>
 </body>
