@@ -21,7 +21,7 @@
             float: none;
             margin: 0 auto;
             /*모바일 기준 너비 고정*/
-            width: 491px;
+            width: 100%;
             height: auto;
         }
 
@@ -64,16 +64,19 @@
         h4 {
             text-align: center;
             position: absolute;
-            top: 40px;
-            left: 28%;
+            top: -10%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 4;
             font-weight: 700;
         }
 
         #map {
             position: absolute;
-            top: 130px;
+            top: 60px;
             width: 80%;
-            height: 450px;
+            /*mobile -> height: 450px;*/
+            height: 500px;
             margin-left: 10%;
             border-radius: 20px;
             padding: 15px;
@@ -135,7 +138,18 @@
         footer>p {
             position: absolute;
             top: -35px;
-            left: 70px;
+            /*left: 37%;*/
+        }
+
+        #info-text{
+            position: relative;
+        }
+        #info-text p{
+            position: absolute;
+            left: 50px;
+        }
+        #info-text p:nth-child(2){
+            top: 30px;
         }
 
     </style>
@@ -154,13 +168,13 @@
                 </div>
             </hearder>
             <div id="content">
-                <h4>가게 근처에서<br>방문인증을 할 수 있어요!</h4>
                 <div id="map" class="card shadow">
+                    <h4>가게 근처에서<br>방문인증을 할 수 있어요!</h4>
                     <div id="info" class="row">
-                        <div class="col-3" style="padding-top: 5px;padding-bottom:5px;">
+                        <div class="col-1" style="padding-top: 5px;padding-bottom:5px;">
                             <img class="categoryImg" src="/img/category-fish-bread.png" alt="category image">
                         </div>
-                        <div class="col-6">
+                        <div class="col-6" id="info-text">
                             <p id="name">그할마 붕어빵</p>
                             <p id="category">#붕어빵</p>
                         </div>
