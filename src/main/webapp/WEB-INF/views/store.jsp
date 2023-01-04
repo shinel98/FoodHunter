@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"> <!--icon-->
     <link href="/css/store.css" rel="stylesheet">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <style>
         body {
             overflow: hidden;
             overscroll-behavior-x: none;
+            position: relative;
         }
         .mobile-view {
             /*중앙 배치*/
@@ -75,7 +77,7 @@
             top: 75px;
         }
 
-        #map {
+        #map-section {
             height: 600px;
             z-index: 0;
         }
@@ -248,12 +250,23 @@
         #btn-review{
             right: 800px;
         }
+        .btn-review-finished{
+            color: white;
+            background-color: #ffb700;
+            padding: 3px 0 3px 0;
+            border-radius: 20px;
+            padding: 10px 30px;
+        }
         #btn-edit {
             right: -120px;
         }
 
         #btn-review:hover, #btn-edit:hover {
             background-color: #f55425;
+            font-weight: bold;
+        }
+        .btn-review-finished:hover{
+            background-color: #ffa600;
             font-weight: bold;
         }
 
@@ -285,6 +298,10 @@
             color: #ffb700;
         }
 
+        #review-score .review-star-list li{
+            font-size: 30px;
+        }
+
         .review-text {
             text-align: left;
             margin: 4px;
@@ -307,6 +324,44 @@
                 width: 30%;
                 height: auto;
             }
+        }
+
+        #review-write-container{
+            z-index: 100;
+            width: 80%;
+            height: 85%;
+            position: absolute;
+            border-radius: 20px;
+            bottom: 0;
+            left: 9.5%;
+            margin: auto;
+            padding: 20px;
+        }
+
+        #review-write-container button:active{
+            border: none;
+        }
+
+        textarea{
+            resize: none;
+            border-color: #ffe49f;
+            border-width: 4px;
+            border-radius: 15px;
+            padding: 10px;
+            width: 100%;
+            height: 60%;
+        }
+
+        textarea:focus{
+            outline: none;
+        }
+
+        #review-cancel {
+            position:absolute;
+            top: 30px;
+            right: 30px;
+            display: inline-block;
+            width: 50px;
         }
 
         @media screen and (max-width: 800px) {
@@ -709,6 +764,31 @@
             </div>
         </div>
     </div>
+    <div id="black-bg" style="z-index: 99;">
+        <div id="review-write-container" class="card shadow bg-white" style="visibility: hidden;">
+            <!--취소 버튼-->
+            <button type="button" class="btn" onclick="reviewCancel();"><i id="review-cancel" class="bi bi-x-lg"></i></button>
+            <div id="review-score">
+                <ul class="review-star-list">
+                    <li><i class="bi bi-star-fill"></i></li>
+                    <li><i class="bi bi-star-fill"></i></li>
+                    <li><i class="bi bi-star-fill"></i></li>
+                    <li><i class="bi bi-star"></i></li>
+                    <li><i class="bi bi-star"></i></li>
+                </ul>
+            </div>
+            <div id="review-text">
+                <form>
+                    <textarea placeholder="리뷰를 작성해주세요." id="form-text"></textarea>
+                </form>
+            </div>
+            <form>
+                <input type="file" accept="image/png, image/jpeg">
+            </form>
+            <button type="submit" class="text-white btn btn-review-finished">저장하기</button>
+        </div>
+    </div>
+
     <!--카카오 공유 SDK-->
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
             integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous">
@@ -795,9 +875,21 @@
 
         }
 
+
         /** 리뷰 작성하기 **/
         function reviewWrite() {
+            // black-bg 효과 안먹음. 수정하기
+            document.getElementById("review-write-container").style.visibility = "visible";
+        }
 
+        /** 리뷰 작성 취소 **/
+        function reviewCancel(){
+            /**Todo : 작성한글, 점수, 파일 value 삭제하기. 아래의 글 참고
+             * https://m.blog.naver.com/javaking75/220073457187
+             * //[1] - 특정 폼 하나만 리셋
+             * $('#myform')[0].reset();
+             * **/
+            document.getElementById("review-write-container").style.visibility = "hidden";
         }
 
         /** 정보 수정하기 **/
@@ -806,7 +898,6 @@
         }
 
     </script>
-    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
     <!--Todo: 새로 고침 시 말고는 0km로 나오는 문제 해결-->
     <!--Todo: 위도 경도로 거리 계산하는 식 수정 -> m로 단위 환산-->
     <script>
