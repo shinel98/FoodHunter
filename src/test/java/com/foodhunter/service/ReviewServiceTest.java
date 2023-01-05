@@ -38,7 +38,7 @@ public class ReviewServiceTest {
         review.setReviewContent("정말 맛있어요~~ 어묵 국물 맛이 깔끔해요!");
 
         // when
-        Long reviewId = reviewService.create(review);
+        Long reviewId = reviewService.join(review);
 
         // then
         Review result = reviewService.findOne(reviewId).get();
@@ -61,15 +61,15 @@ public class ReviewServiceTest {
         Review review2 = new Review();
         java.sql.Date date2 = new java.sql.Date(System.currentTimeMillis());
         review2.setUsrId(1);
-        review2.setUserName("yujin9747");
+        review2.setUserName("yujin");
         review2.setStoreId(4);
         review2.setRegiDate(date2);
         review2.setReviewId(2);
         review2.setReviewContent("별로 ㅠ 너무 비싸요");
 
         // when
-        reviewService.create(review1);
-        IllegalStateException e = assertThrows(IllegalStateException.class, () -> reviewService.create(review2));
+        reviewService.join(review1);
+        IllegalStateException e = assertThrows(IllegalStateException.class, () -> reviewService.join(review2));
 
         // then
         Assertions.assertEquals(e.getMessage(), "이미 리뷰를 작성했습니다. 새로 작성하고 싶으시다면 기존 리뷰를 삭제해주세요.");
