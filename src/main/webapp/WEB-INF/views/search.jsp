@@ -18,6 +18,9 @@
       body {
         padding-top: 8rem;
       }
+      header {
+        height: 8rem;
+      }
       .container {
         display: grid;
         grid-template-columns: 50px 2fr 50px;
@@ -34,11 +37,14 @@
       .bg-beige {
         background-color: #d9d9d9;
       }
+      .clickable {
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
     <header class="container-fluid fixed-top p-0">
-      <div class="row g-0 text-center min-vh-100">
+      <div class="row g-0 text-center">
         <div class="col"></div>
         <div class="col border border-black">
           <div id="header-box" class="container bg-beige">
@@ -64,13 +70,13 @@
             <div id="search-result">
       <%--        검색 결과 템플릿--%>
               <template id="search-result-template">
-                <div class="border search-result py-2">
+                <div class="border search-result py-2 clickable" onclick="{placeSelect}">
                   <div class="d-flex flex-column justify-content-center">
                       <p class="h5 align-baseline text-start ms-2 my-0">{name}</p>
                       <p class="align-top text-start text-secondary ms-2 my-0">{address}</p>
                   </div>
                   <div class="d-flex my-auto">
-                    <img id="place-select-button" src="/img/arrow_forward_ios_FILL0_wght400_GRAD0_opsz48.png" onclick="{placeSelect}" alt="arrow" width="30" height="30">
+                    <img id="place-select-button" src="/img/arrow_forward_ios_FILL0_wght400_GRAD0_opsz48.png" alt="arrow" width="30" height="30">
                   </div>
                 </div>
               </template>
