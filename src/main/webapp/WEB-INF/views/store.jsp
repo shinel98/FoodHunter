@@ -773,22 +773,24 @@
         <div id="review-write-container" class="card shadow bg-white" style="visibility: hidden;">
             <!--취소 버튼-->
             <button type="button" class="btn" onclick="reviewCancel();"><i id="review-cancel" class="bi bi-x-lg"></i></button>
-            <form action="/store/review" method="post">
-                <div id="review-score">
-                    <ul class="review-star-list">
-                        <li><i class="bi bi-star-fill"></i></li>
-                        <li><i class="bi bi-star-fill"></i></li>
-                        <li><i class="bi bi-star-fill"></i></li>
-                        <li><i class="bi bi-star"></i></li>
-                        <li><i class="bi bi-star"></i></li>
-                    </ul>
-                </div>
-                <div id="review-text">
-                    <textarea placeholder="리뷰를 작성해주세요." id="form-text" name="content"></textarea>
-                </div>
-                <input type="file" accept="image/png, image/jpeg" name="photo">
-                <button type="submit" class="text-white btn btn-review-finished">저장하기</button>
+            <div id="review-score">
+                <ul class="review-star-list">
+                    <li><i class="bi bi-star-fill"></i></li>
+                    <li><i class="bi bi-star-fill"></i></li>
+                    <li><i class="bi bi-star-fill"></i></li>
+                    <li><i class="bi bi-star"></i></li>
+                    <li><i class="bi bi-star"></i></li>
+                </ul>
+            </div>
+            <div id="review-text">
+                <form>
+                    <textarea placeholder="리뷰를 작성해주세요." id="form-text"></textarea>
+                </form>
+            </div>
+            <form>
+                <input type="file" accept="image/png, image/jpeg">
             </form>
+            <button type="submit" class="text-white btn btn-review-finished">저장하기</button>
         </div>
     </div>
 
