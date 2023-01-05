@@ -7,18 +7,18 @@
 
     <mvc:annotation-driven />
     <context:component-scan base-package="com.foodhunter" />
-    <mvc:resources mapping="/img/**" location="/resources/img/" />
+<!--    <mvc:resources mapping="/img/**" location="/resources/img/" />-->
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/" />
         <property name="suffix" value=".jsp" />
     </bean>
     <!-- DB 설정 -->
-    <context:component-scan base-package="com.foodhunter" />
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="/WEB-INF/config/config.properties"/>
-        <property name="fileEncoding" value="UTF-8" />
-    </bean>
+<!--    <context:component-scan base-package="com.foodhunter" />-->
+<!--    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+<!--        <property name="location" value="/WEB-INF/config/config.properties"/>-->
+<!--        <property name="fileEncoding" value="UTF-8" />-->
+<!--    </bean>-->
 
     <bean id = "ds"  class="org.apache.commons.dbcp.BasicDataSource">
         <property name = "driverClassName" value="${spring.datasource.driverClassName}"/>
