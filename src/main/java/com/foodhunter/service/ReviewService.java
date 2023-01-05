@@ -19,8 +19,13 @@ public class ReviewService {
     }
 
     /** review 작성 **/
-    public Long create(Review review){
-        validateDuplicateReview(review);
+    public Long join(Review review){
+        try{
+            validateDuplicateReview(review);
+        }
+        catch (IllegalStateException e){
+            return -1L;
+        }
         reviewRepository.save(review);
         return review.getReviewId();
     }
