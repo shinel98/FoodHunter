@@ -12,8 +12,6 @@ public class ReviewForm {
         this.photo = photo;
     }
 
-
-
     public Long getStoreId() {
         return storeId;
     }
