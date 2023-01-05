@@ -40,6 +40,9 @@
       .clickable {
         cursor: pointer;
       }
+      .clickable:hover {
+        background-color: #eeeeee;
+      }
     </style>
   </head>
   <body>
