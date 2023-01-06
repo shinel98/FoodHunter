@@ -251,6 +251,9 @@
             right: 800px;
         }
         .btn-review-finished{
+            position: absolute;
+            bottom: -120px;
+            right: 0;
             color: white;
             background-color: #ffb700;
             padding: 3px 0 3px 0;
@@ -329,7 +332,7 @@
         #review-write-container{
             z-index: 100;
             width: 80%;
-            height: 85%;
+            height: 65%;
             position: absolute;
             border-radius: 20px;
             bottom: 0;
@@ -349,9 +352,10 @@
             border-radius: 15px;
             padding: 20px;
             width: 100%;
-            height: 60%;
+            height: 100%;
             font-size: 20px;
             line-height: 150%;
+            margin-bottom: 20px;
         }
 
         textarea:focus{
@@ -773,7 +777,7 @@
         <div id="review-write-container" class="card shadow bg-white" style="visibility: hidden;">
             <!--취소 버튼-->
             <button type="button" class="btn" onclick="reviewCancel();"><i id="review-cancel" class="bi bi-x-lg"></i></button>
-            <form id="review-form" action="/store/review" method="post">
+            <form id="review-form" action="/store/review" method="post" style="position: relative;">
                 <div id="review-score">
                     <ul class="review-star-list">
                         <li><i class="bi bi-star-fill"></i></li>
