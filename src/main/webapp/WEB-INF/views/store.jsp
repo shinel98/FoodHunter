@@ -10,6 +10,7 @@
     <link href="/css/store.css" rel="stylesheet">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <style>
         body {
             overflow: hidden;
@@ -406,6 +407,15 @@
     </style>
 </head>
 <body>
+    <script>
+        $(function (){
+            const searchParams = new URLSearchParams(location.search);
+
+            for (const param of searchParams) {
+                if(Boolean(param.at(1))) alert("이미 리뷰를 작성했습니다. 다시 작성하려면 기존 리뷰를 삭제하세요.");
+            }
+        });
+    </script>
     <div class="container p-0 m-0">
         <div id="main-row" class="row g-0 text-center min-vh-100">
             <div class="mobile-view">
@@ -892,11 +902,6 @@
 
         /** 리뷰 작성 취소 **/
         function reviewCancel(){
-            /**Todo : 작성한글, 점수, 파일 value 삭제하기. 아래의 글 참고
-             * https://m.blog.naver.com/javaking75/220073457187
-             * //[1] - 특정 폼 하나만 리셋
-             * $('#myform')[0].reset();
-             * **/
             document.getElementById("review-form").reset();
             document.getElementById("review-write-container").style.visibility = "hidden";
         }
@@ -917,9 +922,7 @@
         destLat = 36.10367691445477;
         destLon = 129.38881155932162;
         var element = document.getElementById("distance-text");
-        $(document).ready(function(){
-            calculateDistance();
-        });
+
         // 1초마다 계산한 거리 업데이트하기
         function calculateDistance(){
             setInterval(function(){
