@@ -9,8 +9,12 @@
 <html>
 <head>
     <title>카테고리 추가하기</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"> <!--icon-->
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
   <style>
     #header{
       padding: 15px;
@@ -124,6 +128,25 @@
       margin-bottom: 20px;
     }
 
+    .smallTxt {
+      font-size: smaller;
+      margin-left: 2px;
+    }
+
+    #ask-add {
+      position: absolute;
+      bottom: 0;
+      right: 20px;
+      border: none;
+      background-color: transparent;
+    }
+
+    #multiple-text {
+      position: absolute;
+      top: 3px;
+      left: 130px;
+    }
+
   </style>
 </head>
 <body style="margin: 490px; margin: 0; background-color: #ffa48a">
@@ -151,9 +174,14 @@
         <div><input class="form-control form-control-lg" type="text" value="양덕동 붕어빵" aria-label=".form-control-lg example" name="name"></div>
       </div>
       <div id="category" class="form-section">
-        <div>
+        <div style="position: relative;">
           <h5>카테고리 선택</h5>
-
+          <span id="multiple-text" class="smallTxt">다중선택 가능</span>
+          <!--카테고리 추가 신청 버튼-->
+          <button type="button" id="ask-add" class="btn" onclick="add();">
+            <i class="bi bi-exclamation-circle"></i>
+            <span class="smallTxt">카테고리 추가 신청</span>
+          </button>
         </div>
         <div class="row checkbox-row">
           <div class="col-md-3">
@@ -239,5 +267,13 @@
     </form>
   </div>
 </div>
+
+<script>
+  function add(){
+    var display = document.getElementById("add").style.display;
+    if(display == "none")document.getElementById("add").style.display = "block";
+    else document.getElementById("add").style.display = "none";
+  }
+</script>
 </body>
 </html>
