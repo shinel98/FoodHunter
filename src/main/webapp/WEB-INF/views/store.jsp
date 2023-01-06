@@ -773,7 +773,7 @@
         <div id="review-write-container" class="card shadow bg-white" style="visibility: hidden;">
             <!--취소 버튼-->
             <button type="button" class="btn" onclick="reviewCancel();"><i id="review-cancel" class="bi bi-x-lg"></i></button>
-            <form action="/store/review" method="post">
+            <form id="review-form" action="/store/review" method="post">
                 <div id="review-score">
                     <ul class="review-star-list">
                         <li><i class="bi bi-star-fill"></i></li>
@@ -893,6 +893,7 @@
              * //[1] - 특정 폼 하나만 리셋
              * $('#myform')[0].reset();
              * **/
+            document.getElementById("review-form").reset();
             document.getElementById("review-write-container").style.visibility = "hidden";
         }
 
