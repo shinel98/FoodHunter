@@ -398,7 +398,6 @@
                 right: 30px;
             }
         }
-
     </style>
 </head>
 <body>
