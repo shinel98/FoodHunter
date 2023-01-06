@@ -52,6 +52,18 @@
       margin-top: 20px;
     }
 
+    .btn-category-apply-modal{
+      color: white;
+      background-color: #FF7B54;
+      border-radius: 20px;
+      padding: 10px 20px;
+      align-self : flex-end;
+      width: 40%;
+      margin-top: 20px;
+      float: left;
+      margin-right: 20px;
+    }
+
     #btn-report{
       position: fixed;
       bottom: 30px;
@@ -67,6 +79,12 @@
     }
 
     .btn-category-apply:hover{
+      background-color: #f55425;
+      font-weight: bold;
+      color: white;
+    }
+
+    .btn-category-apply-modal:hover{
       background-color: #f55425;
       font-weight: bold;
       color: white;
@@ -263,16 +281,22 @@
       <div id="category-name">
         <input type="text" placeholder="새로운 카테고리 이름을 작성해주세요" id="form-category-name" name="categoryNameApply">
       </div>
-      <button type="submit" class="text-white btn btn-category-apply float-right">추가신청하기</button>
-    </form>
+      <div style="margin-left: 12%;">
+        <button type="submit" class="text-white btn btn-category-apply-modal float-right">추가신청</button>
+        <button type="button" class="text-white btn btn-category-apply-modal float-right" onclick="cancel();">취소</button>
+      </div>
+      </form>
   </div>
 </div>
 
 <script>
   function add(){
-    var display = document.getElementById("add").style.display;
-    if(display == "none")document.getElementById("add").style.display = "block";
-    else document.getElementById("add").style.display = "none";
+    document.getElementById("add").style.display = "block";
+  }
+
+  function cancel() {
+    document.getElementById("form-category").reset();
+    document.getElementById("add").style.display = "none";
   }
 </script>
 </body>
