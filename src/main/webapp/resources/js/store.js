@@ -171,7 +171,7 @@ function mylocation(){
             var message = '<div style="padding:5px;">현위치</div>'; // 인포윈도우에 표시될 내용입니다
 
             // 마커와 인포윈도우를 표시합니다
-            displayMarker(map, "현재 위치");
+            displayMarker(map, message);
         });
     }
 }
