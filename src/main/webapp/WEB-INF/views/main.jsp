@@ -12,6 +12,7 @@
 
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/fc1b103f84.js" crossorigin="anonymous"></script>
@@ -72,18 +73,13 @@
             margin-top:0.5em;
         }
         .stores {
-            /*position: absolute;*/
-            /*width: 23em;*/
-            /*height: 10em;*/
             width: 80%;
             height: 100%;
-
             border-radius: 30px;
             z-index:1;
             background-color: white;
             margin-right: 10px;
             flex: 0 0 auto;
-            /*transform: translate(, 20%);*/
             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
             blur-radius: 50px;
             padding: 4px;
@@ -200,6 +196,80 @@
             text-decoration : none;
             color: black;
         }
+        #webSearchContainer, #webStoresContainer, #webTagsContainer {
+            display: none;
+        }
+        @media (min-width: 992px) {
+            /* 데스크탑에 최적화된 예외 CSS 코드*/
+            #webSearchContainer, #webStoresContainer, #webTagsContainer {
+                display: block;
+            }
+            #searchContainer, #tagsContainer, #storesContainer {
+                display: none;
+            }
+            #webStoresContainer::-webkit-scrollbar{
+                display:none;
+            }
+
+            #webStoresContainer {
+                padding: 8px;
+                position: absolute;
+                display:flex;
+                /*border: 1px solid black;*/
+                /*background-color: white;*/
+                width:30%;
+                height:50%;
+                z-index:1;
+                flex-wrap: nowrap;
+                overflow-y: auto;
+                margin-top: 15%;
+                -ms-overflow-style: none;
+                flex-direction: column;
+
+            }
+
+            .leftContainer {
+                display:flex;
+                /*justify-content: center;*/
+                flex-direction: column;
+                align-items: center;
+            }
+            .rightContainer {
+                display:none;
+            }
+            #webSearchContainer{
+                width: 80%;
+                margin-top: 8%;
+            }
+            #webTagsContainer {
+                margin-top:3%;
+                width:80%;
+                height: 6%;
+                display:flex;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -ms-overflow-style: none;
+                z-index:1;
+            }
+            #webTagsContainer::-webkit-scrollbar{
+                display:none;
+            }
+            .webStores{
+                width: 100%;
+
+                border-radius: 30px;
+                z-index:1;
+                background-color: white;
+                /*margin-right: 10px;*/
+                flex: 0 0 auto;
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                blur-radius: 50px;
+                padding: 4px;
+                min-width: 270px;
+                margin-top: 7%;
+            }
+        }
+
     </style>
 
 </head>
@@ -207,10 +277,180 @@
 
     <div class="container-fluid p-0">
         <div class="row g-0 text-center min-vh-100">
-            <div class="col"></div>
-            <div class="col">
+            <div class="col leftContainer">
+                <div id="webSearchContainer">
+                    <div class="input-group rounded">
+                        <input id="search_bar" type="search" class="form-control rounded" placeholder="경상북도 포항시 북구 양덕동77" aria-label="Search" aria-describedby="search-addon" readonly/>
+                        <%--                        <div id="search_bar"></div>--%>
+                        <span class="input-group-text border-0" id="search-addon">
+                        <a href="./"><i class="fas fa-search"></i></a>
+                        </span>
+                    </div>
+                </div>
+                <div id="webTagsContainer">
+                    <div class="tags all"><a href="./">전체</a></div>
+                    <div class="tags"><a href="./">붕어빵</a></div>
+                    <div class="tags"><a href="./">호떡</a></div>
+                    <div class="tags"><a href="./">타코야키</a></div>
+                    <div class="tags"><a href="./">오뎅</a></div>
+                    <div class="tags"><a href="./">오뎅</a></div>
+                    <div class="tags"><a href="./">오뎅</a></div>
+                    <div class="tags"><a href="./">오뎅</a></div>
+                    <div class="tags"><a href="./">오뎅</a></div>
+                    <div class="tags"><a href="./">오뎅</a></div>
+                    <div class="tags"><a href="./">오뎅</a></div>
+                    <div class="tags"><a href="./">오뎅</a></div>
+                </div>
+                <div id="webStoresContainer">
+                    <div class="webStores">
+                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                        </div>
+                        <div class="storesInfoContainer">
+                            <div class="storesName">
+                                참 붕어빵
+                            </div>
+                            <div class="storesTag">
+                                #붕어빵
+                            </div>
+                        </div>
+                        <div class="storesDetailContainer">
+                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
+                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
+                            <button class="reportButton">신고하기</button>
+                            <button class="visitButton">방문하기</button>
+                        </div>
+                    </div>
+                    <div class="webStores"><div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                    </div>
+                        <div class="storesInfoContainer">
+                            <div class="storesName">
+                                참 붕어빵
+                            </div>
+                            <div class="storesTag">
+                                #붕어빵
+                            </div>
+                        </div>
+                        <div class="storesDetailContainer">
+                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
+                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
+                            <button class="reportButton">신고하기</button>
+                            <button class="visitButton">방문하기</button>
+                        </div>
+                    </div>
+                    /*변화*/
+                    <div class="webStores">
+                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                        </div>
+                        <div class="storesInfoContainer">
+                            <div class="storesName">
+                                참 붕어빵
+                            </div>
+                            <div class="storesTag">
+                                #붕어빵
+                            </div>
+                        </div>
+                        <div class="storesDetailContainer">
+                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
+                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
+                            <button class="reportButton">신고하기</button>
+                            <button class="visitButton">방문하기</button>
+                        </div>
+                    </div>
+                    <div class="webStores">
+                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                        </div>
+                        <div class="storesInfoContainer">
+                            <div class="storesName">
+                                참 붕어빵
+                            </div>
+                            <div class="storesTag">
+                                #붕어빵
+                            </div>
+                        </div>
+                        <div class="storesDetailContainer">
+                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
+                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
+                            <button class="reportButton">신고하기</button>
+                            <button class="visitButton">방문하기</button>
+                        </div>
+                    </div>
+                    <div class="webStores">
+                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                        </div>
+                        <div class="storesInfoContainer">
+                            <div class="storesName">
+                                참 붕어빵
+                            </div>
+                            <div class="storesTag">
+                                #붕어빵
+                            </div>
+                        </div>
+                        <div class="storesDetailContainer">
+                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
+                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
+                            <button class="reportButton">신고하기</button>
+                            <button class="visitButton">방문하기</button>
+                        </div>
+                    </div>
+                    <div class="webStores">
+                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                        </div>
+                        <div class="storesInfoContainer">
+                            <div class="storesName">
+                                참 붕어빵
+                            </div>
+                            <div class="storesTag">
+                                #붕어빵
+                            </div>
+                        </div>
+                        <div class="storesDetailContainer">
+                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
+                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
+                            <button class="reportButton">신고하기</button>
+                            <button class="visitButton">방문하기</button>
+                        </div>
+                    </div>
+                    <div class="webStores">
+                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                        </div>
+                        <div class="storesInfoContainer">
+                            <div class="storesName">
+                                참 붕어빵
+                            </div>
+                            <div class="storesTag">
+                                #붕어빵
+                            </div>
+                        </div>
+                        <div class="storesDetailContainer">
+                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
+                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
+                            <button class="reportButton">신고하기</button>
+                            <button class="visitButton">방문하기</button>
+                        </div>
+                    </div>
+                    <div class="webStores">
+                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                        </div>
+                        <div class="storesInfoContainer">
+                            <div class="storesName">
+                                참 붕어빵
+                            </div>
+                            <div class="storesTag">
+                                #붕어빵
+                            </div>
+                        </div>
+                        <div class="storesDetailContainer">
+                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
+                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
+                            <button class="reportButton">신고하기</button>
+                            <button class="visitButton">방문하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                <div id="map" style="width:100%;height:100%;"></div>
+            <div class="col mobile">
+                <div id="map" style="width:100%;height:100%;" class="mobileMap"></div>
 <%--                <div id="clickLatlng"></div>--%>
 
                 <div id="searchContainer">
@@ -229,6 +469,9 @@
                     <div class="tags"><a href="./">붕어빵</a></div>
                     <div class="tags"><a href="./">호떡</a></div>
                     <div class="tags"><a href="./">타코야키</a></div>
+                    <div class="tags"><a href="./">오뎅</a></div>
+                    <div class="tags"><a href="./">오뎅</a></div>
+                    <div class="tags"><a href="./">오뎅</a></div>
                     <div class="tags"><a href="./">오뎅</a></div>
                     <div class="tags"><a href="./">오뎅</a></div>
                     <div class="tags"><a href="./">오뎅</a></div>
@@ -312,7 +555,7 @@
                 </div>
 
             </div>
-            <div class="col"></div>
+            <div class="col rightContainer"></div>
         </div>
     </div>
 
