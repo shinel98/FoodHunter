@@ -42,9 +42,6 @@ public class StoreController {
         return "redirect:/store";                  // 정상
     }
 
-    @RequestMapping("/visit")
-    public String visit() { return "visit";}
-
     // 리뷰 모델 생성 테스트
     @GetMapping("/review/test")
     public String list(Model model) {

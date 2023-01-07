@@ -2,11 +2,18 @@
 $(function (){
     calculateDistance();
     const searchParams = new URLSearchParams(location.search);
-
     for (const param of searchParams) {
-        if(Boolean(param.at(1))) {
-            alert("이미 리뷰를 작성했습니다. 다시 작성하려면 기존 리뷰를 삭제하세요.");
-            location.href = "/store";   // reviewError=false 값으로 다시 되돌리기
+        if(param.at(0) === "reviewError"){
+            if(Boolean(param.at(1))) {
+                alert("이미 리뷰를 작성했습니다. 다시 작성하려면 기존 리뷰를 삭제하세요.");
+                location.href = "/store";   // reviewError=false 값으로 다시 되돌리기
+            }
+        }
+        else if(param.at(0) === "visitFinished"){
+            if(Boolean(param.at(1))) {
+                alert("방문인증이 완료되었습니다.");
+                location.href = "/store";   // reviewError=false 값으로 다시 되돌리기
+            }
         }
     }
 
