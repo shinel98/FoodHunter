@@ -63,32 +63,37 @@ $(function (){
 
 });
 
-// Todo: 새로 고침 시 말고는 0km로 나오는 문제 해결
-// Todo: 위도 경도로 거리 계산하는 식 수정 -> m로 단위 환산
-var distance;
-var myLat, myLon;
-var destLat, destLon;   // Todo : DB 연동해서 목적지 주소 넣기
-// 목적지 -> 포항대학교로 테스트
-destLat = 36.10367691445477;
-destLon = 129.38881155932162;
-var element = document.getElementById("distance-text");
-
 // 1초마다 계산한 거리 업데이트하기
 function calculateDistance(){
+
+    // Todo: 새로 고침 시 말고는 0km로 나오는 문제 해결
+    // Todo: 위도 경도로 거리 계산하는 식 수정 -> m로 단위 환산
+    var myLat, myLon;
+    var destLat, destLon;   // Todo : DB 연동해서 목적지 주소 넣기
+    // 목적지 -> 임의로 테스트
+    destLat =  36.08618059199135;
+    destLon = 129.41260195413844;
+    var destLatSec = destLat.toFixed(15)*60*60;
+    var destLonSec = destLon.toFixed(15)*60*60;
+    var element = document.getElementById("distance-text");
+
     setInterval(function(){
         if (navigator.geolocation) {
             // GeoLocation을 이용해서 접속 위치를 얻어옵니다
             navigator.geolocation.getCurrentPosition(function(position) {
-
                 myLat = position.coords.latitude; // 위도
                 myLon = position.coords.longitude; // 경도
             });
         }
-        var latGap = Math.abs(myLat-destLat);
-        var lonGap = Math.abs(myLon-destLon);
-        var distance = Math.sqrt(latGap^2 + lonGap^2);
-        distance += "km";
-        element.innerHTML = distance;
+        var myLatSec = (myLat.toFixed(15))*60*60;
+        var myLonSec = (myLon.toFixed(15))*60*60;
+        var gapLat = (myLatSec > destLatSec) ? myLatSec - destLatSec : destLatSec - myLatSec;
+        var gapLon = (myLonSec > destLonSec) ? myLonSec - destLonSec : destLonSec - myLonSec;
+        var meterLat = gapLat*30.887;
+        var meterLon = gapLon*24.778;
+        var distance = Math.sqrt(Math.pow(meterLon, 2) + Math.pow(meterLat, 2));
+        distance = distance.toFixed(2);
+        element.innerHTML = distance + "m";
     }, 1000);
 }
 
@@ -166,7 +171,7 @@ function mylocation(){
             var message = '<div style="padding:5px;">현위치</div>'; // 인포윈도우에 표시될 내용입니다
 
             // 마커와 인포윈도우를 표시합니다
-            displayMarker(map, message);
+            displayMarker(map, "현재 위치");
         });
     }
 }
