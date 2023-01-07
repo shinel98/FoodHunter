@@ -4,7 +4,10 @@ $(function (){
     const searchParams = new URLSearchParams(location.search);
 
     for (const param of searchParams) {
-        if(Boolean(param.at(1))) alert("이미 리뷰를 작성했습니다. 다시 작성하려면 기존 리뷰를 삭제하세요.");
+        if(Boolean(param.at(1))) {
+            alert("이미 리뷰를 작성했습니다. 다시 작성하려면 기존 리뷰를 삭제하세요.");
+            location.href = "/store";   // reviewError=false 값으로 다시 되돌리기
+        }
     }
 
     // 처음 위치는 가게 table에 저장된 위도, 경도로 설정

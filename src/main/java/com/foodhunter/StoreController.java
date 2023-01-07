@@ -23,6 +23,7 @@ public class StoreController {
         List<Review> reviews = reviewService.read(1L);
         if(reviews.size() > 0) System.out.println(reviews.get(0).getReviewContent());
         model.addAttribute("reviews", reviews);
+        model.addAttribute("reviewError", false);
         return "store";
     }
 
