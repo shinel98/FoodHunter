@@ -156,7 +156,6 @@ function infoEdit() {
 
 }
 
-/** Todo : 현재 위치에 마커 생성되도록 수정!! **/
 function mylocation(){
     const container = document.getElementById('map-section'); //지도를 담을 영역의 DOM 레퍼런스
     // HTML5의 geolocation으로 사용할 수 있는지 확인합니다

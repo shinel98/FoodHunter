@@ -14,173 +14,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"> <!--icon-->
-    <link href="/css/store.css" rel="stylesheet">
-    <style>
-        .mobile-view {
-            /*중앙 배치*/
-            float: none;
-            margin: 0 auto;
-            /*모바일 기준 너비 고정*/
-            width: 100%;
-            height: auto;
-        }
-
-        #content {
-            position: relative;
-            border: none;
-            top: 130px;
-        }
-
-        /*footer : 즐겨찾기, 방문인증하기*/
-        footer > div{
-            float: left;
-        }
-
-        footer {
-            min-height: 80px;
-        }
-
-        #btn-back {
-            padding: 12px;
-        }
-
-        #main-row {
-            min-height: 170px;
-        }
-
-
-        #header{
-            padding: 15px;
-            border-radius: 0 0 20px 20px;
-            height: 86px;
-        }
-
-        #footer {
-            border-radius: 20px 20px 0 0;
-            padding-left: 15px;
-            padding-top: 30px;
-        }
-
-        h4 {
-            text-align: center;
-            position: absolute;
-            top: -10%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 4;
-            font-weight: 700;
-        }
-
-        #map {
-            position: absolute;
-            top: 60px;
-            width: 80%;
-            /*mobile -> height: 450px;*/
-            height: 500px;
-            margin-left: 10%;
-            border-radius: 20px;
-            padding: 15px;
-        }
-
-        #name {
-            text-align: left;
-            font-size: 20px;
-            font-weight: 500;
-            margin: 0;
-        }
-
-        #category {
-            text-align: left;
-        }
-
-        .categoryImg {
-            height: 50px;
-            width: auto;
-        }
-
-        #map-section {
-            height: 80%;
-        }
-
-        #my-location, #kakao-location{
-            position: absolute;
-            bottom: 20px;
-            width: 30px;
-            height: 30px;
-            padding: 4px;
-            border-radius: 50px;
-        }
-
-        #my-location{
-            right: 20px;
-            background-color: white;
-            border: 1px solid #f55425;
-        }
-
-        #kakao-location{
-            right: 70px;
-            background-color: white;
-            border: 1px solid #ffa600;
-        }
-
-        #my-location i {
-            color: #FF7B54;
-        }
-
-        #kakao-location{
-            color: #ffb700;
-        }
-
-        .progress>div>img, .progress>div>input {
-            position: absolute;
-            right: 13px;
-            top: 16px;
-        }
-
-        .progress {
-            width: 95%;
-        }
-
-        #left-distance {
-            position: absolute;
-            bottom: -10px;
-            left: 40%;
-            color: black;
-            font-weight: 700;
-        }
-
-        footer>p {
-            position: absolute;
-            top: -35px;
-            /*left: 37%;*/
-        }
-
-        #info-text{
-            position: relative;
-        }
-        #info-text p{
-            position: absolute;
-            left: 50px;
-        }
-        #info-text p:nth-child(2){
-            top: 30px;
-        }
-
-        .categoryImg{
-            margin-right: 6%;
-        }
-
-        .btn-category-apply-modal{
-            color: white;
-            background-color: #ffb700;
-            border-radius: 20px;
-            padding: 10px 20px;
-            width: 100px;
-            float: left;
-            margin-top: 37px;
-        }
-
-    </style>
+    <link href="/css/visit.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=453d03fdea794867e41a9d927cff2cac"></script>
+    <script type="text/javascript" src="/js/visit.js"></script>
+    <script type="text/javascript" src="/js/store.js"></script>
 </head>
 <body>
 <div class="container p-0">
@@ -208,73 +47,10 @@
                         </div>
                     </div>
                     <div id="map-section" class="card">
-                        <!--카카오 지도 열기 & 길찾기
-                                link 마지막에 가게 이름, 위도, 경도 넣으면 도착지로 자동 설정할 수 있음.
-                            -->
+                        <!--카카오 지도 열기 & 길찾기 : link 마지막에 가게 이름, 위도, 경도 넣으면 도착지로 자동 설정할 수 있음-->
                         <a id="kakao-location" href="https://map.kakao.com/link/to/test,37.402056,127.108212" title="길찾기" style="z-index:3;"><i class="bi bi-map-fill"></i></a>
                         <!--현재 내 위치로 이동 버튼-->
                         <button id="my-location" onclick="mylocation();" style="z-index: 3;" title="현재 내 위치로 이동"><i class="bi bi-geo-alt-fill"></i></button>
-                        <script>
-                            /** Todo : 현재 위치에 마커 생성되도록 수정!! **/
-                            function mylocation(){
-                                const container = document.getElementById('map-section'); //지도를 담을 영역의 DOM 레퍼런스
-                                // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
-                                if (navigator.geolocation) {
-                                    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-                                    navigator.geolocation.getCurrentPosition(function(position) {
-
-                                        var lat = position.coords.latitude; // 위도
-                                        var lon = position.coords.longitude; // 경도
-
-                                        const options = { //지도를 생성할 때 필요한 기본 옵션
-                                            center: new kakao.maps.LatLng(lat, lon), //지도의 중심좌표.
-                                            level: 3 //지도의 레벨(확대, 축소 정도)
-                                        };
-                                        var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
-                                        var message = '<div style="padding:5px;">현위치</div>'; // 인포윈도우에 표시될 내용입니다
-
-                                        // 마커와 인포윈도우를 표시합니다
-                                        displayMarker(map, message);
-                                    });
-                                }
-                            }
-
-                            // 지도에 마커와 인포윈도우를 표시하는 함수입니다
-                            function displayMarker(locPosition, message) {
-
-                                // 마커를 생성합니다
-                                var marker = new kakao.maps.Marker({
-                                    map: map,
-                                    position: locPosition
-                                });
-
-                                var iwContent = message, // 인포윈도우에 표시할 내용
-                                    iwRemoveable = true;
-
-                                // 인포윈도우를 생성합니다
-                                var infowindow = new kakao.maps.InfoWindow({
-                                    content : iwContent,
-                                    removable : iwRemoveable
-                                });
-
-                                // 인포윈도우를 마커위에 표시합니다
-                                infowindow.open(map, marker);
-
-                                // 지도 중심좌표를 접속위치로 변경합니다
-                                map.setCenter(locPosition);
-                            }
-                        </script>
-                        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=453d03fdea794867e41a9d927cff2cac"></script>
-                        <script>
-                            // 처음 위치는 가게 table에 저장된 위도, 경도로 설정
-                            const container = document.getElementById('map-section'); //지도를 담을 영역의 DOM 레퍼런스
-                            const options = { //지도를 생성할 때 필요한 기본 옵션
-                                center: new kakao.maps.LatLng(36.10367691445477, 129.38881155932162), //지도의 중심좌표.
-                                level: 3 //지도의 레벨(확대, 축소 정도)
-                            };
-                            const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-                        </script>
                     </div>
                 </div>
             </div>
@@ -303,14 +79,6 @@
         </div>
     </div>
 </div>
-<script>
-
-    /** header: "<" 뒤로가기 버튼 클릭 **/
-    function back() {
-        history.back();
-    }
-
-</script>
 </body>
 </html>
 
