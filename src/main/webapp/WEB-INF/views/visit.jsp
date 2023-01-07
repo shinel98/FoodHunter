@@ -131,13 +131,14 @@
             color: #ffb700;
         }
 
-        .progress>div>img {
+        .progress>div>img, .progress>div>input {
             position: absolute;
             right: 13px;
             top: 16px;
         }
+
         .progress {
-            width: 90%;
+            width: 95%;
         }
 
         #left-distance {
@@ -167,6 +168,16 @@
 
         .categoryImg{
             margin-right: 6%;
+        }
+
+        .btn-category-apply-modal{
+            color: white;
+            background-color: #ffb700;
+            border-radius: 20px;
+            padding: 10px 20px;
+            width: 100px;
+            float: left;
+            margin-top: 37px;
         }
 
     </style>
@@ -270,17 +281,25 @@
 
             <!--footer-->
             <footer id="footer" class="fixed-bottom border border-black mobile-view bg-white shadow">
-                <p>5m이내에 접근하면 붕어빵 아이콘을 눌러서 인증하세요.</p>
-                <!--방문인증하기-->
-                <div class="progress">
-                    <!--남은 거리에 따라 width %로 진행 상황 표시-->
-                    <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
-                        <img class="categoryImg" src="/img/category-fish-bread.png" class="col" alt="category image" onclick="authenticate();">
-                        <!--Todo: 남은 거리 계산-->
-                        <p id="left-distance">인증까지 500m</p>
+                <form action="/visit/authenticate" method="post">
+                    <!--임의로 1, 2로 설정해서 controller에 넘김-->
+                    <input type="number" name="usrId" value=1 style="display:none">
+                    <input type="number" name="storeId" value=2 style="display:none">
+
+                    <p>5m이내에 접근하면 붕어빵 아이콘을 눌러서 인증하세요.</p>
+                    <!--방문인증하기-->
+                    <div class="progress">
+                        <!--남은 거리에 따라 width %로 진행 상황 표시-->
+                        <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
+                            <input class="col btn-category-apply-modal" type="submit" id="submit-btn" value="인증하기">
+                            <!--<img class="categoryImg" src="/img/category-fish-bread.png" class="col" alt="category image">-->
+                            <!--Todo: 남은 거리 계산-->
+                            <p id="left-distance">인증까지 500m</p>
+                        </div>
                     </div>
-                </div>
+                </form>
             </footer>
+
         </div>
     </div>
 </div>
@@ -289,29 +308,6 @@
     /** header: "<" 뒤로가기 버튼 클릭 **/
     function back() {
         history.back();
-    }
-
-    /** footer: 방문인증하기 버튼 클릭 **/
-    function visit() {
-        /** Todo : 방문인증 페이지로 이동 **/
-        location.href = "/visit";
-    }
-
-    function authenticate() {
-        // distance : 남은 거리 -> 임의로 설정 후 로직만 짜둠
-        //let distance = 4;
-        let distance = 10;
-        let answer;
-        if(distance > 5){
-            alert("5m 이내로 접근해야 인증할 수 있습니다.");
-        }
-        else {
-            answer = confirm("인증하시겠습니까?");
-            if(answer == true) {
-                alert("방문인증 되었습니다.")
-            }
-        }
-
     }
 
 </script>
