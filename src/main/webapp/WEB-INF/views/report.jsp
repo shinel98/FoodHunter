@@ -26,6 +26,22 @@
     .map-card {
       height: 350px;
     }
+
+    .mobile-view {
+      /* 중앙 배치 */
+      float: none;
+      margin: 0 auto;
+      /* 모바일 기준 너비 고정 */
+      /* width: 491px; */
+      width: 100%;
+      height: auto;
+    }
+
+    @media screen and (max-width: 768px) {
+      .mobile-lr {
+        display: none;
+      }
+    }
   </style>
   <script>
     /** 뒤로가기 **/
@@ -38,7 +54,7 @@
 <body>
 <div class="container-fluid p-0">
   <div class="row g-0 text-center min-vh-100">
-    <div class="col">공백</div>
+    <div class="col mobile-lr"></div>
     <div class="col border border-black">
       <header id="header" class="fixed-top border border-black mobile-view bg-white shadow">
         <!--뒤로 가기 버튼-->
@@ -69,7 +85,7 @@
         </div>
       </div>
     </div>
-    <div class="col">공백</div>
+    <div class="col mobile-lr"></div>
   </div>
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892&libraries=services,clusterer,drawing"></script>
