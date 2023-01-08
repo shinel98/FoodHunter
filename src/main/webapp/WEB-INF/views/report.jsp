@@ -55,7 +55,7 @@
 <div class="container-fluid p-0">
   <div class="row g-0 text-center min-vh-100">
     <div class="col mobile-lr"></div>
-    <div class="col border border-black">
+    <div class="col border border-black mobile-center">
       <header id="header" class="fixed-top border border-black mobile-view bg-white shadow">
         <!--뒤로 가기 버튼-->
         <div style="width: 10%; float: left;">
