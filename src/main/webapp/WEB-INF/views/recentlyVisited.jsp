@@ -111,7 +111,8 @@
     $("#recently-visited-list").empty();
 
     if (recentlyVisitedList.length === 0) {
-        $("#recently-visited-list").append(noRecentlyVisitedTemplate);
+      const noRecentlyVisitedElement = document.importNode(noRecentlyVisitedTemplate.content, true);
+      recentlyVisitedListElement.appendChild(noRecentlyVisitedElement);
     } else {
         recentlyVisitedList.forEach((recentlyVisited) => {
             let template = recentlyVisitedTemplate;
@@ -122,8 +123,8 @@
             template.content.querySelector('div').onclick = () => {
                 selectPlace(recentlyVisited.y, recentlyVisited.x);
             };
-
-            $("#recently-visited-list").append(template);
+            const recentlyVisitedElement = document.importNode(template.content, true);
+            recentlyVisitedListElement.appendChild(recentlyVisitedElement);
         });
     }
   });
