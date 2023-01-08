@@ -49,12 +49,26 @@
             var profile = googleUser.getBasicProfile();
         }
     </script>
+    <style>
+        @media screen and (max-width: 768px) {
+            .mobile-lr {
+                display: none;
+            }
+            .mobile-center {
+                width: 100%
+            }
+            #login-img {
+                width: 400px;
+                height: 350px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container-fluid p-0">
         <div class="row g-0 text-center min-vh-100">
-            <div class="col">공백</div>
-            <div class="col border border-black">
+            <div class="col mobile-lr"></div>
+            <div class="col border border-black mobile-center">
                 <div class="row align-items-center justify-content-center">
                     <img src="resources/img/login.png" id="login-img" alt="login">
                     <h1>붕어빵 사냥꾼</h1>
@@ -64,13 +78,13 @@
                         </button>
                     </div>
                     <div class="d-grid mb-2">
-                        <button class="btn btn-google btn-login text-uppercase fw-bold" type="submit" data-onsuccess="onSignIn"">
+                        <button class="btn btn-google btn-login text-uppercase fw-bold" type="submit" data-onsuccess="onSignIn">
                             <i class="fab fa-google me-2"></i>구글 계정으로 로그인
                         </button>
                     </div>
                 </div>
             </div>
-            <div class="col">공백</div>
+            <div class="col mobile-lr"></div>
         </div>
     </div>
 
