@@ -9,4 +9,9 @@ public class myController {
     public String recentlyVisited(){
         return "recentlyVisited";
     }
+
+    @RequestMapping(value="/my/favorites")
+    public String favorites(){
+        return "favorites";
+    }
 }
