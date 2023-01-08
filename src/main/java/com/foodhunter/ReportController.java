@@ -6,7 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ReportController {
     @RequestMapping("/report")
-    public String home() {
+    public String report() {
         return "report";
+    }
+
+    @RequestMapping("/category-request")
+    public String categoryRequest() {
+        return "category-request";
     }
 }
