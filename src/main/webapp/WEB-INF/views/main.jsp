@@ -114,7 +114,7 @@
             width: 100%;
             justify-content: center;
             height: 6%;
-            display:flex;
+
             flex-wrap: nowrap;
             overflow-x: auto;
             -ms-overflow-style: none;
@@ -606,7 +606,7 @@
                     </div>
                     <div class="menuIcon">
                         <a href="./"><i class="fas fa-pen fa-2x"></i><p>제보하기</p></a></div>
-                    <div class="menuIcon"><a href="./"><i class="fas fa-user fa-2x"></i><p>마이페이지</p></a></div>
+                    <div class="menuIcon"><a href="/mypage"><i class="fas fa-user fa-2x"></i><p>마이페이지</p></a></div>
 
 <%--                    <i class="far fa-user"></i>--%>
                 </div>
@@ -761,7 +761,7 @@
             myLocation(position, message)
         }
 
-        const options = {
+        let options = {
             enableHighAccuracy: false,
             maximumAge: 0,
             timeout: Infinity

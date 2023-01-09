@@ -5,8 +5,11 @@
 package com.foodhunter;
 
 import com.foodhunter.DAO.MemoryReviewRepository;
+import com.foodhunter.DAO.MemoryVisitRepository;
 import com.foodhunter.DAO.ReviewRepository;
+import com.foodhunter.DAO.VisitRepository;
 import com.foodhunter.service.ReviewService;
+import com.foodhunter.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +31,17 @@ public class SpringConfig {
     }
 
     @Bean
+    public VisitService visitService(){
+        return new VisitService(visitRepository());
+    }
+
+    @Bean
     public ReviewRepository reviewRepository() {
          return new MemoryReviewRepository();
+    }
+
+    @Bean
+    public VisitRepository visitRepository() {
+        return new MemoryVisitRepository();
     }
 }
