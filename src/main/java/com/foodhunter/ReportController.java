@@ -9,4 +9,9 @@ public class ReportController {
     public String report() {
         return "report";
     }
+
+    @RequestMapping("/report/category-detail")
+    public String categorySelect(){
+        return "report-detail";
+    }
 }

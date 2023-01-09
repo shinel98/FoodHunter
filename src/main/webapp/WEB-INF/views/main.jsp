@@ -459,7 +459,7 @@
             myLocation(position, message)
         }
 
-        const options = {
+        let options = {
             enableHighAccuracy: false,
             maximumAge: 0,
             timeout: Infinity
