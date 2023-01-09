@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
     <script src="https://kit.fontawesome.com/fc1b103f84.js" crossorigin="anonymous"></script>
 
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892"></script>
@@ -34,10 +35,12 @@
 
         * {
             box-sizing: border-box;
+
         }
+
         #searchContainer {
             position:fixed;
-            width:25%;
+            width:70%;
 
             /*margin: 0 20px 0 20px;*/
             top:10px;
@@ -52,6 +55,9 @@
             /*background-color: white;*/
             /*height: 40px;*/
             /*border: 1px solid black;*/
+        }
+        .mobile {
+            border: 1px solid #ececec;
         }
         #menuContainer {
             /*position: fixed;*/
@@ -71,7 +77,7 @@
             margin-top:0.5em;
         }
         .stores {
-            width: 80%;
+            width: 30%;
             height: 100%;
             border-radius: 30px;
             z-index:1;
@@ -81,28 +87,32 @@
             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
             blur-radius: 50px;
             padding: 4px;
-            min-width: 270px;
+            min-width: 300px;
         }
 
         #storesContainer::-webkit-scrollbar{
             display:none;
         }
         #storesContainer {
+            width: 90%;
+            /* justify-content: center; */
+            margin-left: 60px;
             padding: 8px;
             position: absolute;
             display:flex;
             /*border: 1px solid black;*/
             /*background-color: white;*/
-            width:30%;
+
             height:20%;
             z-index:1;
             flex-wrap: nowrap;
             overflow-x: auto;
-            transform: translate(10%, -170%);
+            transform: translateY(-170%);
             -ms-overflow-style: none;
         }
         #tagsContainer {
-            width:32%;
+            width: 100%;
+            justify-content: center;
             height: 6%;
             display:flex;
             flex-wrap: nowrap;
@@ -126,7 +136,7 @@
             z-index: 1;
             background-color:white;
             /*width:20%;*/
-            height:30px;
+            height:25px;
             padding:0 0.5em 0 0.5em;
             /*border: 1px solid black;*/
             border-radius: 20px;
@@ -146,19 +156,24 @@
             width: 50%;
             height: 40%;
             margin-left: 30%;
-            margin-top: 5%;
+            margin-top: 2%;
             /*border: 1px solid black;*/
         }
         .storesIcon {
             float: left;
-            margin-top: 8%;
-            width: 30%;
+            margin-top: 3%;
+            width: 40%;
             height: 40%;
+            margin-right:-50px;
+        }
+        .storesIcon img{
+            width: 80px;
+            height: 80px;
         }
         .storesDetailContainer {
             display: flex;
             justify-content: space-evenly;
-            margin-top: 6%;
+            margin-top: 10%;
 
         }
         .reportButton {
@@ -168,6 +183,7 @@
             border-radius: 30px;
             color: white;
             background-color: crimson;
+
         }
         .visitButton {
             text-decoration: none;
@@ -177,14 +193,16 @@
         }
         .storesName {
             font-weight: bold;
-            font-size: 1.6em;
+            font-size: 2em;
             padding: 0 !important;
             height: 31px;
-            margin: 0 !important;
+            margin-left:20px;
         }
         .storesTag {
             color:gray;
             margin-bottom: 7px;
+            margin-top:8px;
+            font-size: 1.5em;
 
         }
         .storesDistance {
@@ -197,6 +215,35 @@
         #webSearchContainer, #webStoresContainer, #webTagsContainer {
             display: none;
         }
+        .fa-home:before {
+            content: "\f015";
+            font-size: smaller;
+            color: gray;
+        }
+        .fa-pen:before {
+            content: "\f304";
+            font-size: smaller;
+            color: gray;
+        }
+        .fa-user:before {
+            content: "\f007";
+            font-size: smaller;
+            color: gray;
+        }
+        .menuIcon p {
+            color: gray;
+        }
+        .clicked {
+            background-color: crimson;
+            color: white;
+        }
+        .leftContainer {
+            display:none;
+        }
+        .rightContainer {
+            display: none;
+        }
+
         @media (min-width: 992px) {
             /* 데스크탑에 최적화된 예외 CSS 코드*/
             #webSearchContainer, #webStoresContainer, #webTagsContainer {
@@ -208,7 +255,14 @@
             #webStoresContainer::-webkit-scrollbar{
                 display:none;
             }
-
+            .reportButton {
+                margin-right: -4%;
+                margin-left: 20px;
+            }
+            .storesIcon img{
+                width: 70px;
+                height: 70px;
+            }
             #webStoresContainer {
                 padding: 8px;
                 position: absolute;
@@ -216,11 +270,11 @@
                 /*border: 1px solid black;*/
                 /*background-color: white;*/
                 width:30%;
-                height:50%;
+                height:69%;
                 z-index:1;
                 flex-wrap: nowrap;
                 overflow-y: auto;
-                margin-top: 15%;
+                margin-top: 12%;
                 -ms-overflow-style: none;
                 flex-direction: column;
 
@@ -231,6 +285,9 @@
                 /*justify-content: center;*/
                 flex-direction: column;
                 align-items: center;
+            }
+            .storesRate {
+                margin-left: 0;
             }
             .rightContainer {
                 display:none;
@@ -254,7 +311,6 @@
             }
             .webStores{
                 width: 100%;
-
                 border-radius: 30px;
                 z-index:1;
                 background-color: white;
@@ -263,7 +319,7 @@
                 box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
                 blur-radius: 50px;
                 padding: 4px;
-                min-width: 270px;
+                min-width: 400px;
                 margin-top: 7%;
             }
         }
@@ -284,24 +340,27 @@
                         <a href="./"><i class="fas fa-search"></i></a>
                         </span>
                     </div>
+
                 </div>
                 <div id="webTagsContainer">
-                    <div class="tags all"><a href="./">전체</a></div>
-                    <div class="tags"><a href="./">붕어빵</a></div>
-                    <div class="tags"><a href="./">호떡</a></div>
-                    <div class="tags"><a href="./">타코야키</a></div>
-                    <div class="tags"><a href="./">오뎅</a></div>
-                    <div class="tags"><a href="./">오뎅</a></div>
-                    <div class="tags"><a href="./">오뎅</a></div>
-                    <div class="tags"><a href="./">오뎅</a></div>
-                    <div class="tags"><a href="./">오뎅</a></div>
-                    <div class="tags"><a href="./">오뎅</a></div>
-                    <div class="tags"><a href="./">오뎅</a></div>
-                    <div class="tags"><a href="./">오뎅</a></div>
+                        <div id="test">hi</div>
+                        <div class="tags">전체</div>
+                        <div class="tags">붕어빵</div>
+                        <div class="tags">호떡</div>
+                        <div class="tags">타코야키</div>
+                        <div class="tags">오뎅</div>
+                        <div class="tags">오뎅</div>
+                        <div class="tags">오뎅</div>
+                        <div class="tags">오뎅</div>
+                        <div class="tags">오뎅</div>
+                        <div class="tags">오뎅</div>
+                        <div class="tags">오뎅</div>
+                        <div class="tags">오뎅</div>
+
                 </div>
                 <div id="webStoresContainer">
                     <div class="webStores">
-                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                        <div class="storesIcon"><img src="img/crucianbread.png">
                         </div>
                         <div class="storesInfoContainer">
                             <div class="storesName">
@@ -318,7 +377,7 @@
                             <button class="visitButton">방문하기</button>
                         </div>
                     </div>
-                    <div class="webStores"><div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                    <div class="webStores"><div class="storesIcon"><img src="img/crucianbread.png" >
                     </div>
                         <div class="storesInfoContainer">
                             <div class="storesName">
@@ -335,27 +394,9 @@
                             <button class="visitButton">방문하기</button>
                         </div>
                     </div>
-                    /*변화*/
+
                     <div class="webStores">
-                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
-                        </div>
-                        <div class="storesInfoContainer">
-                            <div class="storesName">
-                                참 붕어빵
-                            </div>
-                            <div class="storesTag">
-                                #붕어빵
-                            </div>
-                        </div>
-                        <div class="storesDetailContainer">
-                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
-                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
-                            <button class="reportButton">신고하기</button>
-                            <button class="visitButton">방문하기</button>
-                        </div>
-                    </div>
-                    <div class="webStores">
-                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                        <div class="storesIcon"><img src="img/crucianbread.png">
                         </div>
                         <div class="storesInfoContainer">
                             <div class="storesName">
@@ -373,7 +414,7 @@
                         </div>
                     </div>
                     <div class="webStores">
-                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                        <div class="storesIcon"><img src="img/crucianbread.png">
                         </div>
                         <div class="storesInfoContainer">
                             <div class="storesName">
@@ -391,7 +432,7 @@
                         </div>
                     </div>
                     <div class="webStores">
-                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                        <div class="storesIcon"><img src="img/crucianbread.png" >
                         </div>
                         <div class="storesInfoContainer">
                             <div class="storesName">
@@ -409,7 +450,7 @@
                         </div>
                     </div>
                     <div class="webStores">
-                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                        <div class="storesIcon"><img src="img/crucianbread.png" >
                         </div>
                         <div class="storesInfoContainer">
                             <div class="storesName">
@@ -427,7 +468,25 @@
                         </div>
                     </div>
                     <div class="webStores">
-                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                        <div class="storesIcon"><img src="img/crucianbread.png" >
+                        </div>
+                        <div class="storesInfoContainer">
+                            <div class="storesName">
+                                참 붕어빵
+                            </div>
+                            <div class="storesTag">
+                                #붕어빵
+                            </div>
+                        </div>
+                        <div class="storesDetailContainer">
+                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
+                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
+                            <button class="reportButton">신고하기</button>
+                            <button class="visitButton">방문하기</button>
+                        </div>
+                    </div>
+                    <div class="webStores">
+                        <div class="storesIcon"><img src="img/crucianbread.png" >
                         </div>
                         <div class="storesInfoContainer">
                             <div class="storesName">
@@ -463,18 +522,18 @@
 
 
                 <div id="tagsContainer">
-                    <div class="tags all"><a href="./">전체</a></div>
-                    <div class="tags"><a href="./">붕어빵</a></div>
-                    <div class="tags"><a href="./">호떡</a></div>
-                    <div class="tags"><a href="./">타코야키</a></div>
-                    <div class="tags"><a href="./">오뎅</a></div>
-                    <div class="tags"><a href="./">오뎅</a></div>
-                    <div class="tags"><a href="./">오뎅</a></div>
-                    <div class="tags"><a href="./">오뎅</a></div>
-                    <div class="tags"><a href="./">오뎅</a></div>
-                    <div class="tags"><a href="./">오뎅</a></div>
-                    <div class="tags"><a href="./">오뎅</a></div>
-                    <div class="tags"><a href="./">오뎅</a></div>
+                    <div class="tags">전체</div>
+                    <div class="tags">붕어빵</div>
+                    <div class="tags">호떡</div>
+                    <div class="tags">타코야키</div>
+                    <div class="tags">오뎅</div>
+                    <div class="tags">오뎅</div>
+                    <div class="tags">오뎅</div>
+                    <div class="tags">오뎅</div>
+                    <div class="tags">오뎅</div>
+                    <div class="tags">오뎅</div>
+                    <div class="tags">오뎅</div>
+                    <div class="tags">오뎅</div>
                 </div>
 <%--                <div class="window">--%>
                     <div id="storesContainer">
@@ -722,12 +781,37 @@
         getUserLocation();
 
 
+        // 선택한 태그 색상 변경
+        var currentMenu;
+        var menuLinks = document.querySelectorAll('.tags');
+
+        function clickMenuHandler(){
+            if (currentMenu){
+                currentMenu.classList.remove('clicked');
+            }
+            this.classList.add('clicked');
+            currentMenu = this;
+        }
+
+
+        for (var i = 0; i < menuLinks.length; i++){    /* 단점: 메뉴가 백만개라면....? 또한 addEventListener는 시스템 성능에 악영향을 끼친다고 함 */
+            menuLinks[i].addEventListener('click', clickMenuHandler);
+        }
 
 
 
+        //좌표를 주소로 변환
+        getAddr(latitude, longitude);
+        function getAddr(curLatitude, curLongitude){
+            let geocoder = new kakao.maps.services.Geocoder();
 
-
-
+            let callback = function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    console.log(result[0].address.address_name);
+                }
+            }
+            geocoder.coord2Address(curLatitude, curLongitude, callback);
+        }
     </script>
 </body>
 </html>
