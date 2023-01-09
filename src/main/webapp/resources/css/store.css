@@ -251,6 +251,17 @@ h4 {
     right: -120px;
 }
 
+#confirm{
+    right: 20px;
+    bottom: 20px;
+}
+
+#reviewConfirm{
+    right: 20px;
+    bottom: 20px;
+    background-color: #F55425FF;
+}
+
 #btn-review:hover, #btn-edit:hover {
     background-color: #f55425;
     font-weight: bold;
@@ -328,6 +339,28 @@ h4 {
     padding: 20px;
 }
 
+#visitFinished-modal{
+    z-index: 100;
+    width: 500px;
+    height: 300px;
+    position: absolute;
+    border-radius: 20px;
+    bottom: 250px;
+    left: 34%;
+    padding: 20px;
+}
+
+#reviewError-modal{
+    z-index: 100;
+    width: 500px;
+    height: 300px;
+    position: absolute;
+    border-radius: 20px;
+    bottom: 250px;
+    left: 34%;
+    padding: 20px;
+}
+
 #review-write-container button:active{
     border: none;
 }
@@ -387,5 +420,8 @@ textarea:focus{
     }
     #btn-review, #btn-edit{
         right: 30px;
+    }
+    #visitFinished-modal{
+        left: 0;
     }
 }

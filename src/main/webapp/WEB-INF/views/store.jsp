@@ -344,5 +344,26 @@
             </form>
         </div>
     </div>
+
+    <!--방문인증 완료 모달-->
+    <div style="z-index: 100; position: relative; margin: auto;">
+        <div id="visitFinished-modal" class="card shadow bg-white" style="visibility:hidden">
+            <div><h4>방문인증이 완료되었습니다.</h4></div>
+            <iframe src="https://embed.lottiefiles.com/animation/42183" width="100%" style="margin: auto"></iframe>
+            <button id="confirm" class="text-white btn btn-review-finished" onclick="confirm()">확인</button>
+        </div>
+    </div>
+
+    <!--리뷰 에러 모달-->
+    <div style="z-index: 100; position: relative; margin: auto;">
+        <div id="reviewError-modal" class="card shadow bg-white" style="visibility:hidden">
+            <div>
+                <h4>이미 리뷰를 작성했습니다.</h4>
+                <p>다시 작성하려면 기존의 리뷰를 삭제해주세요.</p>
+            </div>
+            <iframe src="https://embed.lottiefiles.com/animation/84891"></iframe>
+            <button id="reviewConfirm" class="text-white btn btn-review-finished" onclick="confirm()">확인</button>
+        </div>
+    </div>
 </body>
 </html>
