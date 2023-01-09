@@ -10,6 +10,11 @@ public class ReportController {
         return "report";
     }
 
+    @RequestMapping("/category-request")
+    public String categoryRequest() {
+        return "category-request";
+    }
+
     @RequestMapping("/report/category-detail")
     public String categorySelect(){
         return "report-detail";
