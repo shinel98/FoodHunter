@@ -8,6 +8,7 @@
     <mvc:annotation-driven />
     <context:component-scan base-package="com.foodhunter" />
     <mvc:resources mapping="/img/**" location="/resources/img/" />
+    <mvc:resources mapping="/resources/**" location="/resources/" />
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/" />
@@ -19,10 +20,9 @@
         <property name="location" value="/WEB-INF/config/config.properties"/>
         <property name="fileEncoding" value="UTF-8" />
     </bean>
-
-    <bean id = "ds"  class="org.apache.commons.dbcp.BasicDataSource">
+    <bean id="ds" class="org.apache.commons.dbcp.BasicDataSource">
         <property name = "driverClassName" value="${spring.datasource.driverClassName}"/>
-        <property name="url" value="${spring.datasource.url}"/>
+        <property name = "url" value="${spring.datasource.url}"/>
         <property name = "username" value="${spring.datasource.username}"/>
         <property name = "password" value="${spring.datasource.password}"/>
     </bean>
@@ -40,7 +40,8 @@
         <property name="configLocation" value="classpath:mybatis-config.xml" />
         <property name="mapperLocations" value="classpath:mappers/*-mapper.xml"></property>
     </bean>
-    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache"> <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
     </bean>
 <!--    <bean id="dao" class="com.spring.board.BoardDAO"> <property name="template" ref="jt"></property>-->
 <!--    </bean>-->
