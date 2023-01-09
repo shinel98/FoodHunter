@@ -424,4 +424,7 @@ textarea:focus{
     #visitFinished-modal{
         left: 0;
     }
+    #reviewError-modal{
+        left: 0;
+    }
 }
