@@ -34,6 +34,7 @@
                         url: '/v2/user/me',
                         success: function (response) {
                             console.log(response)
+                            location.href="http://localhost:8080/main"
                         },
                         fail: function (error) {
                             console.log(error)
@@ -70,10 +71,10 @@
             <div class="col mobile-lr"></div>
             <div class="col border border-black mobile-center">
                 <div class="row align-items-center justify-content-center">
-                    <img src="resources/img/login.png" id="login-img" alt="login">
+                    <img src="/img/login.png" id="login-img" alt="login">
                     <h1>붕어빵 사냥꾼</h1>
                     <div class="d-grid mt-3 mb-2">
-                        <button class="btn btn-kakao btn-login text-uppercase fw-bold" type="submit" onclick="javascript:kakaoLogin();">
+                        <button class="btn btn-kakao btn-login text-uppercase fw-bold" type="submit" onclick="kakaoLogin();">
                             <i class="fab xi-kakaotalk xi-x me-2"></i>카카오 계정으로 로그인
                         </button>
                     </div>
@@ -87,6 +88,5 @@
             <div class="col mobile-lr"></div>
         </div>
     </div>
-
 </body>
 </html>

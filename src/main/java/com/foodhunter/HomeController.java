@@ -14,9 +14,4 @@ public class HomeController {
     public String search(){
         return "search";
     }
-
-    @RequestMapping("/")
-    public String login(){
-        return "login";
-    }
 }
