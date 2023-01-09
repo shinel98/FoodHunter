@@ -159,10 +159,15 @@
       background-color: transparent;
     }
 
-    #multiple-text {
+    .multiple-text {
       position: absolute;
       top: 3px;
-      left: 130px;
+      left: 110px;
+      color: #5e5e5e;
+    }
+
+    #days > label{
+      margin-right: 20px;
     }
 
   </style>
@@ -194,7 +199,7 @@
       <div id="category" class="form-section">
         <div style="position: relative;">
           <h5>카테고리 선택</h5>
-          <span id="multiple-text" class="smallTxt">다중선택 가능</span>
+          <span class="multiple-text" class="smallTxt">다중선택 가능</span>
           <!--카테고리 추가 신청 버튼-->
           <button type="button" id="ask-add" class="btn" onclick="add();">
             <i class="bi bi-exclamation-circle"></i>
@@ -270,6 +275,26 @@
           </div>
         </div>
       </div>
+      <div style="position: relative;">
+        <div><h5>영업 요일</h5></div>
+        <span class="multiple-text" class="smallTxt" style="left: 80px;">다중선택 가능</span>
+        <div id="days">
+          <input type="checkbox" id="sun" name="sun" style="margin-left: 30px;">
+          <label for="sun">일</label>
+          <input type="checkbox" id="mon" name="mon">
+          <label for="mon">월</label>
+          <input type="checkbox" id="tue" name="tue">
+          <label for="tue">화</label>
+          <input type="checkbox" id="wed" name="wed">
+          <label for="wed">수</label>
+          <input type="checkbox" id="thu" name="thu">
+          <label for="thu">목</label>
+          <input type="checkbox" id="fri" name="fri">
+          <label for="fri">금</label>
+          <input type="checkbox" id="sat" name="sat">
+          <label for="sat">토</label>
+        </div>
+      </div>
       <div id="finish">
         <button id="btn-report" type="submit" class="btn btn-category-apply shadow">제보하기</button>
       </div>
@@ -297,6 +322,10 @@
   function cancel() {
     document.getElementById("form-category").reset();
     document.getElementById("add").style.display = "none";
+  }
+
+  function back() {
+    history.back();
   }
 </script>
 </body>
