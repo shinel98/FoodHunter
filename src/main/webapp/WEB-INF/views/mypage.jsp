@@ -22,7 +22,12 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
     <style>
+        .main{
+            background-color: #1A1A1A;
+            height: auto;
+        }
         .navigationBar {
+            position: fixed;
             height: 75px;
 
             left: 0;
@@ -30,7 +35,7 @@
             bottom: 0;
             z-index: 2;
             padding-top: 10px;
-            position: sticky;
+
         }
         .idBox{
 
@@ -65,6 +70,7 @@
         }
 
         .emty{
+            background-color: #3D3D3D;
             width: 350px;
             height: 100px;
             align-items: center;
@@ -76,8 +82,12 @@
             height: auto;
 
         }
-        #bottom{
+
+
+        .bottom{
             background-color: #242424;
+            height: 100%;
+            padding-bottom: 75px;
         }
         .moreText{
             font-size: 15px;
@@ -95,12 +105,43 @@
         .noneText{
             color:#737373;
         }
+        .storeContainer{
+            padding: 8px;
+
+            display:flex;
+            /*border: 1px solid black;*/
+            /*background-color: white;*/
+            width:100%;
+            height:20%;
+            z-index:1;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+
+            -ms-overflow-style: none;
+
+        }
+        .storeContainer::-webkit-scrollbar{
+            display:none;
+        }
+        .storeitem{
+            width: 20%;
+            height: 50%;
+            background-color: #3D3D3D;
+            border-radius: 10px;
+            z-index:1;
+            margin-top: 10px;
+            margin-left: 10px;
+            margin-right: 10px;
+            flex: 0 0 auto;
+            /*transform: translate(, 20%);*/
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            blur-radius: 50px;
+            padding: 4px;
+            min-width: 270px;
+        }
 
 
-        /*.button{*/
-        /*    background-color: #1A1A1A;*/
-        /*    color: white;*/
-        /*}*/
+
         /*본체 */
         .swiper {
             display:flex;
@@ -143,11 +184,11 @@
 <body>
 <div class="container-fluid p-0">
     <div class="row g-0 text-center min-vh-100">
-        <div class="col">공백</div>
 
-        <div class="col border top border-black main">
 
-            <div class="align-items-center  w-100   rounded-bottom   md-5" id= "top">
+        <div class="main">
+
+            <div id= "top" class="align-items-center top w-100   rounded-bottom   md-5" >
 
                 <div id = 'title'>
                     <label class="text-white fs-6 mt-3">마이페이지</label>
@@ -178,7 +219,7 @@
                 </div>
             </div>
 
-            <div id = 'bottom' class ="text-white  h-100">
+            <div id = 'bottom' class ="bottom text-white">
 
 <%--           <div id="visit" class ="">   </div>--%>
                 <div id ='visitText' class='text-start mt-3'>
@@ -197,7 +238,7 @@
 
                 <div id ='visitStore' class = ' mt-2 mx-4 mb-2'>
                     <div>
-                        <div id='item1' class ='emty mt-4 rounded bg-secondary d-flex flex-row '>
+                        <div id='item1' class ='emty mt-4 rounded  d-flex flex-row '>
 
                             <div id="img1" class=' pt-2 mt-4 mb-4 ms-4 me-2'>
                                 <i class="fa-3x fa-solid fa-face-frown"></i>
@@ -229,57 +270,108 @@
                     </div>
                 </div>
 
-                <div class="stores swiper mySwiper  ms-4 ps-2 ">
-                  <div class="swiper-wrapper">
-                        <div class="swiper-slide  rounded bg-secondary  ">
-                            <div class="d-flex flex-row ">
-                                <div  class='mt-4 mb-4 ms-4 me-2'>
-                                    <i class="fa-solid fa-burger fa-3x"></i>
+                <div id="container1" class="storeContainer">
+                    <div id="items1" class ="storeitem">
+                        <div class="d-flex flex-row ">
+                            <div  class='mt-3 mb-4 ms-4 me-2'>
+                                <i class="fa-solid fa-burger fa-3x"></i>
+                            </div>
+                            <div class='storeEx mt-3 mb-4 ms-2 me-2 '>
+                                <div class="">
+                                    호떡 트럭 이름
                                 </div>
-                                <div class='storeEx mt-3 mb-4 ms-2 me-2 '>
-                                    <div class="">
-                                        호떡 트럭 이름
-                                    </div>
-                                    <div class="pt-1 tag" >
-                                        #태그
-                                    </div>
+                                <div class="pt-1 tag" >
+                                    #태그
                                 </div>
                             </div>
                         </div>
-                      <div class="swiper-slide  rounded bg-secondary  ">
-                          <div class="d-flex flex-row ">
-                              <div  class='mt-4 mb-4 ms-4 me-2'>
-                                  <i class="fa-solid fa-burger fa-3x"></i>
-                              </div>
-                              <div class='storeEx mt-3 mb-4 ms-2 me-2 '>
-                                  <div class="">
-                                      호떡 트럭 이름
-                                  </div>
-                                  <div class="pt-1 tag" >
-                                      #태그
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="swiper-slide  rounded bg-secondary  ">
-                      <div class="d-flex flex-row ">
-                          <div  class='mt-4 mb-4 ms-4 me-2'>
-                              <i class="fa-solid fa-burger fa-3x"></i>
-                          </div>
-                          <div class='storeEx mt-3 mb-4 ms-2 me-2 '>
-                              <div class="">
-                                  호떡 트럭 이름
-                              </div>
-                              <div class="pt-1 tag" >
-                                  #태그
-                              </div>
-                          </div>
-                      </div>
-                  </div>
                     </div>
+                    <div  class ="storeitem ">
+                        <div class="d-flex flex-row ">
+                            <div  class='mt-3 mb-4 ms-4 me-2'>
+                                <i class="fa-solid fa-burger fa-3x"></i>
+                            </div>
+                            <div class='storeEx mt-3 mb-4 ms-2 me-2 '>
+                                <div class="">
+                                    호떡 트럭 이름
+                                </div>
+                                <div class="pt-1 tag" >
+                                    #태그
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div  class ="storeitem ">
+                        <div class="d-flex flex-row ">
+                            <div  class='mt-3 mb-4 ms-4 me-2'>
+                                <i class="fa-solid fa-burger fa-3x"></i>
+                            </div>
+                            <div class='storeEx mt-3 mb-4 ms-2 me-2 '>
+                                <div class="">
+                                    호떡 트럭 이름
+                                </div>
+                                <div class="pt-1 tag" >
+                                    #태그
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+<%--                    <div id="items3" class ="storeitem">--%>
+<%--                        item3--%>
+<%--                    </div>--%>
                 </div>
 
-        <div class ='navigationBar position-sticky bg-dark d-flex flex-row justify-content-around text-white'>
+<%--                <div class="stores swiper mySwiper  ms-4 ps-2 ">--%>
+<%--                  <div class="swiper-wrapper">--%>
+<%--                        <div class="swiper-slide  rounded bg-secondary  ">--%>
+<%--                            <div class="d-flex flex-row ">--%>
+<%--                                <div  class='mt-4 mb-4 ms-4 me-2'>--%>
+<%--                                    <i class="fa-solid fa-burger fa-3x"></i>--%>
+<%--                                </div>--%>
+<%--                                <div class='storeEx mt-3 mb-4 ms-2 me-2 '>--%>
+<%--                                    <div class="">--%>
+<%--                                        호떡 트럭 이름--%>
+<%--                                    </div>--%>
+<%--                                    <div class="pt-1 tag" >--%>
+<%--                                        #태그--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                      <div class="swiper-slide  rounded bg-secondary  ">--%>
+<%--                          <div class="d-flex flex-row ">--%>
+<%--                              <div  class='mt-4 mb-4 ms-4 me-2'>--%>
+<%--                                  <i class="fa-solid fa-burger fa-3x"></i>--%>
+<%--                              </div>--%>
+<%--                              <div class='storeEx mt-3 mb-4 ms-2 me-2 '>--%>
+<%--                                  <div class="">--%>
+<%--                                      호떡 트럭 이름--%>
+<%--                                  </div>--%>
+<%--                                  <div class="pt-1 tag" >--%>
+<%--                                      #태그--%>
+<%--                                  </div>--%>
+<%--                              </div>--%>
+<%--                          </div>--%>
+<%--                      </div>--%>
+<%--                      <div class="swiper-slide  rounded bg-secondary  ">--%>
+<%--                      <div class="d-flex flex-row ">--%>
+<%--                          <div  class='mt-4 mb-4 ms-4 me-2'>--%>
+<%--                              <i class="fa-solid fa-burger fa-3x"></i>--%>
+<%--                          </div>--%>
+<%--                          <div class='storeEx mt-3 mb-4 ms-2 me-2 '>--%>
+<%--                              <div class="">--%>
+<%--                                  호떡 트럭 이름--%>
+<%--                              </div>--%>
+<%--                              <div class="pt-1 tag" >--%>
+<%--                                  #태그--%>
+<%--                              </div>--%>
+<%--                          </div>--%>
+<%--                      </div>--%>
+<%--                  </div>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+
+        <div class ='navigationBar bg-dark d-flex flex-row justify-content-around text-white'>
         <div>
             <a href="./">
                 <i class="fas fa-home fa-2x"></i>
@@ -306,7 +398,7 @@
             </div>
 
             </div>
-        <div class="col">공백</div>
+
 
     </div>
 </div>
