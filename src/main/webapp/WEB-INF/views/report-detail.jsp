@@ -201,7 +201,7 @@
   </hearder>
   <!--main-->
   <div id="main" style="width: 500px; height: 100%; margin: auto;">
-    <form id="form-main" action="" method="post">
+    <form id="form-main" method="post">
       <div id="location" class="form-section">
           <div><h5>가게 위치</h5></div>
           <!--Todo : 기본 값으로 지도에서 선택한 위치 넣기-->
@@ -312,7 +312,7 @@
         </div>
       </div>
       <div id="finish">
-        <button id="btn-report" type="submit" class="btn btn-category-apply shadow">제보하기</button>
+        <button formaction="/report/finish" id="btn-report" type="submit" class="btn btn-category-apply shadow">제보하기</button>
       </div>
     </form>
 
@@ -350,6 +350,10 @@
 <!--랜덤 이름 생성 api-->
 <script>
   $(function(){
+      randomName();
+  });
+
+  function randomName(){
     try {
       fetch('https://nickname.hwanmoo.kr/?format=json&count=1',{
         credentials: "include",
@@ -366,7 +370,7 @@
     } catch(err) {
       alert(err); // TypeError: Failed to fetch
     }
-  });
+  }
 </script>
 </body>
 </html>
