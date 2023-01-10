@@ -170,6 +170,22 @@
       margin-right: 20px;
     }
 
+    #randomButton{
+      position: absolute;
+      top: 0;
+      right: 0;
+      border-radius: 20px;
+      padding: 5px 20px 5px 20px;
+      background-color: white;
+      color: #FF7B54;
+      border: 1px solid #FF7B54;
+    }
+
+    #randomButton:hover, #randomButton:active{
+      background-color: #f55425;
+      color: white;
+    }
+
   </style>
 </head>
 <body style="margin: 490px; margin: 0; background-color: #ffa48a">
@@ -192,7 +208,7 @@
           <div><input class="form-control form-control-lg" type="text" value="포항시 북구 흥해흡 558 한동대학교" aria-label=".form-control-lg example" name="location"></div>
       </div>
       <div id="name" class="form-section">
-        <div><h5>가게 이름</h5></div>
+        <div style="position: relative;"><h5>가게 이름</h5><button id="randomButton" onclick="randomName();">랜덤생성</button></div>
         <!--Todo : 기본 값으로 이름 자동생성 api 결과 넣기-->
         <div><input id="randomName" class="form-control form-control-lg" type="text" aria-label=".form-control-lg example" name="name"></div>
       </div>
