@@ -10,6 +10,7 @@
 <head>
   <title>관리자 페이지</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
   <style>
     #header-box {
@@ -47,23 +48,90 @@
   <main>
     <div class="container-fluid p-0">
       <div class="row g-0 text-center min-vh-100">
-        <div id="add-category-request-div">
+        <div id="add-category-request-list">
           <%--        카테고리 추가 요청 템플릿--%>
-  <%--          <template id="add-category-request-template">--%>
-          <div class="border add-category-request py-2 d-flex">
-            <div class="me-auto d-flex align-items-center">
-              <p class="h5 text-start ms-2 my-0">{name}</p>
-              <small class="text-muted ms-2">요청 수: {number}</small>
+          <template id="add-category-request-template">
+            <div class="border add-category-request py-2 d-flex">
+              <div class="me-auto d-flex align-items-center">
+                <p class="h5 text-start ms-2 my-0">{name}</p>
+                <small class="text-muted ms-2">요청 수: {number}</small>
+              </div>
+              <div class="d-flex my-auto justify-content-end">
+                <button class="btn btn-success btn-sm m-auto d-flex align-items-center" onclick=""><img src="/img/done_FILL0_wght400_GRAD0_opsz48.png" width="30" height="30"/></button>
+                <button class="btn btn-danger btn-sm ms-1 me-2 my-auto d-flex align-items-center" onclick=""><img src="/img/block_FILL0_wght400_GRAD0_opsz48.png" width="30" height="30"/></button>
+              </div>
             </div>
-            <div class="d-flex my-auto justify-content-end">
-              <button class="btn btn-success btn-sm m-auto d-flex align-items-center" onclick=""><img src="/img/done_FILL0_wght400_GRAD0_opsz48.png" width="30" height="30"/></button>
-              <button class="btn btn-danger btn-sm ms-1 me-2 my-auto d-flex align-items-center" onclick=""><img src="/img/block_FILL0_wght400_GRAD0_opsz48.png" width="30" height="30"/></button>
+          </template>
+          <template id="no-add-category-request-template">
+            <div class="py-5">
+              <div class="d-flex flex-column justify-content-center">
+                <p class="h5 text-center text-secondary my-0">카테고리 추가 요청이 없습니다.</p>
+              </div>
             </div>
-          </div>
-  <%--          </template>--%>
+          </template>
         </div>
       </div>
     </div>
   </main>
 </body>
 </html>
+<script>
+  const addCategoryRequestListElement = document.getElementById('add-category-request-list');
+  const addCategoryRequestTemplate = document.getElementById('add-category-request-template');
+  const noAddCategoryRequestTemplate = document.getElementById('no-add-category-request-template');
+  const addCategoryRequestList = getAddCategoryRequestList();
+
+  $(document).ready(function() {
+      $("#add-category-request-list").empty();
+
+      if (addCategoryRequestList.length === 0) {
+          const noAddCategoryRequest = document.importNode(noAddCategoryRequestTemplate.content, true);
+          addCategoryRequestListElement.appendChild(noAddCategoryRequest);
+      } else {
+          addCategoryRequestList.forEach((addCategoryRequest) => {
+              let template = addCategoryRequestTemplate;
+
+              template.content.querySelector('p').textContent = addCategoryRequest.name;
+              template.content.querySelector('small').textContent = "요청 수: " + addCategoryRequest.number;
+              template.content.querySelector('button').setAttribute('onclick', 'acceptAddCategoryRequest(' + addCategoryRequest.id + ')');
+              template.content.querySelector('button').nextElementSibling.setAttribute('onclick', 'rejectAddCategoryRequest(' + addCategoryRequest.id + ')');
+
+              const addCategoryRequestElement = document.importNode(template.content, true);
+              addCategoryRequestListElement.appendChild(addCategoryRequestElement);
+          });
+      }
+  });
+
+  function getAddCategoryRequestList() {
+      let list = [
+          {
+              id: 1,
+              name: "카테고리1",
+              number: 1
+          },
+          {
+              id: 2,
+              name: "카테고리2",
+              number: 2
+          },
+          {
+              id: 3,
+              name: "카테고리3",
+              number: 3
+          }
+      ];
+      // Load Data from DB
+      return list;
+  }
+
+  function acceptAddCategoryRequest(id) {
+      // Accept Add Category Request
+      console.log(id + "번 카테고리 추가 요청을 승인합니다.");
+  }
+
+  function rejectAddCategoryRequest(id) {
+      // Reject Add Category Request
+      console.log(id + "번 카테고리 추가 요청을 거절합니다.");
+  }
+
+</script>
