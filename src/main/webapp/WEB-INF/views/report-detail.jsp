@@ -194,7 +194,7 @@
       <div id="name" class="form-section">
         <div><h5>가게 이름</h5></div>
         <!--Todo : 기본 값으로 이름 자동생성 api 결과 넣기-->
-        <div><input class="form-control form-control-lg" type="text" value="양덕동 붕어빵" aria-label=".form-control-lg example" name="name"></div>
+        <div><input id="randomName" class="form-control form-control-lg" type="text" aria-label=".form-control-lg example" name="name"></div>
       </div>
       <div id="category" class="form-section">
         <div style="position: relative;">
@@ -327,6 +327,30 @@
   function back() {
     history.back();
   }
+
+
+</script>
+
+<!--랜덤 이름 생성 api-->
+<script>
+  $(function(){
+    try {
+      fetch('https://nickname.hwanmoo.kr/?format=json&count=1',{
+        credentials: "include",
+      }).then((response)=> response.json())
+              .then((data)=>{
+                var name = data["words"][0];
+                var arr = name.split(" ");
+                var result="";
+                for(var i=0; i<arr.length-1; i++) result += arr[i] + " ";
+                <!--Todo: 마지막에 카테고리 이름 넣어서 랜덤 이름 만들기-->
+                result += "붕어빵";
+                document.getElementById("randomName").value = result;
+              });
+    } catch(err) {
+      alert(err); // TypeError: Failed to fetch
+    }
+  });
 </script>
 </body>
 </html>
