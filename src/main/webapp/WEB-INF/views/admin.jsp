@@ -12,22 +12,42 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
   <style>
+    #header-box {
+        max-width: none;
+        height: 6rem;
+        border-radius: 0 0 1rem 1rem;
+    }
+    body {
+        padding-top: 6rem;
+    }
+    header {
+        height: 6rem;
+    }
     .bg-beige {
       background-color: #d9d9d9;
+    }
+    .add-category-request:first-child {
+      margin-top: 1rem;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
     }
   </style>
 </head>
 <body>
-  <div class="container-fluid p-0">
-    <div class="row g-0 text-center min-vh-100">
-      <div class="col"></div>
-      <div class="col border border-black">
-        <div class="bg-beige d-flex py-3">
-            <div class="item d-flex m-auto">
-              <p class="h5 py-0">카테고리 추가 요청</p>
-            </div>
-        </div>
-        <div id="add-category-request-list">
+  <header class="container-fluid fixed-top p-0">
+    <div id="header-box" class="container bg-beige shadow">
+      <div class="item d-flex m-auto">
+        <p class="h5 py-0">카테고리 추가 요청</p>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="container-fluid p-0">
+      <div class="row g-0 text-center min-vh-100">
+        <div id="add-category-request-div">
           <%--        카테고리 추가 요청 템플릿--%>
   <%--          <template id="add-category-request-template">--%>
           <div class="border add-category-request py-2 d-flex">
@@ -43,8 +63,7 @@
   <%--          </template>--%>
         </div>
       </div>
-      <div class="col"></div>
     </div>
-  </div>
+  </main>
 </body>
 </html>
