@@ -1,11 +1,13 @@
 package com.foodhunter;
 
+import com.foodhunter.DAO.ReviewFileUpload;
 import com.foodhunter.DTO.Review;
 import com.foodhunter.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -27,13 +29,10 @@ public class StoreController {
         return "store";
     }
 
-    @PostMapping("/store/review")
-    public String create(ReviewForm form, Model model) {
-        Review review = new Review();
-        // 임의로 폼에서 받은 content랑 photo 정보만 받아서 객체 생성해서 잘 들어갔나 확인 완료.
-        review.setStoreId(1);
-        review.setReviewContent(form.getContent());
-        review.setPhoto(form.getPhoto());
+    @RequestMapping(value = "/store/review", method = RequestMethod.POST)
+    public String create(HttpServletRequest request, Model model) {
+        ReviewFileUpload fileUpload = new ReviewFileUpload();
+        Review review = fileUpload.uploadPhoto(request);
 
         Long result = reviewService.join(review);
         if(result == -1L) { // 에러 발생

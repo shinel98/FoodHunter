@@ -326,7 +326,7 @@
         <div id="review-write-container" class="card shadow bg-white" style="visibility: hidden;">
             <!--취소 버튼-->
             <button type="button" class="btn" onclick="reviewCancel();"><i id="review-cancel" class="bi bi-x-lg"></i></button>
-            <form id="review-form" action="/store/review" method="post" style="position: relative;">
+            <form id="review-form" action="/store/review" method="post" enctype="multipart/form-data" style="position: relative;">
                 <div id="review-score">
                     <ul class="review-star-list">
                         <li><i class="bi bi-star-fill"></i></li>
@@ -339,10 +339,40 @@
                 <div id="review-text">
                     <textarea placeholder="리뷰를 작성해주세요." id="form-text" name="content"></textarea>
                 </div>
-                <input type="file" accept="image/png, image/jpeg" name="photo">
+
+                <div id="photos">
+                    <button type="button" id="add-photo-button" class="btn btn-primary" onclick="addPhoto()">사진 추가</button>
+                    <button type="button" id="remove-photo-button" class="btn btn-warning d-none" onclick="removePhoto()">사진 삭제</button>
+                </div>
+
                 <button type="submit" class="text-white btn btn-review-finished">저장하기</button>
             </form>
         </div>
     </div>
 </body>
 </html>
+
+<script>
+    let photoCnt = 0;
+
+    function addPhoto() {
+        let photo = $("<input>");
+        photo.attr("type", "file");
+        photo.attr("accept", "image/png, image/jpeg");
+        photo.attr("name", "photo" + photoCnt);
+        photo.attr("class", "form-control photo-upload mt-1");
+        $('#photos').append(photo);
+        photoCnt++;
+        $('#remove-photo-button').removeClass('d-none');
+    }
+
+    function removePhoto() {
+        if (photoCnt > 0) {
+            $('#photos').children("input:last").remove();
+            photoCnt--;
+        }
+        if (photoCnt == 0) {
+            $('#remove-photo-button').addClass('d-none');
+        }
+    }
+</script>
