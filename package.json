@@ -1,0 +1,8 @@
+{
+  "name": "FoodHunter",
+  "version": "1.0.0",
+  "dependencies": {
+    "fetch-with-proxy": "^3.0.1",
+    "http-proxy-middleware": "^2.0.6"
+  }
+}

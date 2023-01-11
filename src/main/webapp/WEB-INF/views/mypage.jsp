@@ -200,8 +200,9 @@
 
                 </div>
                 <div class ='nicktext'>
-                    <input class='idBox text-white fs-4 fw-bold text-center mt-3'   value="인사인사" disabled >
+                    <input id="nickname" class='idBox text-white fs-4 fw-bold text-center mt-3'   value="인사인사" disabled >
                     <button class="idBoxbutton"><i class="fa-regular fa-pen-to-square"></i></button>
+                    <button class="idBoxbutton" onclick="randomName();">랜덤생성</button>
                 </div>
                 <div ids ='summery' class=" mt-5 row d-flex justify-content-around ">
 
@@ -444,5 +445,21 @@
             clickable: true,
         },
     });
+</script>
+
+<!--랜덤 닉네임 생성 api
+임의로 랜덤생성 버튼 만들어서 연결해놨으니 의도한 페이지 동작 방식 대로 가져다가 쓰시면 됩니다.
+-->
+<script>
+    function randomName(){
+        try {
+            fetch('https://nickname.hwanmoo.kr/?format=json&count=1',{
+                credentials: "include",
+            }).then((response)=> response.json())
+                .then((data)=>document.getElementById("nickname").value = data["words"][0]);
+        } catch(err) {
+            alert(err); // TypeError: Failed to fetch
+        }
+    }
 </script>
 </html>
