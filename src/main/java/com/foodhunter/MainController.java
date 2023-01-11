@@ -14,5 +14,10 @@ public class MainController {
 
         return "main";
     }
+    @RequestMapping(value="/nickname", method= RequestMethod.GET)
+    public String to_nickname(Model model) {
+
+        return "nickname";
+    }
 }
 
