@@ -15,6 +15,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
     <script src="https://kit.fontawesome.com/fc1b103f84.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892"></script>
     <style>
         .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
@@ -323,12 +325,68 @@
             }
         }
 
+        #confirm{
+            right: 20px;
+            bottom: 20px;
+        }
+        #reportFinished-modal{
+            z-index: 200;
+            width: 500px;
+            height: 300px;
+            position: absolute;
+            border-radius: 20px;
+            bottom: 250px;
+            left: 34%;
+            padding: 20px;
+            background-color: #f55425;
+        }
+
+        .btn-review-finished{
+            position: absolute;
+            bottom: -120px;
+            right: 0;
+            color: white;
+            background-color: #ffb700;
+            padding: 3px 0 3px 0;
+            border-radius: 20px;
+            padding: 10px 30px;
+        }
+        .btn-review-finished:hover{
+            background-color: #ffa600;
+            font-weight: bold;
+        }
+
+        @media screen and (max-width: 800px){
+            #reportFinished-modal{
+                left: 0;
+            }
+        }
     </style>
+    <script>
+        $(function(){
+            const searchParams = new URLSearchParams(location.search);
+            for (const param of searchParams) {
+                if(param.at(0) === "report"){
+                    if(Boolean(param.at(1))) {
+                        document.getElementById("reportFinished-modal").style.visibility = "visible";
+                    }
+                }
+            }
+        });
+    </script>
 
 </head>
 <body>
 
-    <div class="container-fluid p-0">
+    <div class="container-fluid p-0" style="position:relative; margin:auto;">
+        <!--가게 제보 완료 모달-->
+        <div style="z-index: 100; margin: auto;">
+            <div id="reportFinished-modal" class="card shadow bg-white" style="visibility: hidden">
+                <div><h4>가게 제보가 완료되었습니다.</h4></div>
+                <iframe src="https://embed.lottiefiles.com/animation/96081"  width="100%" style="margin: auto"></iframe>
+                <button id="confirm" class="text-white btn btn-review-finished" onclick="confirm()">확인</button>
+            </div>
+        </div>
         <div class="row g-0 text-center min-vh-100">
             <div class="col leftContainer">
                 <div id="webSearchContainer">
@@ -779,6 +837,9 @@
 
         getUserLocation();
 
+        function confirm(){
+            location.href = "/main";
+        }
 
         // 선택한 태그 색상 변경
         var currentMenu;

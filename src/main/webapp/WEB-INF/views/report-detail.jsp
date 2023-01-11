@@ -159,10 +159,31 @@
       background-color: transparent;
     }
 
-    #multiple-text {
+    .multiple-text {
       position: absolute;
       top: 3px;
-      left: 130px;
+      left: 110px;
+      color: #5e5e5e;
+    }
+
+    #days > label{
+      margin-right: 20px;
+    }
+
+    #randomButton{
+      position: absolute;
+      top: 0;
+      right: 0;
+      border-radius: 20px;
+      padding: 5px 20px 5px 20px;
+      background-color: white;
+      color: #FF7B54;
+      border: 1px solid #FF7B54;
+    }
+
+    #randomButton:hover, #randomButton:active{
+      background-color: #f55425;
+      color: white;
     }
 
   </style>
@@ -180,21 +201,21 @@
   </hearder>
   <!--main-->
   <div id="main" style="width: 500px; height: 100%; margin: auto;">
-    <form id="form-main" action="" method="post">
+    <form id="form-main" method="post">
       <div id="location" class="form-section">
           <div><h5>가게 위치</h5></div>
           <!--Todo : 기본 값으로 지도에서 선택한 위치 넣기-->
           <div><input class="form-control form-control-lg" type="text" value="포항시 북구 흥해흡 558 한동대학교" aria-label=".form-control-lg example" name="location"></div>
       </div>
       <div id="name" class="form-section">
-        <div><h5>가게 이름</h5></div>
+        <div style="position: relative;"><h5>가게 이름</h5><button id="randomButton" onclick="randomName();">랜덤생성</button></div>
         <!--Todo : 기본 값으로 이름 자동생성 api 결과 넣기-->
-        <div><input class="form-control form-control-lg" type="text" value="양덕동 붕어빵" aria-label=".form-control-lg example" name="name"></div>
+        <div><input id="randomName" class="form-control form-control-lg" type="text" aria-label=".form-control-lg example" name="name"></div>
       </div>
       <div id="category" class="form-section">
         <div style="position: relative;">
           <h5>카테고리 선택</h5>
-          <span id="multiple-text" class="smallTxt">다중선택 가능</span>
+          <span class="multiple-text" class="smallTxt">다중선택 가능</span>
           <!--카테고리 추가 신청 버튼-->
           <button type="button" id="ask-add" class="btn" onclick="add();">
             <i class="bi bi-exclamation-circle"></i>
@@ -270,8 +291,28 @@
           </div>
         </div>
       </div>
+      <div style="position: relative;">
+        <div><h5>영업 요일</h5></div>
+        <span class="multiple-text" class="smallTxt" style="left: 80px;">다중선택 가능</span>
+        <div id="days">
+          <input type="checkbox" id="sun" name="sun" style="margin-left: 30px;">
+          <label for="sun">일</label>
+          <input type="checkbox" id="mon" name="mon">
+          <label for="mon">월</label>
+          <input type="checkbox" id="tue" name="tue">
+          <label for="tue">화</label>
+          <input type="checkbox" id="wed" name="wed">
+          <label for="wed">수</label>
+          <input type="checkbox" id="thu" name="thu">
+          <label for="thu">목</label>
+          <input type="checkbox" id="fri" name="fri">
+          <label for="fri">금</label>
+          <input type="checkbox" id="sat" name="sat">
+          <label for="sat">토</label>
+        </div>
+      </div>
       <div id="finish">
-        <button id="btn-report" type="submit" class="btn btn-category-apply shadow">제보하기</button>
+        <button formaction="/report/finish" id="btn-report" type="submit" class="btn btn-category-apply shadow">제보하기</button>
       </div>
     </form>
 
@@ -297,6 +338,38 @@
   function cancel() {
     document.getElementById("form-category").reset();
     document.getElementById("add").style.display = "none";
+  }
+
+  function back() {
+    history.back();
+  }
+
+
+</script>
+
+<!--랜덤 이름 생성 api-->
+<script>
+  $(function(){
+      randomName();
+  });
+
+  function randomName(){
+    try {
+      fetch('https://nickname.hwanmoo.kr/?format=json&count=1',{
+        credentials: "include",
+      }).then((response)=> response.json())
+              .then((data)=>{
+                var name = data["words"][0];
+                var arr = name.split(" ");
+                var result="";
+                for(var i=0; i<arr.length-1; i++) result += arr[i] + " ";
+                <!--Todo: 마지막에 카테고리 이름 넣어서 랜덤 이름 만들기-->
+                result += "붕어빵";
+                document.getElementById("randomName").value = result;
+              });
+    } catch(err) {
+      alert(err); // TypeError: Failed to fetch
+    }
   }
 </script>
 </body>

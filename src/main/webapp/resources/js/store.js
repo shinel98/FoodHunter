@@ -5,14 +5,17 @@ $(function (){
     for (const param of searchParams) {
         if(param.at(0) === "reviewError"){
             if(Boolean(param.at(1))) {
-                alert("이미 리뷰를 작성했습니다. 다시 작성하려면 기존 리뷰를 삭제하세요.");
-                location.href = "/store";   // reviewError=false 값으로 다시 되돌리기
+                document.getElementById("reviewError-modal").style.visibility = "visible";
             }
         }
         else if(param.at(0) === "visitFinished"){
             if(Boolean(param.at(1))) {
-                alert("방문인증이 완료되었습니다.");
-                location.href = "/store";   // reviewError=false 값으로 다시 되돌리기
+                document.getElementById("visitFinished-modal").style.visibility = "visible";
+            }
+        }
+        else if(param.at(0) === "delete"){
+            if(Boolean(param.at(1))) {
+                document.getElementById("delete-modal").style.visibility = "visible";
             }
         }
     }
@@ -134,7 +137,7 @@ function visit() {
 
 /** 삭제 요청 **/
 function deletion() {
-
+    location.href = "/store/delete";
 }
 
 
@@ -188,4 +191,8 @@ function mylocation(){
             });
         });
     }
+}
+
+function confirm(){
+    location.href = "/store";
 }
