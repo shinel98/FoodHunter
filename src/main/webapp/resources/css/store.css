@@ -262,6 +262,12 @@ h4 {
     background-color: #F55425FF;
 }
 
+#deleteConfirm{
+    right: 20px;
+    bottom: 20px;
+    background-color: #F55425FF;
+}
+
 #btn-review:hover, #btn-edit:hover {
     background-color: #f55425;
     font-weight: bold;
@@ -351,6 +357,16 @@ h4 {
 }
 
 #reviewError-modal{
+    z-index: 100;
+    width: 500px;
+    height: 300px;
+    position: absolute;
+    border-radius: 20px;
+    bottom: 250px;
+    left: 34%;
+    padding: 20px;
+}
+#delete-modal{
     z-index: 100;
     width: 500px;
     height: 300px;

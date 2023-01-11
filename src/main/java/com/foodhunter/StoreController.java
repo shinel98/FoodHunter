@@ -24,6 +24,7 @@ public class StoreController {
         if(reviews.size() > 0) System.out.println(reviews.get(0).getReviewContent());
         model.addAttribute("reviews", reviews);
         model.addAttribute("reviewError", false);
+        model.addAttribute("delete", false);
         return "store";
     }
 
@@ -40,6 +41,12 @@ public class StoreController {
             model.addAttribute("reviewError", true);
         }
         return "redirect:/store";                  // 정상
+    }
+
+    @RequestMapping("/store/delete")
+    public String delete(Model model){
+        model.addAttribute("delete", true);
+        return "redirect:/store";
     }
 
     // 리뷰 모델 생성 테스트

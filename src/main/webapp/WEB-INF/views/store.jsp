@@ -366,6 +366,16 @@
             <button id="reviewConfirm" class="text-white btn btn-review-finished" onclick="confirm()">확인</button>
         </div>
     </div>
+    <!--삭제 요청 모달-->
+    <div style="z-index: 100; position: relative; margin: auto;">
+        <div id="delete-modal" class="card shadow bg-white" style="visibility:hidden">
+            <div>
+                <h4>삭제 요청이 완료되었습니다.</h4>
+            </div>
+            <iframe src="https://embed.lottiefiles.com/animation/108969"></iframe>
+            <button id="deleteConfirm" class="text-white btn btn-review-finished" onclick="confirm()">확인</button>
+        </div>
+    </div>
     <script>
         function randomName(){
             try {

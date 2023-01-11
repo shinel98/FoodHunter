@@ -13,6 +13,11 @@ $(function (){
                 document.getElementById("visitFinished-modal").style.visibility = "visible";
             }
         }
+        else if(param.at(0) === "delete"){
+            if(Boolean(param.at(1))) {
+                document.getElementById("delete-modal").style.visibility = "visible";
+            }
+        }
     }
 
     // 처음 위치는 가게 table에 저장된 위도, 경도로 설정
@@ -132,7 +137,7 @@ function visit() {
 
 /** 삭제 요청 **/
 function deletion() {
-
+    location.href = "/store/delete";
 }
 
 
