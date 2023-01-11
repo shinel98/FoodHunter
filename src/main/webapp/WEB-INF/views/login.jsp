@@ -22,43 +22,12 @@
     <!-- 카카오 api 사용을 위한 스크립트 -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
-
-
-    <!-- 카카오 로그인 -->
-
-
 <%--   구글로그인에 사용하는 스크립 시온 --%>
 <%--    <meta name="google-signin-client_id" content="157055717235-djh98t5kk3atuabnlcoaa9nl9jtvn716.apps.googleusercontent.com">--%>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
 
-
-    <script>
-        window.Kakao.init("c48aad1ab7543b81a71be9469b035774");
-        function kakaoLogin() {
-            window.Kakao.Auth.login ({
-                success: function (response) {
-                    //console.log(authObj);
-                    window.Kakao.API.request ({
-                        url: '/v2/user/me',
-                        success: function (response) {
-                            console.log(response)
-                            location.href="http://localhost:8080/main"
-                        },
-                        fail: function (error) {
-                            console.log(error)
-                        },
-                    })
-                },
-                fail: function (error) {
-                    console.log(error)
-                },
-            })
-        }
-
-
-    </script>
     <style>
         @media screen and (max-width: 768px) {
             .mobile-lr {
@@ -83,7 +52,7 @@
                     <img src="/img/login.png" id="login-img" alt="login">
                     <h1>붕어빵 사냥꾼</h1>
                     <div class="d-grid mt-3 mb-2">
-                        <button class="btn btn-kakao btn-login text-uppercase fw-bold" type="submit" onclick="kakaoLogin();">
+                        <button class="btn btn-kakao btn-login text-uppercase fw-bold" type="submit" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=1501bf8447efb2ba05b4183faf2dd8a2&redirect_uri=http://localhost:8080/main&response_type=code'";>
                             <i class="fab xi-kakaotalk xi-x me-2"></i>카카오 계정으로 로그인
                         </button>
                     </div>
@@ -106,7 +75,5 @@
             <div class="col mobile-lr"></div>
         </div>
     </div>
-
-
 </body>
 </html>
