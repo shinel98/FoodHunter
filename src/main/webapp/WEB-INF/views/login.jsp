@@ -12,7 +12,7 @@
 <head>
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="google-signin-client_id" content="989664921943-25870q3dpeq7plab53a4ik8dseqqccvu.apps.googleusercontent.com">
+<%--    <meta name ="google-signin-client_id" content="989664921943-25870q3dpeq7plab53a4ik8dseqqccvu.apps.googleusercontent.com">--%>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css" />
@@ -21,13 +21,13 @@
     <link rel="stylesheet" href="resources/css/bootstrap-social.css">
     <!-- 카카오 api 사용을 위한 스크립트 -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <!-- 구글 api 사용을 위한 스크립트 -->
+
+<%--   구글로그인에 사용하는 스크립 시온 --%>
+<%--    <meta name="google-signin-client_id" content="157055717235-djh98t5kk3atuabnlcoaa9nl9jtvn716.apps.googleusercontent.com">--%>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
-    <script>
-        function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
-        }
-    </script>
+
     <style>
         @media screen and (max-width: 768px) {
             .mobile-lr {
@@ -57,10 +57,19 @@
                         </button>
                     </div>
                     <div class="d-grid mb-2">
-                        <button class="btn btn-google btn-login text-uppercase fw-bold" type="submit" data-onsuccess="onSignIn">
-                            <i class="fab fa-google me-2"></i>구글 계정으로 로그인
+                        <button class="btn btn-google btn-login text-uppercase fw-bold" type="submit" onclick="test();">
+
+                                <div id="g_id_onload"
+                                     data-client_id="157055717235-djh98t5kk3atuabnlcoaa9nl9jtvn716"
+                                     data-ux_mode="redirect"
+                                     data-login_uri="http://localhost:8080/main">
+                                </div>
+                                <div class="g_id_signin" data-type="standard"></div>
+
                         </button>
+
                     </div>
+
                 </div>
             </div>
             <div class="col mobile-lr"></div>
