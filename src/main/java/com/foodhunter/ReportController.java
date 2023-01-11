@@ -22,4 +22,9 @@ public class ReportController {
         model.addAttribute("report", true);
         return "redirect:/main";
     }
+
+    @RequestMapping("/category-request")
+    public String categoryRequest() {
+        return "category-request";
+    }
 }
