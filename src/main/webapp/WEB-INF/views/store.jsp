@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"> <!--icon-->
     <link href="/css/store.css" rel="stylesheet">
+    <link rel="canonical" href="https://nickname.hwanmoo.kr" />
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -326,7 +327,7 @@
         <div id="review-write-container" class="card shadow bg-white" style="visibility: hidden;">
             <!--취소 버튼-->
             <button type="button" class="btn" onclick="reviewCancel();"><i id="review-cancel" class="bi bi-x-lg"></i></button>
-            <form id="review-form" action="/store/review" method="post" style="position: relative;">
+            <form id="review-form" action="/store/review" method="post" enctype="multipart/form-data" style="position: relative;">
                 <div id="review-score">
                     <ul class="review-star-list">
                         <li><i class="bi bi-star-fill"></i></li>
@@ -339,10 +340,83 @@
                 <div id="review-text">
                     <textarea placeholder="리뷰를 작성해주세요." id="form-text" name="content"></textarea>
                 </div>
-                <input type="file" accept="image/png, image/jpeg" name="photo">
+
+                <div id="photos">
+                    <button type="button" id="add-photo-button" class="btn btn-primary" onclick="addPhoto()">사진 추가</button>
+                    <button type="button" id="remove-photo-button" class="btn btn-warning d-none" onclick="removePhoto()">사진 삭제</button>
+                </div>
+
                 <button type="submit" class="text-white btn btn-review-finished">저장하기</button>
             </form>
         </div>
     </div>
+
+    <!--방문인증 완료 모달-->
+    <div style="z-index: 100; position: relative; margin: auto;">
+        <div id="visitFinished-modal" class="card shadow bg-white" style="visibility:hidden">
+            <div><h4>방문인증이 완료되었습니다.</h4></div>
+            <iframe src="https://embed.lottiefiles.com/animation/42183" width="100%" style="margin: auto"></iframe>
+            <button id="confirm" class="text-white btn btn-review-finished" onclick="confirm()">확인</button>
+        </div>
+    </div>
+
+    <!--리뷰 에러 모달-->
+    <div style="z-index: 100; position: relative; margin: auto;">
+        <div id="reviewError-modal" class="card shadow bg-white" style="visibility:hidden">
+            <div>
+                <h4>이미 리뷰를 작성했습니다.</h4>
+                <p>다시 작성하려면 기존의 리뷰를 삭제해주세요.</p>
+            </div>
+            <iframe src="https://embed.lottiefiles.com/animation/84891"></iframe>
+            <button id="reviewConfirm" class="text-white btn btn-review-finished" onclick="confirm()">확인</button>
+        </div>
+    </div>
+    <!--삭제 요청 모달-->
+    <div style="z-index: 100; position: relative; margin: auto;">
+        <div id="delete-modal" class="card shadow bg-white" style="visibility:hidden">
+            <div>
+                <h4>삭제 요청이 완료되었습니다.</h4>
+            </div>
+            <iframe src="https://embed.lottiefiles.com/animation/108969"></iframe>
+            <button id="deleteConfirm" class="text-white btn btn-review-finished" onclick="confirm()">확인</button>
+        </div>
+    </div>
+    <script>
+        function randomName(){
+            try {
+                fetch('https://nickname.hwanmoo.kr/?format=json&count=1',{
+                    credentials: "include",
+                }).then((response)=> response.json())
+                    .then((data)=>alert(data["words"][0]));
+            } catch(err) {
+                alert(err); // TypeError: Failed to fetch
+            }
+        }
+    </script>
 </body>
 </html>
+
+<script>
+    let photoCnt = 0;
+
+    function addPhoto() {
+        let photo = $("<input>");
+        photo.attr("type", "file");
+        photo.attr("accept", "image/png, image/jpeg");
+        photo.attr("name", "photo" + photoCnt);
+        photo.attr("class", "form-control photo-upload mt-1");
+        $('#photos').append(photo);
+        photoCnt++;
+        $('#remove-photo-button').removeClass('d-none');
+    }
+
+    function removePhoto() {
+        if (photoCnt > 0) {
+            $('#photos').children("input:last").remove();
+            photoCnt--;
+        }
+        if (photoCnt == 0) {
+            $('#remove-photo-button').addClass('d-none');
+        }
+    }
+</script>
