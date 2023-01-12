@@ -327,7 +327,8 @@
         <div id="review-write-container" class="card shadow bg-white" style="visibility: hidden;">
             <!--취소 버튼-->
             <button type="button" class="btn" onclick="reviewCancel();"><i id="review-cancel" class="bi bi-x-lg"></i></button>
-            <form id="review-form" action="/store/review" method="post" enctype="multipart/form-data" style="position: relative;">
+            <!--enctype="multipart/form-data" 넣으면 폼 데이터 Servlet으로 제대로 안넘어가서 지웠음-->
+            <form id="review-form" action="/store/review" enctype="multipart/form-data" method="post" style="position: relative;">
                 <div id="review-score">
                     <ul class="review-star-list">
                         <li><i class="bi bi-star-fill"></i></li>
