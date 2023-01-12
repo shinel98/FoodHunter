@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import java.util.*;
 
-public class ReviewDAOImpl implements ReviewRepository{
+public class ReviewDAOImpl implements ReviewDAO {
 
     SqlSession sqlSession;
 

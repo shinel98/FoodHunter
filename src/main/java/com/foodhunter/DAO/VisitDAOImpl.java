@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class VisitDAOImpl implements VisitRepository{
+public class VisitDAOImpl implements VisitDAO {
 
     // 1st: visitId, 2nd : Visit 객체
     private static Map<Long, Visit> store = new HashMap<>();

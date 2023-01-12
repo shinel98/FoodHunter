@@ -2,8 +2,8 @@ package com.foodhunter;
 
 import com.foodhunter.DAO.ReviewDAOImpl;
 import com.foodhunter.DAO.VisitDAOImpl;
-import com.foodhunter.DAO.ReviewRepository;
-import com.foodhunter.DAO.VisitRepository;
+import com.foodhunter.DAO.ReviewDAO;
+import com.foodhunter.DAO.VisitDAO;
 import com.foodhunter.service.ReviewService;
 import com.foodhunter.service.VisitService;
 import org.apache.ibatis.session.SqlSession;
@@ -33,12 +33,12 @@ public class SpringConfig {
     }
 
     @Bean
-    public ReviewRepository reviewRepository() {
+    public ReviewDAO reviewRepository() {
          return new ReviewDAOImpl(sqlSession);
     }
 
     @Bean
-    public VisitRepository visitRepository() {
+    public VisitDAO visitRepository() {
         return new VisitDAOImpl(sqlSession);
     }
 }

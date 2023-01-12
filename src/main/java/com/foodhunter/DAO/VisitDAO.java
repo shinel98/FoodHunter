@@ -4,7 +4,7 @@ import com.foodhunter.DTO.Visit;
 
 import java.util.List;
 
-public interface VisitRepository {
+public interface VisitDAO {
     Visit save(Visit visit);
     List<Visit> findAll(Long usrId);
 }

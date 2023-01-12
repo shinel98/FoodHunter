@@ -8,10 +8,8 @@ package com.foodhunter.DAO;
 import com.foodhunter.DTO.Review;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
-public interface ReviewRepository {
+public interface ReviewDAO {
 
     // 리뷰 작성하기
     Review save(Review review);
