@@ -8,7 +8,6 @@ import com.foodhunter.DTO.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Optional;
 
 public class ReviewService {
     private final ReviewRepository reviewRepository;
@@ -19,7 +18,7 @@ public class ReviewService {
     }
 
     /** review 작성 **/
-    public Long join(Review review){
+    public Long write(Review review){
         try{
             validateDuplicateReview(review);
         }
@@ -32,7 +31,7 @@ public class ReviewService {
 
     /** review를 이미 작성한 가게에 똑같은 유저가 중복 작성을 하는 경우 validation check **/
     public void validateDuplicateReview(Review review){
-        List<Review> storeReview = reviewRepository.findAll(review.getStoreId());
+        List<Review> storeReview = reviewRepository.findByStoreId(review.getStoreId());
         storeReview.stream()
                 .forEach(rv -> {
                     if(rv.getUsrId() == review.getUsrId()){
@@ -41,12 +40,21 @@ public class ReviewService {
                 });
     }
 
-    public Optional<Review> findOne(Long reviewId){
-        return reviewRepository.findById(reviewId);
+    /** 리뷰 삭제 **/
+    public Long delete(Review review){
+        Long removedReviewId = reviewRepository.delete(review);
+        return removedReviewId; // Todo: 삭제할 리뷰가 없는 에러 상황에서는 -1L 반환되니 컨트롤러에서 처리하기
     }
 
-    /** review 한 가게에 대해 전체 조회 **/
-    public List<Review> read(Long storeId){
-        return reviewRepository.findAll(storeId);
+    /** 리뷰 조회 (유저별 -> 마이페이지) **/
+    public List<Review> readByUserId(Long userId){
+        List<Review> result = reviewRepository.findByUserId(userId);
+        return result;
+    }
+
+    /** 리뷰 조회 (가게별 -> 가게상세페이지) **/
+    public List<Review> readByStoreId(Long storeId){
+        List<Review> result = reviewRepository.findByStoreId(storeId);
+        return result;
     }
 }

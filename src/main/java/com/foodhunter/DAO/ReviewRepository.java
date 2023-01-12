@@ -8,11 +8,17 @@ package com.foodhunter.DAO;
 import com.foodhunter.DTO.Review;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface ReviewRepository {
 
+    // 리뷰 작성하기
     Review save(Review review);
-    Optional<Review> findById(Long id);
-    List<Review> findAll(Long storeId);
+    // usrId로 리뷰 모두 읽어오기 -> 마이페이지에서 사용
+    List<Review> findByUserId(Long usrId);
+    // storeId로 리뷰 모두 읽어오기 -> 가게상세페이지에서 사용
+    List<Review> findByStoreId(Long storeId);
+    // 리뷰 삭제하기
+    Long delete(Review review);
 }
