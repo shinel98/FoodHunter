@@ -115,9 +115,9 @@
             width: 100%;
             justify-content: center;
             height: 6%;
-
+            display: flex;
             flex-wrap: nowrap;
-            overflow-x: auto;
+            /*overflow-x: auto;*/
             -ms-overflow-style: none;
             position:fixed;
             top:60px;
@@ -388,6 +388,112 @@
             </div>
         </div>
         <div class="row g-0 text-center min-vh-100">
+            <div class="col mobile">
+                <div id="map" style="width:100%;height:100%;" class="mobileMap"></div>
+                <%--                <div id="clickLatlng"></div>--%>
+
+                <div id="searchContainer">
+                    <div class="input-group rounded">
+                        <input id="search_bar" type="search" class="form-control rounded" placeholder="경상북도 포항시 북구 양덕동77" aria-label="Search" aria-describedby="search-addon" readonly/>
+                        <%--                        <div id="search_bar"></div>--%>
+                        <span class="input-group-text border-0" id="search-addon">
+                        <a href="./"><i class="fas fa-search"></i></a>
+                        </span>
+                    </div>
+                </div>
+
+
+                <div id="tagsContainer">
+                    <div class="tags clicked">전체</div>
+                    <div class="tags">붕어빵</div>
+                    <div class="tags">호떡</div>
+                    <div class="tags">타코야키</div>
+                    <div class="tags">오뎅</div>
+                    <div class="tags">오뎅</div>
+                    <div class="tags">오뎅</div>
+                    <div class="tags">오뎅</div>
+                    <div class="tags">오뎅</div>
+                    <div class="tags">오뎅</div>
+                    <div class="tags">오뎅</div>
+                    <div class="tags">오뎅</div>
+                </div>
+                <%--                <div class="window">--%>
+                <div id="storesContainer">
+                    <div class="stores">
+                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                        </div>
+                        <div class="storesInfoContainer">
+                            <div class="storesName">
+                                참 붕어빵
+                            </div>
+                            <div class="storesTag">
+                                #붕어빵
+                            </div>
+                        </div>
+                        <div class="storesDetailContainer">
+                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
+                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
+                            <button class="reportButton">신고하기</button>
+                            <button class="visitButton">방문하기</button>
+                        </div>
+                    </div>
+                    <div class="stores"><div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                    </div>
+                        <div class="storesInfoContainer">
+                            <div class="storesName">
+                                참 붕어빵
+                            </div>
+                            <div class="storesTag">
+                                #붕어빵
+                            </div>
+                        </div>
+                        <div class="storesDetailContainer">
+                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
+                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
+                            <button class="reportButton">신고하기</button>
+                            <button class="visitButton">방문하기</button>
+                        </div>
+                    </div>
+                    <div class="stores">
+                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                        </div>
+                        <div class="storesInfoContainer">
+                            <div class="storesName">
+                                참 붕어빵
+                            </div>
+                            <div class="storesTag">
+                                #붕어빵
+                            </div>
+                        </div>
+                        <div class="storesDetailContainer">
+                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
+                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
+                            <button class="reportButton">신고하기</button>
+                            <button class="visitButton">방문하기</button>
+                        </div>
+                    </div>
+                </div>
+                <%--                </div>--%>
+                <%--                <div id="button-container">--%>
+                <%--                    <button id="prev">previous</button>--%>
+                <%--                    <button id="next">next</button>--%>
+                <%--                </div>--%>
+
+                <div id="menuContainer">
+                    <div class="menuIcon">
+                        <a href="./">
+                            <i class="fas fa-home fa-2x"></i>
+                            <p>홈</p>
+                        </a>
+                    </div>
+                    <div class="menuIcon">
+                        <a href="./"><i class="fas fa-pen fa-2x"></i><p>제보하기</p></a></div>
+                    <div class="menuIcon"><a href="/mypage"><i class="fas fa-user fa-2x"></i><p>마이페이지</p></a></div>
+
+                    <%--                    <i class="far fa-user"></i>--%>
+                </div>
+
+            </div>
             <div class="col leftContainer">
                 <div id="webSearchContainer">
                     <div class="input-group rounded">
@@ -400,8 +506,8 @@
 
                 </div>
                 <div id="webTagsContainer">
-                        <div id="test">hi</div>
-                        <div class="tags">전체</div>
+<%--                        <div id="test">hi</div>--%>
+                        <div class="tags clicked">전체</div>
                         <div class="tags">붕어빵</div>
                         <div class="tags">호떡</div>
                         <div class="tags">타코야키</div>
@@ -563,112 +669,7 @@
                 </div>
             </div>
 
-            <div class="col mobile">
-                <div id="map" style="width:100%;height:100%;" class="mobileMap"></div>
-<%--                <div id="clickLatlng"></div>--%>
 
-                <div id="searchContainer">
-                    <div class="input-group rounded">
-                        <input id="search_bar" type="search" class="form-control rounded" placeholder="경상북도 포항시 북구 양덕동77" aria-label="Search" aria-describedby="search-addon" readonly/>
-<%--                        <div id="search_bar"></div>--%>
-                        <span class="input-group-text border-0" id="search-addon">
-                        <a href="./"><i class="fas fa-search"></i></a>
-                        </span>
-                    </div>
-                </div>
-
-
-                <div id="tagsContainer">
-                    <div class="tags">전체</div>
-                    <div class="tags">붕어빵</div>
-                    <div class="tags">호떡</div>
-                    <div class="tags">타코야키</div>
-                    <div class="tags">오뎅</div>
-                    <div class="tags">오뎅</div>
-                    <div class="tags">오뎅</div>
-                    <div class="tags">오뎅</div>
-                    <div class="tags">오뎅</div>
-                    <div class="tags">오뎅</div>
-                    <div class="tags">오뎅</div>
-                    <div class="tags">오뎅</div>
-                </div>
-<%--                <div class="window">--%>
-                    <div id="storesContainer">
-                        <div class="stores">
-                            <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
-                            </div>
-                            <div class="storesInfoContainer">
-                                <div class="storesName">
-                                    참 붕어빵
-                                </div>
-                                <div class="storesTag">
-                                    #붕어빵
-                                </div>
-                            </div>
-                            <div class="storesDetailContainer">
-                                <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
-                                <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
-                                <button class="reportButton">신고하기</button>
-                                <button class="visitButton">방문하기</button>
-                            </div>
-                        </div>
-                        <div class="stores"><div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
-                        </div>
-                            <div class="storesInfoContainer">
-                                <div class="storesName">
-                                    참 붕어빵
-                                </div>
-                                <div class="storesTag">
-                                    #붕어빵
-                                </div>
-                            </div>
-                            <div class="storesDetailContainer">
-                                <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
-                                <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
-                                <button class="reportButton">신고하기</button>
-                                <button class="visitButton">방문하기</button>
-                            </div>
-                        </div>
-                        <div class="stores">
-                            <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
-                            </div>
-                            <div class="storesInfoContainer">
-                                <div class="storesName">
-                                    참 붕어빵
-                                </div>
-                                <div class="storesTag">
-                                    #붕어빵
-                                </div>
-                            </div>
-                            <div class="storesDetailContainer">
-                                <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
-                                <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
-                                <button class="reportButton">신고하기</button>
-                                <button class="visitButton">방문하기</button>
-                            </div>
-                        </div>
-                    </div>
-<%--                </div>--%>
-<%--                <div id="button-container">--%>
-<%--                    <button id="prev">previous</button>--%>
-<%--                    <button id="next">next</button>--%>
-<%--                </div>--%>
-
-                <div id="menuContainer">
-                    <div class="menuIcon">
-                    <a href="./">
-                    <i class="fas fa-home fa-2x"></i>
-                        <p>홈</p>
-                    </a>
-                    </div>
-                    <div class="menuIcon">
-                        <a href="./"><i class="fas fa-pen fa-2x"></i><p>제보하기</p></a></div>
-                    <div class="menuIcon"><a href="/mypage"><i class="fas fa-user fa-2x"></i><p>마이페이지</p></a></div>
-
-<%--                    <i class="far fa-user"></i>--%>
-                </div>
-
-            </div>
             <div class="col rightContainer"></div>
         </div>
     </div>
@@ -846,8 +847,12 @@
         var menuLinks = document.querySelectorAll('.tags');
 
         function clickMenuHandler(){
-            if (currentMenu){
-                currentMenu.classList.remove('clicked');
+            // if (currentMenu){
+            //     currentMenu.classList.remove('clicked');
+            // }
+            for (var i = 0; i < menuLinks.length; i++){
+                menuLinks[i].classList.remove('clicked');
+                console.log(menuLinks[i]);
             }
             this.classList.add('clicked');
             currentMenu = this;

@@ -1,11 +1,13 @@
 package com.foodhunter;
 
+//import com.foodhunter.DAO.ReviewFileUpload;
 import com.foodhunter.DTO.Review;
 import com.foodhunter.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletRequest;
 
 import java.sql.Date;
 import java.util.List;
@@ -29,8 +31,10 @@ public class StoreController {
         return "store";
     }
 
-    @PostMapping("/store/review")
-    public String create(ReviewForm form, Model model) {
+    @RequestMapping(value = "/store/review", method = RequestMethod.POST)
+    public String create(HttpServletRequest request,ReviewForm form, Model model) {
+//        ReviewFileUpload fileUpload = new ReviewFileUpload();
+//        Review review = fileUpload.uploadPhoto(request);
         Review review = new Review();
         // 임의로 폼에서 받은 content랑 photo 정보만 받아서 객체 생성해서 잘 들어갔나 확인 완료.
         review.setStoreId(1);
