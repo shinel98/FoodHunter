@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page isELIgnored="false" %>
 
 <html>
 <head>
@@ -196,13 +197,18 @@
             font-weight: bold;
             font-size: 2em;
             padding: 0 !important;
-            height: 31px;
+            white-space: nowrap;
+            overflow: auto;
             margin-left:20px;
+            -ms-overflow-style: none;
+        }
+        .storesName::-webkit-scrollbar{
+            display:none;
         }
         .storesTag {
             color:gray;
             margin-bottom: 7px;
-            margin-top:8px;
+            margin-top:-7px;
             font-size: 1.5em;
 
         }
@@ -419,12 +425,14 @@
                 </div>
                 <%--                <div class="window">--%>
                 <div id="storesContainer">
+                <c:forEach var="sList" items="${storeList}">
                     <div class="stores">
                         <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
                         </div>
                         <div class="storesInfoContainer">
                             <div class="storesName">
-                                참 붕어빵
+<%--                                참 붕어빵--%>
+                                ${sList.name}
                             </div>
                             <div class="storesTag">
                                 #붕어빵
@@ -437,6 +445,7 @@
                             <button class="visitButton">방문하기</button>
                         </div>
                     </div>
+                </c:forEach>
                     <div class="stores"><div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
                     </div>
                         <div class="storesInfoContainer">
@@ -454,24 +463,24 @@
                             <button class="visitButton">방문하기</button>
                         </div>
                     </div>
-                    <div class="stores">
-                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
-                        </div>
-                        <div class="storesInfoContainer">
-                            <div class="storesName">
-                                참 붕어빵
-                            </div>
-                            <div class="storesTag">
-                                #붕어빵
-                            </div>
-                        </div>
-                        <div class="storesDetailContainer">
-                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
-                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
-                            <button class="reportButton">신고하기</button>
-                            <button class="visitButton">방문하기</button>
-                        </div>
-                    </div>
+<%--                    <div class="stores">--%>
+<%--                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">--%>
+<%--                        </div>--%>
+<%--                        <div class="storesInfoContainer">--%>
+<%--                            <div class="storesName">--%>
+<%--                                참 붕어빵--%>
+<%--                            </div>--%>
+<%--                            <div class="storesTag">--%>
+<%--                                #붕어빵--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                        <div class="storesDetailContainer">--%>
+<%--                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>--%>
+<%--                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>--%>
+<%--                            <button class="reportButton">신고하기</button>--%>
+<%--                            <button class="visitButton">방문하기</button>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
                 </div>
                 <%--                </div>--%>
                 <%--                <div id="button-container">--%>
@@ -522,6 +531,27 @@
 
                 </div>
                 <div id="webStoresContainer">
+                    <c:forEach var="sList" items="${storeList}">
+                        <div class="webstores">
+                            <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
+                            </div>
+                            <div class="storesInfoContainer">
+                                <div class="storesName">
+                                        <%--                                참 붕어빵--%>
+                                        ${sList.name}
+                                </div>
+                                <div class="storesTag">
+                                    #붕어빵
+                                </div>
+                            </div>
+                            <div class="storesDetailContainer">
+                                <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
+                                <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
+                                <button class="reportButton">신고하기</button>
+                                <button class="visitButton">방문하기</button>
+                            </div>
+                        </div>
+                    </c:forEach>
                     <div class="webStores">
                         <div class="storesIcon"><img src="img/crucianbread.png">
                         </div>
