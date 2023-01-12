@@ -40,4 +40,14 @@ public class Visit {
     public void setRegiDate(Date regiDate) {
         this.regiDate = regiDate;
     }
+
+    @Override
+    public String toString() {
+        return "Visit{" +
+                "visitId=" + visitId +
+                ", usrId=" + usrId +
+                ", storeId=" + storeId +
+                ", regiDate=" + regiDate +
+                '}';
+    }
 }

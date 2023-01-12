@@ -1,18 +1,23 @@
 package com.foodhunter.DAO;
 
-import com.foodhunter.DTO.Review;
 import com.foodhunter.DTO.Visit;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MemoryVisitRepository implements VisitRepository{
+public class VisitDAOImpl implements VisitRepository{
 
     // 1st: visitId, 2nd : Visit 객체
     private static Map<Long, Visit> store = new HashMap<>();
+    SqlSession sqlSession;
     private static long sequence = 0L;
+
+    public VisitDAOImpl(SqlSession sqlSession) {
+        this.sqlSession = sqlSession;
+    }
 
     @Override
     public Visit save(Visit visit) {
