@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main">
+    <!--    <insert id="insertBoard">-->
+    <!--        insert into BOARD (category, title, writer, content) values-->
+    <!--        (#{category} , #{title} , #{writer} , #{content})-->
+    <!--    </insert>-->
+    <!--    <update id="updateBoard">-->
+    <!--        update BOARD-->
+    <!--        set title=#{title}, content=#{content}, writer=#{writer}, category=#{category} where seq=#{seq}-->
+    <!--    </update>-->
+    <!--    <delete id="deleteBoard">-->
+    <!--        delete from BOARD where seq=#{seq}-->
+    <!--    </delete>-->
+        <select id="getStores" resultType="com.foodhunter.DTO.Store">
+            select * from stores_table order by visitCnt;
+        </select>
+    <!--    <select id="getBoardList" resultType="board">-->
+    <!--        select * from BOARD order by seq desc-->
+    <!--    </select>-->
+</mapper>
