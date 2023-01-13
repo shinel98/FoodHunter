@@ -323,6 +323,7 @@
             </div>
         </div>
     </div>
+    // TODO: 파일 업로드 구현
     <div id="black-bg" style="z-index: 99;">
         <div id="review-write-container" class="card shadow bg-white" style="visibility: hidden;">
             <!--취소 버튼-->
@@ -338,7 +339,7 @@
                     </ul>
                 </div>
                 <div id="review-text">
-                    <textarea placeholder="리뷰를 작성해주세요." id="form-text" name="content"></textarea>
+                    <textarea placeholder="리뷰를 작성해주세요." id="form-text" name="reviewContent"></textarea>
                 </div>
 
                 <div id="photos">
@@ -403,6 +404,7 @@
         let photo = $("<input>");
         photo.attr("type", "file");
         photo.attr("accept", "image/png, image/jpeg");
+        photo.attr("id", "photo" + photoCnt);
         photo.attr("name", "photo" + photoCnt);
         photo.attr("class", "form-control photo-upload mt-1");
         $('#photos').append(photo);

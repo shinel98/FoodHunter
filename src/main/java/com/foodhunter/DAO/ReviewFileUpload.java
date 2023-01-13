@@ -28,14 +28,15 @@ public class ReviewFileUpload {
         String savePath = request.getServletContext().getRealPath("/resources/upload");
 
         File dir = new File(savePath);
+        System.out.println("dir: " + dir);
         if (!dir.exists()) dir.mkdirs();
 
         MultipartRequest multipartRequest = null;
         try {
             multipartRequest = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
 
-            for (int i = 0; multipartRequest.getFilesystemName("imageFile" + i) != null; i++) {
-                filenameList.add(multipartRequest.getFilesystemName("imageFile" + i));
+            for (int i = 0; multipartRequest.getFilesystemName("photo" + i) != null; i++) {
+                filenameList.add(multipartRequest.getFilesystemName("photo" + i));
             }
             for (int i = 0; i < filenameList.size(); i++) {
                 if (i == 0) {
@@ -51,15 +52,17 @@ public class ReviewFileUpload {
             if (reviewId != null && !reviewId.equals("")) {
                 review.setReviewId(Long.parseLong(reviewId));
             }
-            review.setStoreId(Long.parseLong(multipartRequest.getParameter("storeId")));
+//            review.setStoreId(Long.parseLong(multipartRequest.getParameter("storeId")));
+//            review.setScore(Integer.parseInt(multipartRequest.getParameter("score")));
             review.setReviewContent(multipartRequest.getParameter("reviewContent"));
-            review.setScore(Integer.parseInt(multipartRequest.getParameter("score")));
+            review.setPhoto(filenames);
 
-            System.out.println("reviewId: " + review.getReviewId());
-            System.out.println("storeId: " + review.getStoreId());
+//            System.out.println("reviewId: " + review.getReviewId());
+//            System.out.println("storeId: " + review.getStoreId());
+//            System.out.println("score: " + review.getScore());
             System.out.println("reviewContent: " + review.getReviewContent());
-            System.out.println("score: " + review.getScore());
             System.out.println("photo: " + review.getPhoto());
+//            System.out.println("regiDate: " + review.getRegiDate());
 
             // Editing review
             if (reviewId != null && !reviewId.equals("")) {

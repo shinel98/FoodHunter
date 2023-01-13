@@ -35,6 +35,13 @@ public class StoreController {
         ReviewFileUpload fileUpload = new ReviewFileUpload();
         Review review = fileUpload.uploadPhoto(request);
 
+//        System.out.println("reviewId: " + review.getReviewId());
+//        System.out.println("storeId: " + review.getStoreId());
+//        System.out.println("score: " + review.getScore());
+//        System.out.println("reviewContent: " + review.getReviewContent());
+//        System.out.println("photo: " + review.getPhoto());
+//        System.out.println("regiDate: " + review.getRegiDate());
+
         Long result = reviewService.join(review);
         if(result == -1L) { // 에러 발생
             model.addAttribute("reviewError", true);
