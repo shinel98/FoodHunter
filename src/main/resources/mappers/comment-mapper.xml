@@ -11,4 +11,7 @@
     <select id="selectCommentByStoreId" resultType="com.foodhunter.DTO.Review">
         select * from comment_table where storeId = #{storeId}
     </select>
+    <select id="selectCommentByUserId" resultType="com.foodhunter.DTO.Review">
+        select * from comment_table where userId = #{usrId}
+    </select>
 </mapper>

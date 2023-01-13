@@ -27,7 +27,8 @@ public class StoreController {
     public String store(Model model) {
         // 리뷰 storeId로 필터링해서 가져오기 -> 임의로 1번으로 가져와서 테스트 진행
         List<Review> reviews = reviewService.readByStoreId(1L);
-        System.out.println(reviews.size());
+        //List<Review> findByUserIdTest = reviewService.readByUserId(1L); -> 구현 성공 : Todo: 마이페이지에서 적용하기
+        // Todo : 가게 객체 전달하기
         model.addAttribute("reviews", reviews);
         model.addAttribute("reviewError", false);
         model.addAttribute("delete", false);
