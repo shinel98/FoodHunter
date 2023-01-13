@@ -10,10 +10,7 @@ import java.util.Map;
 
 public class VisitDAOImpl implements VisitDAO {
 
-    // 1st: visitId, 2nd : Visit 객체
-    private static Map<Long, Visit> store = new HashMap<>();
     SqlSession sqlSession;
-    private static long sequence = 0L;
 
     public VisitDAOImpl(SqlSession sqlSession) {
         this.sqlSession = sqlSession;
@@ -21,19 +18,14 @@ public class VisitDAOImpl implements VisitDAO {
 
     @Override
     public Visit save(Visit visit) {
-        visit.setVisitId(++sequence);
-        store.put(visit.getVisitId(), visit);
+        sqlSession.insert("visit.insertVisit", visit);
         return visit;
     }
 
     @Override
-    public List<Visit> findAll(Long usrId) {
-        List<Visit> result = new ArrayList<>();
-        store.values()
-                .stream()
-                .forEach(visit -> {
-                    if(visit.getUsrId() == usrId) result.add(visit);
-                });
+    public List<Visit> findAll(Long userId) {
+        List<Visit> result;
+        result = sqlSession.selectList("visit.selectVisitByUserId", userId);
         return result;
     }
 }

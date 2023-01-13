@@ -22,9 +22,9 @@ public class VisitService {
     }
 
     /** 방문인증을 한 가게에 대해 전체 조회 **/
-    public List<Visit> read(Long usrId){
+    public List<Visit> read(Long userId){
         // Todo: storeRepository의 findAll을 사용해 최종적으로 List<Store>를 반환하도록 수정하기
-        return visitDAO.findAll(usrId);
+        return visitDAO.findAll(userId);
     }
 
 }

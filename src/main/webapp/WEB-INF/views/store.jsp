@@ -1,3 +1,6 @@
+<%@ page import="com.foodhunter.DTO.Review" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Collections" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
@@ -129,8 +132,8 @@
                                         </ul>
                                     </div>
                                     <div class="row">
-                                        <p class="review-text">사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!</p>
-                                        <!--Todo : trash icon 배치하기-->
+                                        <p class="review-text col">사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!</p>
+                                        <i class="bi bi-trash-fill col-2" style="margin: auto;"></i>
                                     </div>
                                     <div class="row">
                                         <!--Todo: 이미지 존재 여부에 따라 img 태그 삽입-->

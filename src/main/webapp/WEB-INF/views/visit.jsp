@@ -58,9 +58,9 @@
             <!--footer-->
             <footer id="footer" class="fixed-bottom border border-black mobile-view bg-white shadow">
                 <form action="/visit/authenticate" method="post">
-                    <!--임의로 1, 2로 설정해서 controller에 넘김-->
+                    <!--임의로 1, 1로 설정해서 controller에 넘김-->
                     <input type="number" name="usrId" value=1 style="display:none">
-                    <input type="number" name="storeId" value=2 style="display:none">
+                    <input type="number" name="storeId" value=1 style="display:none">
 
                     <p>5m이내에 접근하면 붕어빵 아이콘을 눌러서 인증하세요.</p>
                     <!--방문인증하기-->

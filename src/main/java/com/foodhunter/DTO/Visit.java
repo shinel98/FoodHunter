@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Visit {
 
     private Long visitId;
-    private Long usrId;
+    private Long userId;
     private Long storeId;
     private Date regiDate;
 
@@ -18,11 +18,11 @@ public class Visit {
     }
 
     public Long getUsrId() {
-        return usrId;
+        return userId;
     }
 
     public void setUsrId(Long usrId) {
-        this.usrId = usrId;
+        this.userId = usrId;
     }
 
     public Long getStoreId() {
@@ -45,7 +45,7 @@ public class Visit {
     public String toString() {
         return "Visit{" +
                 "visitId=" + visitId +
-                ", usrId=" + usrId +
+                ", usrId=" + userId +
                 ", storeId=" + storeId +
                 ", regiDate=" + regiDate +
                 '}';
