@@ -33,16 +33,9 @@ public class StoreController {
     }
 
     @PostMapping(value = "/store/review")
-    public String create(HttpServletRequest request, Model model) {
+    public String create(HttpServletRequest request, Model model){
         ReviewFileUpload fileUpload = new ReviewFileUpload();
         Review review = fileUpload.uploadPhoto(request);
-
-        review.setStoreId(1);
-        review.setScore(5);
-        review.setRegiDate(new Date(2022, 2, 13));
-        review.setReviewContent(request.getParameter("content"));
-        //review.setPhoto(request.getParameter("photo"));
-        review.setUsrId(1);
 
         Long result = reviewService.write(review);
         if(result == -1L) { // 에러 발생

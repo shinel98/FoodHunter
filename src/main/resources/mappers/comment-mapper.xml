@@ -3,7 +3,7 @@
 <mapper namespace="comment">
     <insert id="insertComment">
         insert into comment_table (storeId, userId, score, regDate, photo, reviewContent)
-        values (#{storeId}, #{usrId}, #{score}, #{regiDate}, #{photo}, #{reviewContent})
+        values (#{storeId}, #{usrId}, #{score}, NOW(), #{photo}, #{reviewContent})
     </insert>
     <delete id="deleteComment">
         delete from comment_table where storeId = #{storeId} and userId = #{usrId}
