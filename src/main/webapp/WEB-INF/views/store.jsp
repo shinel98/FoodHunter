@@ -329,7 +329,7 @@
             <button type="button" class="btn" onclick="reviewCancel();"><i id="review-cancel" class="bi bi-x-lg"></i></button>
             <form id="review-form" action="/store/review" enctype="multipart/form-data" method="post" style="position: relative;">
                 <!--임의로 설정해서 controller에 넘김-->
-                <input type="number" name="usrId" value=1 style="display:none">
+                <input type="number" name="usrId" value=3 style="display:none">
                 <input type="number" name="storeId" value=1 style="display:none">
                 <input type="number" name="score" id="score" value=3 style="display:none">
                 <div id="review-score">

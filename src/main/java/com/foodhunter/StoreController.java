@@ -22,16 +22,19 @@ public class StoreController {
         this.reviewService = reviewService;
     }
 
+    /**가게 로드 -> 가게, 리뷰 정보 가져오기**/
     @RequestMapping("/store")
     public String store(Model model) {
-//        List<Review> reviews = reviewService.readByStoreId(1L);
-//        if(reviews.size() > 0) System.out.println(reviews.get(0).getReviewContent());
-//        model.addAttribute("reviews", reviews);
-//        model.addAttribute("reviewError", false);
-//        model.addAttribute("delete", false);
+        // 리뷰 storeId로 필터링해서 가져오기 -> 임의로 1번으로 가져와서 테스트 진행
+        List<Review> reviews = reviewService.readByStoreId(1L);
+        System.out.println(reviews.size());
+        model.addAttribute("reviews", reviews);
+        model.addAttribute("reviewError", false);
+        model.addAttribute("delete", false);
         return "store";
     }
 
+    /**리뷰 생성**/
     @PostMapping(value = "/store/review")
     public String create(HttpServletRequest request, Model model){
         ReviewFileUpload fileUpload = new ReviewFileUpload();
@@ -44,13 +47,20 @@ public class StoreController {
         return "redirect:/store";                  // 정상
     }
 
+    /**가게 삭제 요청**/
     @RequestMapping("/store/delete")
     public String delete(Model model){
+        model.addAttribute("delete", true);
+        return "redirect:/store";
+    }
+
+    /**리뷰 삭제**/
+    @RequestMapping("/store/review-delete")
+    public String reviewDelete(){
         Review review = new Review();
         review.setUsrId(1);
         review.setStoreId(1);
         Long result = reviewService.delete(review);
-        model.addAttribute("delete", true);
         return "redirect:/store";
     }
 

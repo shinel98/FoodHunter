@@ -43,13 +43,7 @@ public class ReviewDAOImpl implements ReviewDAO {
     public List<Review> findByStoreId(Long storeId) {
         // 리스트를 new로 생성해주지 않고 바로 리턴값을 받아오려고 하면 오류가 난다. 오류 이름 까먹음.
         List<Review> result = new ArrayList<>();
-        sqlSession.selectList("comment.selectCommentByStoreId", storeId);
-//        List<Review> result = new ArrayList<>();
-//        store.values()
-//                .forEach(review -> {
-//                    if(review.getStoreId() == storeId) result.add(review);
-//                });
-        //return result;
+        result = sqlSession.selectList("comment.selectCommentByStoreId", storeId);
         return result;
     }
 
