@@ -1,32 +1,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Category">
+    <parameterMap id="CategoryParamMap" type="category">
+        <parameter property="id" javaType="int" jdbcType="INTEGER" />
+        <parameter property="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <parameter property="icon" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <parameter property="requestStatus" javaType="int" jdbcType="INTEGER" />
+        <parameter property="requestCnt" javaType="int" jdbcType="INTEGER" />
+        <parameter property="regDate" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </parameterMap>
+
+    <resultMap id="CategoryResultMap" type="category">
+        <result property="categoryId" column="id"/>
+        <result property="name" column="name"/>
+        <result property="icon" column="icon"/>
+        <result property="requestStatus" column="requestStatus"/>
+        <result property="requestCnt" column="requestCnt"/>
+        <result property="regDate" column="regDate"/>
+    </resultMap>
+
     <insert id="insertCategory">
         INSERT INTO category_table (name, icon, requestStatus, requestCnt)
         VALUES (#{name}, #{icon}, #{requestStatus}, #{requestCnt});
     </insert>
     <delete id="deleteCategory">
         DELETE FROM category_table
-        WHERE id = #{id};
+        WHERE id = #{categoryId};
     </delete>
     <update id="updateCategory">
             UPDATE category_table
             SET name = #{name}, icon = #{icon}, requestStatus = #{requestStatus}, requestCnt = #{requestCnt}
-            WHERE id = #{id};
+            WHERE id = #{categoryId};
     </update>
-    <select id="getCategory" resultType="category">
+    <select id="getCategory" resultType="category" resultMap="CategoryResultMap">
         <![CDATA[
             SELECT *
             FROM category_table
             WHERE id = #{id};
         ]]>
     </select>
-    <select id="getCategoryList" resultType="category">
+    <select id="getCategoryList" resultType="category" resultMap="CategoryResultMap">
         <![CDATA[
             SELECT *
             FROM category_table
         ]]>
     </select>
-    <select id="getCategoryListByRequestStatus" resultType="category">
+    <select id="getCategoryListByRequestStatus" resultType="category" resultMap="CategoryResultMap">
         <![CDATA[
             SELECT *
             FROM category_table

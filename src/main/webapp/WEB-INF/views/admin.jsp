@@ -55,6 +55,12 @@
           <c:choose>
             <c:when test="${fn:length(categoryRequestList) > 0}">
               <c:forEach var="categoryRequest" items="${categoryRequestList}">
+                ${categoryRequest.categoryId}
+                ${categoryRequest.name}
+                ${categoryRequest.icon}
+                ${categoryRequest.requestStatus}
+                ${categoryRequest.requestCnt}
+                ${categoryRequest.regDate}
                 <div class="col-12 add-category-request">
                   <div class="border add-category-request py-2 d-flex">
                     <div class="me-auto d-flex align-items-center">
@@ -63,13 +69,15 @@
                     </div>
                     <div class="d-flex my-auto justify-content-end">
                       <form action="/admin/category/accept" method="post">
-                        <input type="hidden" name="categoryName" value="${categoryRequest.categoryId}">
+                        <input type="hidden" name="accept-categoryId" value="${categoryRequest.categoryId}">
+                        ${categoryRequest.categoryId}
                         <button type="submit" class="btn btn-success btn-sm m-auto d-flex align-items-center">
                           <img src="/img/done_FILL0_wght400_GRAD0_opsz48.png" width="30" height="30"/>
                         </button>
                       </form>
                       <form action="/admin/category/reject" method="post">
-                        <input type="hidden" name="categoryName" value="${categoryRequest.categoryId}">
+                        <input type="hidden" name="reject-categoryId" value="${categoryRequest.categoryId}">
+                          ${categoryRequest.categoryId}
                         <button type="submit" class="btn btn-danger btn-sm ms-1 me-2 my-auto d-flex align-items-center">
                           <img src="/img/block_FILL0_wght400_GRAD0_opsz48.png" width="30" height="30"/>
                         </button>
