@@ -20,7 +20,6 @@ public class AdminController {
     @RequestMapping("/admin")
     public String admin(Model model, HttpSession session) {
         model.addAttribute("categoryRequestList", categoryService.getCategoryListByRequestStatus(1));
-        System.out.println(categoryService.getCategoryListByRequestStatus(1).size());
 
         // TODO: Checks if the account has administrator privileges
 
@@ -29,7 +28,6 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/category/accept", method = RequestMethod.POST)
     public String acceptCategoryRequest(HttpServletRequest request) {
-        System.out.println(request.getParameter("accept-categoryId"));
         Category category = categoryService.getCategory(Integer.parseInt(request.getParameter("accept-categoryId")));
         category.setRequestStatus(0);
         category.setRequestCnt(0);
@@ -40,7 +38,6 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/category/reject", method = RequestMethod.POST)
     public String rejectCategoryRequest(HttpServletRequest request) {
-        System.out.println(request.getParameter("reject-categoryId"));
         categoryService.deleteCategory(Integer.parseInt(request.getParameter("reject-categoryId")));
 
         return "redirect:/admin";
