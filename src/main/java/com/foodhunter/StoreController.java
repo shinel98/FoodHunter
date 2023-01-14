@@ -2,7 +2,9 @@ package com.foodhunter;
 
 //import com.foodhunter.DAO.ReviewFileUpload;
 import com.foodhunter.DAO.ReviewFileUpload;
+import com.foodhunter.DTO.Favorite;
 import com.foodhunter.DTO.Review;
+import com.foodhunter.service.FavoriteService;
 import com.foodhunter.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +18,12 @@ import java.util.List;
 @Controller
 public class StoreController {
     private final ReviewService reviewService;
+    private final FavoriteService favoriteService;
 
     @Autowired
-    public StoreController(ReviewService reviewService) {
+    public StoreController(ReviewService reviewService, FavoriteService favoriteService) {
         this.reviewService = reviewService;
+        this.favoriteService = favoriteService;
     }
 
     /**가게 로드 -> 가게, 리뷰 정보 가져오기**/
@@ -29,6 +33,11 @@ public class StoreController {
         List<Review> reviews = reviewService.readByStoreId(1L);
         //List<Review> findByUserIdTest = reviewService.readByUserId(1L); -> 구현 성공 : Todo: 마이페이지에서 적용하기
         // Todo : 가게 객체 전달하기
+        Favorite favorite = new Favorite();
+        favorite.setStoreId(1L);
+        favorite.setUserId(1L);
+        Long currentLike = favoriteService.current(favorite);
+        if(currentLike > 0L) model.addAttribute("like", true);
         model.addAttribute("reviews", reviews);
         model.addAttribute("reviewError", false);
         model.addAttribute("delete", false);
@@ -65,14 +74,13 @@ public class StoreController {
         return "redirect:/store";
     }
 
-    // 리뷰 모델 생성 테스트
-    @GetMapping("/review/test")
-    public String list(Model model) {
-        List<Review> reviews = reviewService.readByStoreId(1L);
-        System.out.println(reviews.size());
-        System.out.println(reviews.get(0).getReviewContent());
-        System.out.println(reviews.get(0).getPhoto());
-        model.addAttribute("reviews", reviews);
-        return "store";
+
+    @RequestMapping("/store/like")
+    public String like(){
+        Favorite favorite = new Favorite();
+        favorite.setStoreId(1L);
+        favorite.setUserId(2L);
+        favoriteService.like(favorite);
+        return "redirect:/store";
     }
 }

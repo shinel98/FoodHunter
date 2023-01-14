@@ -25,7 +25,7 @@ public class ReviewDAOImpl implements ReviewDAO {
     @Override
     public Long delete(Review review){
         sqlSession.delete("comment.deleteComment", review);
-        return -1L;
+        return review.getReviewId();
     }
 
     @Override

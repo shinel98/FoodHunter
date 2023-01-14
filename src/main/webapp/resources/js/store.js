@@ -18,6 +18,12 @@ $(function (){
                 document.getElementById("delete-modal").style.visibility = "visible";
             }
         }
+        else if(param.at(0) === "like"){
+            alert("true");
+            if(Boolean(param.at(1))) {
+                favorite();
+            }
+        }
     }
 
     // 처음 위치는 가게 table에 저장된 위도, 경도로 설정
@@ -110,18 +116,21 @@ function calculateDistance(){
 function favorite(){
     let favoriteBtn =  document.getElementsByClassName("favoriteBtn");
     let favoriteIcon = favoriteBtn.item(0).classList.item(2);
+    // 즐겨찾기 누른 경우
     if(favoriteIcon == "bi-heart") {
         for(let i=0; i<favoriteBtn.length; i++){
             favoriteBtn[i].classList.remove('bi-heart');
             favoriteBtn.item(i).classList.add('bi-heart-fill');
         }
-    }
+        location.href = "/store/like";
+    } // 즐겨찾기 해제한 경우
     else {
         for(let i=0; i<favoriteBtn.length; i++){
             favoriteBtn[i].classList.remove('bi-heart-fill');
             favoriteBtn.item(i).classList.add('bi-heart');
 
         }
+        location.href = "/store/unlike";
     }
 }
 
