@@ -37,4 +37,12 @@ public class AdminController {
 
         return "redirect:/admin";
     }
+
+    @RequestMapping(value = "/admin/category/reject", method = RequestMethod.POST)
+    public String rejectCategoryRequest(HttpServletRequest request) {
+        System.out.println(request.getParameter("reject-categoryId"));
+        categoryService.deleteCategory(Integer.parseInt(request.getParameter("reject-categoryId")));
+
+        return "redirect:/admin";
+    }
 }
