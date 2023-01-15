@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comment">
+    <insert id="insertComment">
+        insert into comment_table (storeId, userId, score, regDate, photo, reviewContent)
+        values (#{storeId}, #{usrId}, #{score}, NOW(), #{photo}, #{reviewContent})
+    </insert>
+    <delete id="deleteComment">
+        delete from comment_table where storeId = #{storeId} and userId = #{usrId}
+    </delete>
+    <select id="selectCommentByStoreId" resultType="com.foodhunter.DTO.Review">
+        select * from comment_table where storeId = #{storeId}
+    </select>
+    <select id="selectCommentByUserId" resultType="com.foodhunter.DTO.Review">
+        select * from comment_table where userId = #{usrId}
+    </select>
+</mapper>

@@ -1,34 +1,26 @@
-/**
- * Created by yujin
- * Component 스캔을 위한 Configuration
- * **/
 package com.foodhunter;
 
-import com.foodhunter.DAO.MemoryReviewRepository;
-import com.foodhunter.DAO.MemoryVisitRepository;
-import com.foodhunter.DAO.ReviewRepository;
-import com.foodhunter.DAO.VisitRepository;
+import com.foodhunter.DAO.*;
+import com.foodhunter.service.FavoriteService;
 import com.foodhunter.service.ReviewService;
 import com.foodhunter.service.VisitService;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.sql.DataSource;
-
 @Configuration
 public class SpringConfig {
-    private DataSource dataSource;
+    private SqlSession sqlSession;
+
+    //DataSource dataSource;
     @Autowired
-    public SpringConfig(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public SpringConfig(SqlSession sqlSession) {
+        this.sqlSession = sqlSession;
     }
 
     @Bean
-    public ReviewService reviewService(){
-
-        return new ReviewService(reviewRepository());
-    }
+    public ReviewService reviewService(){return new ReviewService(reviewRepository());}
 
     @Bean
     public VisitService visitService(){
@@ -36,12 +28,18 @@ public class SpringConfig {
     }
 
     @Bean
-    public ReviewRepository reviewRepository() {
-         return new MemoryReviewRepository();
+    public FavoriteService favoriteService(){ return new FavoriteService(favoriteRepository());}
+
+    @Bean
+    public ReviewDAO reviewRepository() {
+         return new ReviewDAOImpl(sqlSession);
     }
 
     @Bean
-    public VisitRepository visitRepository() {
-        return new MemoryVisitRepository();
+    public VisitDAO visitRepository() {
+        return new VisitDAOImpl(sqlSession);
     }
+
+    @Bean
+    public FavoriteDAO favoriteRepository(){ return new FavoriteDAOImpl(sqlSession);}
 }

@@ -11,6 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 
   <style>
     .mobile {
@@ -23,6 +24,9 @@
       left: 50%;
       transform: translate(-50%, -50%);
     }
+    form{
+        height: 60%;
+    }
     .my {
       font-size: 3em;
       width: 400px;
@@ -32,7 +36,7 @@
 
     }
     .name input {
-      width: 70%;
+      width: 100%;
       height: 50px;
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       border-style: none;
@@ -88,7 +92,7 @@
         <div class="my">저는 닉네임 </div>
         <div class="name">
         <input type="text" id="nickname" name="nickname" required
-               minlength="4" maxlength="8" placeholder="랜덤닉네임">
+               minlength="4" maxlength="8">
         </div>
         <div class="is">로 시작할래요</div>
 <%--        <input id="send" type="submit" value="">--%>
@@ -99,9 +103,43 @@
       </div>
 
       </form>
+        <div>
+            <button class="btn btn-dark" onclick="recreate();">랜덤생성</button>
+            <button class="btn btn-dark" onclick="use();">사용하기</button>
+        </div>
     </div>
     <div class="col rightContainer"></div>
   </div>
 </div>
+<!--랜덤 이름 생성 api-->
+<script>
+    $(function(){
+        randomName();
+    });
+
+    function randomName(){
+        try {
+            fetch('https://nickname.hwanmoo.kr/?format=json&count=1',{
+                credentials: "include",
+            }).then((response)=> response.json())
+                .then((data)=>{
+                    document.getElementById("nickname").placeholder = data["words"][0];
+                });
+        } catch(err) {
+            alert(err); // TypeError: Failed to fetch
+        }
+    }
+
+    function recreate(){
+        document.getElementById("nickname").value = null;
+        location.reload();
+    }
+
+    function use(){
+        document.getElementById("nickname").value = document.getElementById("nickname").placeholder;
+        document.getElementById("nickname").style.color = "white";
+        document.getElementById("nickname").style.background = "#133331";
+    }
+</script>
 </body>
 </html>

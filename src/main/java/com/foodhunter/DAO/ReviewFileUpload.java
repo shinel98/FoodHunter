@@ -6,7 +6,10 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ReviewFileUpload {
@@ -28,7 +31,6 @@ public class ReviewFileUpload {
         String savePath = request.getServletContext().getRealPath("/resources/upload");
 
         File dir = new File(savePath);
-        System.out.println("dir: " + dir);
         if (!dir.exists()) dir.mkdirs();
 
         MultipartRequest multipartRequest = null;
@@ -52,32 +54,34 @@ public class ReviewFileUpload {
             if (reviewId != null && !reviewId.equals("")) {
                 review.setReviewId(Long.parseLong(reviewId));
             }
-//            review.setStoreId(Long.parseLong(multipartRequest.getParameter("storeId")));
-//            review.setScore(Integer.parseInt(multipartRequest.getParameter("score")));
+            review.setStoreId(Long.parseLong(multipartRequest.getParameter("storeId")));
             review.setReviewContent(multipartRequest.getParameter("reviewContent"));
+            review.setScore(Integer.parseInt(multipartRequest.getParameter("score")));
+//            review.setReviewContent(multipartRequest.getParameter("content"));
+            review.setUsrId(Long.parseLong(multipartRequest.getParameter("usrId")));
             review.setPhoto(filenames);
+            review.toString();
 
-//            System.out.println("reviewId: " + review.getReviewId());
-//            System.out.println("storeId: " + review.getStoreId());
-//            System.out.println("score: " + review.getScore());
+            System.out.println("reviewId: " + review.getReviewId());
+            System.out.println("storeId: " + review.getStoreId());
             System.out.println("reviewContent: " + review.getReviewContent());
+            System.out.println("score: " + review.getScore());
             System.out.println("photo: " + review.getPhoto());
-//            System.out.println("regiDate: " + review.getRegiDate());
 
-            // Editing review
-            if (reviewId != null && !reviewId.equals("")) {
-                MemoryReviewRepository dao = new MemoryReviewRepository();
-                String oldFilenames = dao.findById(Long.parseLong(reviewId)).orElse(null).getPhoto();
-
-                if (oldFilenames != null) {
-                    ReviewFileUpload.deletePhoto(request, oldFilenames);
-                }
-                // Error 대비
-                if (filenames == null) {
-                    filenames = oldFilenames;
-                }
-            }
-            review.setPhoto(filenames);
+//            // Editing review
+//            if (reviewId != null && !reviewId.equals("")) {
+//                MemoryReviewRepository dao = new MemoryReviewRepository();
+//                String oldFilenames = dao.findById(Long.parseLong(reviewId)).orElse(null).getPhoto();
+//
+//                if (oldFilenames != null) {
+//                    ReviewFileUpload.deletePhoto(request, oldFilenames);
+//                }
+//                // Error 대비
+//                if (filenames == null) {
+//                    filenames = oldFilenames;
+//                }
+//            }
+//            review.setPhoto(filenames);
         } catch (Exception e) {
             e.printStackTrace();
         }

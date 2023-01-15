@@ -2,27 +2,26 @@ package com.foodhunter.DTO;
 
 import java.sql.Date;
 
-public class Visit {
-
-    private Long visitId;
+public class Favorite {
+    private Long favoriteId;
     private Long userId;
     private Long storeId;
     private Date regiDate;
 
-    public Long getVisitId() {
-        return visitId;
+    public Long getFavoriteId() {
+        return favoriteId;
     }
 
-    public void setVisitId(Long visitId) {
-        this.visitId = visitId;
+    public void setFavoriteId(Long favoriteId) {
+        this.favoriteId = favoriteId;
     }
 
-    public Long getUsrId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUsrId(Long usrId) {
-        this.userId = usrId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Long getStoreId() {
@@ -43,8 +42,8 @@ public class Visit {
 
     @Override
     public String toString() {
-        return "Visit{" +
-                "visitId=" + visitId +
+        return "Favorite{" +
+                "favoriteId=" + favoriteId +
                 ", usrId=" + userId +
                 ", storeId=" + storeId +
                 ", regiDate=" + regiDate +
