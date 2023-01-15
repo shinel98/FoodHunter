@@ -1,3 +1,6 @@
+<%@ page import="com.foodhunter.DTO.Review" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Collections" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
@@ -129,8 +132,8 @@
                                         </ul>
                                     </div>
                                     <div class="row">
-                                        <p class="review-text">사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!</p>
-                                        <!--Todo : trash icon 배치하기-->
+                                        <p class="review-text col">사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!</p>
+                                        <i class="bi bi-trash-fill col-2" style="margin: auto;"></i>
                                     </div>
                                     <div class="row">
                                         <!--Todo: 이미지 존재 여부에 따라 img 태그 삽입-->
@@ -327,14 +330,18 @@
         <div id="review-write-container" class="card shadow bg-white" style="visibility: hidden;">
             <!--취소 버튼-->
             <button type="button" class="btn" onclick="reviewCancel();"><i id="review-cancel" class="bi bi-x-lg"></i></button>
-            <form id="review-form" action="/store/review" method="post" enctype="multipart/form-data" style="position: relative;">
+            <form id="review-form" action="/store/review" enctype="multipart/form-data" method="post" style="position: relative;">
+                <!--임의로 설정해서 controller에 넘김-->
+                <input type="number" name="usrId" value=3 style="display:none">
+                <input type="number" name="storeId" value=1 style="display:none">
+                <input type="number" name="score" id="score" value=3 style="display:none">
                 <div id="review-score">
                     <ul class="review-star-list">
-                        <li><i class="bi bi-star-fill"></i></li>
-                        <li><i class="bi bi-star-fill"></i></li>
-                        <li><i class="bi bi-star-fill"></i></li>
-                        <li><i class="bi bi-star"></i></li>
-                        <li><i class="bi bi-star"></i></li>
+                        <li><i id="scoreOne" class="bi bi-star-fill" onclick="scoreOne();"></i></li>
+                        <li><i id="scoreTwo"class="bi bi-star-fill" onclick="scoreTwo();"></i></li>
+                        <li><i id="scoreThree"class="bi bi-star-fill" onclick="scoreThree();"></i></li>
+                        <li><i id="scoreFour"class="bi bi-star" onclick="scoreFour();"></i></li>
+                        <li><i id="scoreFive"class="bi bi-star" onclick="scoreFive();"></i></li>
                     </ul>
                 </div>
                 <div id="review-text">
@@ -419,4 +426,152 @@
             $('#remove-photo-button').addClass('d-none');
         }
     }
+</script>
+
+<script>
+    function scoreOne(){
+        document.getElementById("score").value = 1;
+        let scoreIcon =  document.getElementById("scoreOne").classList.item(1);
+        if(scoreIcon == "bi-star") {
+            document.getElementById("scoreOne").classList.remove("bi-star");
+            document.getElementById("scoreOne").classList.add("bi-star-fill");
+        }
+        scoreIcon =  document.getElementById("scoreTwo").classList.item(1);
+        if(scoreIcon == "bi-star-fill") {
+            document.getElementById("scoreTwo").classList.remove("bi-star-fill");
+            document.getElementById("scoreTwo").classList.add("bi-star");
+        }
+        scoreIcon =  document.getElementById("scoreThree").classList.item(1);
+        if(scoreIcon == "bi-star-fill") {
+            document.getElementById("scoreThree").classList.remove("bi-star-fill");
+            document.getElementById("scoreThree").classList.add("bi-star");
+        }
+        scoreIcon =  document.getElementById("scoreFour").classList.item(1);
+        if(scoreIcon == "bi-star-fill") {
+            document.getElementById("scoreFour").classList.remove("bi-star-fill");
+            document.getElementById("scoreFour").classList.add("bi-star");
+        }
+        scoreIcon =  document.getElementById("scoreFive").classList.item(1);
+        if(scoreIcon == "bi-star-fill") {
+            document.getElementById("scoreFive").classList.remove("bi-star-fill");
+            document.getElementById("scoreFive").classList.add("bi-star");
+        }
+    }
+    function scoreTwo(){
+        document.getElementById("score").value = 2;
+        let scoreIcon =  document.getElementById("scoreOne").classList.item(1);
+        if(scoreIcon == "bi-star") {
+            document.getElementById("scoreOne").classList.remove("bi-star");
+            document.getElementById("scoreOne").classList.add("bi-star-fill");
+        }
+        scoreIcon =  document.getElementById("scoreTwo").classList.item(1);
+        if(scoreIcon == "bi-star") {
+            document.getElementById("scoreTwo").classList.remove("bi-star");
+            document.getElementById("scoreTwo").classList.add("bi-star-fill");
+        }
+        scoreIcon =  document.getElementById("scoreThree").classList.item(1);
+        if(scoreIcon == "bi-star-fill") {
+            document.getElementById("scoreThree").classList.remove("bi-star-fill");
+            document.getElementById("scoreThree").classList.add("bi-star");
+        }
+        scoreIcon =  document.getElementById("scoreFour").classList.item(1);
+        if(scoreIcon == "bi-star-fill") {
+            document.getElementById("scoreFour").classList.remove("bi-star-fill");
+            document.getElementById("scoreFour").classList.add("bi-star");
+        }
+        scoreIcon =  document.getElementById("scoreFive").classList.item(1);
+        if(scoreIcon == "bi-star-fill") {
+            document.getElementById("scoreFive").classList.remove("bi-star-fill");
+            document.getElementById("scoreFive").classList.add("bi-star");
+        }
+    }
+
+    function scoreThree(){
+        document.getElementById("score").value = 3;
+        let scoreIcon =  document.getElementById("scoreOne").classList.item(1);
+        if(scoreIcon == "bi-star") {
+            document.getElementById("scoreOne").classList.remove("bi-star");
+            document.getElementById("scoreOne").classList.add("bi-star-fill");
+        }
+        scoreIcon =  document.getElementById("scoreTwo").classList.item(1);
+        if(scoreIcon == "bi-star") {
+            document.getElementById("scoreTwo").classList.remove("bi-star");
+            document.getElementById("scoreTwo").classList.add("bi-star-fill");
+        }
+        scoreIcon =  document.getElementById("scoreThree").classList.item(1);
+        if(scoreIcon == "bi-star") {
+            document.getElementById("scoreThree").classList.remove("bi-star");
+            document.getElementById("scoreThree").classList.add("bi-star-fill");
+        }
+        scoreIcon =  document.getElementById("scoreFour").classList.item(1);
+        if(scoreIcon == "bi-star-fill") {
+            document.getElementById("scoreFour").classList.remove("bi-star-fill");
+            document.getElementById("scoreFour").classList.add("bi-star");
+        }
+        scoreIcon =  document.getElementById("scoreFive").classList.item(1);
+        if(scoreIcon == "bi-star-fill") {
+            document.getElementById("scoreFive").classList.remove("bi-star-fill");
+            document.getElementById("scoreFive").classList.add("bi-star");
+        }
+    }
+
+    function scoreFour(){
+        document.getElementById("score").value = 4;
+        let scoreIcon =  document.getElementById("scoreOne").classList.item(1);
+        if(scoreIcon == "bi-star") {
+            document.getElementById("scoreOne").classList.remove("bi-star");
+            document.getElementById("scoreOne").classList.add("bi-star-fill");
+        }
+        scoreIcon =  document.getElementById("scoreTwo").classList.item(1);
+        if(scoreIcon == "bi-star") {
+            document.getElementById("scoreTwo").classList.remove("bi-star");
+            document.getElementById("scoreTwo").classList.add("bi-star-fill");
+        }
+        scoreIcon =  document.getElementById("scoreThree").classList.item(1);
+        if(scoreIcon == "bi-star") {
+            document.getElementById("scoreThree").classList.remove("bi-star");
+            document.getElementById("scoreThree").classList.add("bi-star-fill");
+        }
+        scoreIcon =  document.getElementById("scoreFour").classList.item(1);
+        if(scoreIcon == "bi-star") {
+            document.getElementById("scoreFour").classList.remove("bi-star");
+            document.getElementById("scoreFour").classList.add("bi-star-fill");
+        }
+        scoreIcon =  document.getElementById("scoreFive").classList.item(1);
+        if(scoreIcon == "bi-star-fill") {
+            document.getElementById("scoreFive").classList.remove("bi-star-fill");
+            document.getElementById("scoreFive").classList.add("bi-star");
+        }
+    }
+
+    function scoreFive(){
+        document.getElementById("score").value = 5;
+        let scoreIcon =  document.getElementById("scoreOne").classList.item(1);
+        if(scoreIcon == "bi-star") {
+            document.getElementById("scoreOne").classList.remove("bi-star");
+            document.getElementById("scoreOne").classList.add("bi-star-fill");
+        }
+        scoreIcon =  document.getElementById("scoreTwo").classList.item(1);
+        if(scoreIcon == "bi-star") {
+            document.getElementById("scoreTwo").classList.remove("bi-star");
+            document.getElementById("scoreTwo").classList.add("bi-star-fill");
+        }
+        scoreIcon =  document.getElementById("scoreThree").classList.item(1);
+        if(scoreIcon == "bi-star") {
+            document.getElementById("scoreThree").classList.remove("bi-star");
+            document.getElementById("scoreThree").classList.add("bi-star-fill");
+        }
+        scoreIcon =  document.getElementById("scoreFour").classList.item(1);
+        if(scoreIcon == "bi-star") {
+            document.getElementById("scoreFour").classList.remove("bi-star");
+            document.getElementById("scoreFour").classList.add("bi-star-fill");
+        }
+        scoreIcon =  document.getElementById("scoreFive").classList.item(1);
+        if(scoreIcon == "bi-star") {
+            document.getElementById("scoreFive").classList.remove("bi-star");
+            document.getElementById("scoreFive").classList.add("bi-star-fill");
+        }
+    }
+
+
 </script>

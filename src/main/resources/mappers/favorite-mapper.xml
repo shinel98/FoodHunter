@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="favorite">
+    <insert id="insertFavorite">
+        insert into like_table (storeId, userId, regDate)
+        values (#{storeId}, #{userId}, NOW())
+    </insert>
+    <delete id="deleteFavorite">
+        delete from like_table where storeId = #{storeId} and userId = #{userId}
+    </delete>
+    <select id="selectFavoriteByUserId" resultType="com.foodhunter.DTO.Favorite">
+        select * from like_table where userId = #{userId}
+    </select>
+    <select id="selectOne" resultType="com.foodhunter.DTO.Favorite">
+        select * from like_table where storeId = #{storeId} and userId = #{userId}
+    </select>
+</mapper>

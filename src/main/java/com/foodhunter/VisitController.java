@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.sql.Date;
+import java.util.List;
 
 @Controller
 public class VisitController {
@@ -31,10 +32,17 @@ public class VisitController {
         visit.setStoreId(form.getStoreId());
 
         visitService.authenticate(visit);
-        System.out.println(visit.getUsrId());
-        System.out.println(visit.getStoreId());
 
         model.addAttribute("visitFinished", true);
+        return "redirect:/store";
+    }
+
+    /**마이페이지에서 사용할 "방문인증한 visit 리스트 읽어오기" 테스트**/
+    /**Todo: 마이페이지에서 사용 -> storeId로 가게 리스트 불러와서 보여주기**/
+    @RequestMapping("/visit/read-test")
+    public String readTest(){
+        List<Visit> result = visitService.read(1L);
+        System.out.println(result.size());
         return "redirect:/store";
     }
 }

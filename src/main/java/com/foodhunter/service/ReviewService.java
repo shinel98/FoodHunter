@@ -3,36 +3,35 @@
  * **/
 package com.foodhunter.service;
 
-import com.foodhunter.DAO.ReviewRepository;
+import com.foodhunter.DAO.ReviewDAO;
 import com.foodhunter.DTO.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Optional;
 
 public class ReviewService {
-    private final ReviewRepository reviewRepository;
+    private final ReviewDAO reviewDAO;
 
     @Autowired
-    public ReviewService(ReviewRepository reviewRepository) {
-        this.reviewRepository = reviewRepository;
+    public ReviewService(ReviewDAO reviewDAO) {
+        this.reviewDAO = reviewDAO;
     }
 
     /** review 작성 **/
-    public Long join(Review review){
+    public Long write(Review review){
         try{
             validateDuplicateReview(review);
         }
         catch (IllegalStateException e){
             return -1L;
         }
-        reviewRepository.save(review);
+        reviewDAO.save(review);
         return review.getReviewId();
     }
 
     /** review를 이미 작성한 가게에 똑같은 유저가 중복 작성을 하는 경우 validation check **/
     public void validateDuplicateReview(Review review){
-        List<Review> storeReview = reviewRepository.findAll(review.getStoreId());
+        List<Review> storeReview = reviewDAO.findByStoreId(review.getStoreId());
         storeReview.stream()
                 .forEach(rv -> {
                     if(rv.getUsrId() == review.getUsrId()){
@@ -41,12 +40,21 @@ public class ReviewService {
                 });
     }
 
-    public Optional<Review> findOne(Long reviewId){
-        return reviewRepository.findById(reviewId);
+    /** 리뷰 삭제 **/
+    public Long delete(Review review){
+        Long removedReviewId = reviewDAO.delete(review);
+        return removedReviewId; // Todo: 삭제할 리뷰가 없는 에러 상황에서는 -1L 반환되니 컨트롤러에서 처리하기
     }
 
-    /** review 한 가게에 대해 전체 조회 **/
-    public List<Review> read(Long storeId){
-        return reviewRepository.findAll(storeId);
+    /** 리뷰 조회 (유저별 -> 마이페이지) **/
+    public List<Review> readByUserId(Long userId){
+        List<Review> result = reviewDAO.findByUserId(userId);
+        return result;
+    }
+
+    /** 리뷰 조회 (가게별 -> 가게상세페이지) **/
+    public List<Review> readByStoreId(Long storeId){
+        List<Review> result = reviewDAO.findByStoreId(storeId);
+        return result;
     }
 }

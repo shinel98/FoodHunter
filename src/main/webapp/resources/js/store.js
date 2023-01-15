@@ -1,7 +1,9 @@
 
 $(function (){
+    console.log("in");
     calculateDistance();
     const searchParams = new URLSearchParams(location.search);
+    console.log(searchParams);
     for (const param of searchParams) {
         if(param.at(0) === "reviewError"){
             if(Boolean(param.at(1))) {
@@ -16,6 +18,19 @@ $(function (){
         else if(param.at(0) === "delete"){
             if(Boolean(param.at(1))) {
                 document.getElementById("delete-modal").style.visibility = "visible";
+            }
+        }
+        else if(param.at(0) === "like"){
+            alert("true");
+            if(Boolean(param.at(1))) {
+                let buttons = document.getElementsByClassName("favoriteBtn");
+                //let icon = buttons.item(0).classList.item(2);
+                for(let i=0; i<buttons.length; i++){
+                    buttons[i].classList.remove('bi-heart');
+                    buttons.item(i).classList.add('bi-heart-fill');
+                }
+                console.log("heart=true");
+                //location.href = "redirect:/store";
             }
         }
     }
@@ -108,20 +123,24 @@ function calculateDistance(){
 /** footer: 즐겨찾기 버튼 클릭 **/
 /** Todo : icon의 초기 값을 DB와 연동 및 수정 **/
 function favorite(){
+    console.log("favorite()");
     let favoriteBtn =  document.getElementsByClassName("favoriteBtn");
     let favoriteIcon = favoriteBtn.item(0).classList.item(2);
+    // 즐겨찾기 누른 경우
     if(favoriteIcon == "bi-heart") {
         for(let i=0; i<favoriteBtn.length; i++){
             favoriteBtn[i].classList.remove('bi-heart');
             favoriteBtn.item(i).classList.add('bi-heart-fill');
         }
-    }
+        //location.href = "/store/like";
+    } // 즐겨찾기 해제한 경우
     else {
         for(let i=0; i<favoriteBtn.length; i++){
             favoriteBtn[i].classList.remove('bi-heart-fill');
             favoriteBtn.item(i).classList.add('bi-heart');
 
         }
+        //location.href = "/store/unlike";
     }
 }
 
