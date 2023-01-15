@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Category {
     private long categoryId;
-    private String name;
+    private String categoryName;
     private String icon;
     private long requestStatus;
     private long requestCnt;
@@ -19,12 +19,12 @@ public class Category {
         this.categoryId = categoryId;
     }
 
-    public String getName() {
-        return name;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getIcon() {

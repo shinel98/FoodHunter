@@ -11,7 +11,7 @@
 
     <resultMap id="CategoryResultMap" type="category">
         <result property="categoryId" column="id"/>
-        <result property="name" column="name"/>
+        <result property="categoryName" column="categoryName"/>
         <result property="icon" column="icon"/>
         <result property="requestStatus" column="requestStatus"/>
         <result property="requestCnt" column="requestCnt"/>
@@ -19,8 +19,8 @@
     </resultMap>
 
     <insert id="insertCategory">
-        INSERT INTO category_table (name, icon, requestStatus, requestCnt)
-        VALUES (#{name}, #{icon}, #{requestStatus}, #{requestCnt});
+        INSERT INTO category_table (categoryName, icon, requestStatus, requestCnt)
+        VALUES (#{categoryName}, #{icon}, #{requestStatus}, #{requestCnt});
     </insert>
     <delete id="deleteCategory">
         DELETE FROM category_table
@@ -28,7 +28,7 @@
     </delete>
     <update id="updateCategory">
             UPDATE category_table
-            SET name = #{name}, icon = #{icon}, requestStatus = #{requestStatus}, requestCnt = #{requestCnt}
+            SET categoryName = #{categoryName}, icon = #{icon}, requestStatus = #{requestStatus}, requestCnt = #{requestCnt}
             WHERE id = #{categoryId};
     </update>
     <select id="getCategory" resultType="category" resultMap="CategoryResultMap">

@@ -55,16 +55,10 @@
           <c:choose>
             <c:when test="${fn:length(categoryRequestList) > 0}">
               <c:forEach var="categoryRequest" items="${categoryRequestList}">
-                ${categoryRequest.categoryId}
-                ${categoryRequest.name}
-                ${categoryRequest.icon}
-                ${categoryRequest.requestStatus}
-                ${categoryRequest.requestCnt}
-                ${categoryRequest.regDate}
                 <div class="col-12 add-category-request">
                   <div class="border add-category-request py-2 d-flex">
                     <div class="me-auto d-flex align-items-center">
-                      <p class="h5 text-start ms-2 my-0">${categoryRequest.name}</p>
+                      <p class="h5 text-start ms-2 my-0">${categoryRequest.categoryName}</p>
                       <small class="text-muted ms-2">요청 수: ${categoryRequest.requestCnt}</small>
                     </div>
                     <div class="d-flex my-auto justify-content-end">
