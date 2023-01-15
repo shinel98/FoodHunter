@@ -1,6 +1,5 @@
 package com.foodhunter;
 
-//import com.foodhunter.DAO.ReviewFileUpload;
 import com.foodhunter.DAO.ReviewFileUpload;
 import com.foodhunter.DTO.Favorite;
 import com.foodhunter.DTO.Review;
