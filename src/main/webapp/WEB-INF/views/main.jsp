@@ -16,9 +16,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
     <script src="https://kit.fontawesome.com/fc1b103f84.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892"></script>
+
+
+<%--    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892"></script>--%>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892&libraries=services,clusterer,drawing"></script>
     <style>
         .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
         .wrap * {padding: 0;margin: 0;}
@@ -57,6 +61,9 @@
             /*background-color: white;*/
             /*height: 40px;*/
             /*border: 1px solid black;*/
+        }
+        #webSearch_bar {
+            width:50% !important;
         }
         .mobile {
             border: 1px solid #ececec;
@@ -114,7 +121,7 @@
         }
         #tagsContainer {
             width: 100%;
-            justify-content: center;
+            /*justify-content: center;*/
             height: 6%;
             display: flex;
             flex-wrap: nowrap;
@@ -368,18 +375,18 @@
             }
         }
     </style>
-    <script>
-        $(function(){
-            const searchParams = new URLSearchParams(location.search);
-            for (const param of searchParams) {
-                if(param.at(0) === "report"){
-                    if(Boolean(param.at(1))) {
-                        document.getElementById("reportFinished-modal").style.visibility = "visible";
-                    }
-                }
-            }
-        });
-    </script>
+<%--    <script>--%>
+<%--        $(function(){--%>
+<%--            const searchParams = new URLSearchParams(location.search);--%>
+<%--            for (const param of searchParams) {--%>
+<%--                if(param.at(0) === "report"){--%>
+<%--                    if(Boolean(param.at(1))) {--%>
+<%--                        document.getElementById("reportFinished-modal").style.visibility = "visible";--%>
+<%--                    }--%>
+<%--                }--%>
+<%--            }--%>
+<%--        });--%>
+<%--    </script>--%>
 
 </head>
 <body>
@@ -400,7 +407,7 @@
 
                 <div id="searchContainer">
                     <div class="input-group rounded">
-                        <input id="search_bar" type="search" class="form-control rounded" placeholder="경상북도 포항시 북구 양덕동77" aria-label="Search" aria-describedby="search-addon" readonly/>
+                        <input id="search_bar" type="search" class="form-control rounded" placeholder="위치 검색 중.." aria-label="Search" aria-describedby="search-addon" readonly/>
                         <%--                        <div id="search_bar"></div>--%>
                         <span class="input-group-text border-0" id="search-addon">
                         <a href="./"><i class="fas fa-search"></i></a>
@@ -410,83 +417,42 @@
 
 
                 <div id="tagsContainer">
-                    <div class="tags clicked">전체</div>
-                    <div class="tags">붕어빵</div>
-                    <div class="tags">호떡</div>
-                    <div class="tags">타코야키</div>
-                    <div class="tags">오뎅</div>
-                    <div class="tags">오뎅</div>
-                    <div class="tags">오뎅</div>
-                    <div class="tags">오뎅</div>
-                    <div class="tags">오뎅</div>
-                    <div class="tags">오뎅</div>
-                    <div class="tags">오뎅</div>
-                    <div class="tags">오뎅</div>
+                    <c:forEach var="tagList" items="${allCategories}" varStatus="status">
+                        <c:choose>
+                            <c:when test="${status.first}">
+                                <div class="tags clicked">${tagList.categoryName}</div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="tags">${tagList.categoryName}</div>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
                 </div>
-                <%--                <div class="window">--%>
+
                 <div id="storesContainer">
-                <c:forEach var="sList" items="${storeList}">
+                <c:forEach var="sList" items="${allMarkers}">
                     <div class="stores">
                         <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
                         </div>
                         <div class="storesInfoContainer">
                             <div class="storesName">
-<%--                                참 붕어빵--%>
+
                                 ${sList.name}
                             </div>
                             <div class="storesTag">
-                                #붕어빵
+                                ${sList.categoryName}
                             </div>
                         </div>
                         <div class="storesDetailContainer">
                             <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
-                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
+                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">${sList.likeCnt}</div>
                             <button class="reportButton">신고하기</button>
                             <button class="visitButton">방문하기</button>
                         </div>
                     </div>
                 </c:forEach>
-                    <div class="stores"><div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
-                    </div>
-                        <div class="storesInfoContainer">
-                            <div class="storesName">
-                                참 붕어빵
-                            </div>
-                            <div class="storesTag">
-                                #붕어빵
-                            </div>
-                        </div>
-                        <div class="storesDetailContainer">
-                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
-                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
-                            <button class="reportButton">신고하기</button>
-                            <button class="visitButton">방문하기</button>
-                        </div>
-                    </div>
-                    <div class="stores">
-                        <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
-                        </div>
-                        <div class="storesInfoContainer">
-                            <div class="storesName">
-                                참 붕어빵
-                            </div>
-                            <div class="storesTag">
-                                #붕어빵
-                            </div>
-                        </div>
-                        <div class="storesDetailContainer">
-                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
-                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
-                            <button class="reportButton">신고하기</button>
-                            <button class="visitButton">방문하기</button>
-                        </div>
-                    </div>
                 </div>
-                <%--                </div>--%>
-                <%--                <div id="button-container">--%>
-                <%--                    <button id="prev">previous</button>--%>
-                <%--                    <button id="next">next</button>--%>
-                <%--                </div>--%>
+
 
                 <div id="menuContainer">
                     <div class="menuIcon">
@@ -499,15 +465,15 @@
                         <a href="./"><i class="fas fa-pen fa-2x"></i><p>제보하기</p></a></div>
                     <div class="menuIcon"><a href="/mypage"><i class="fas fa-user fa-2x"></i><p>마이페이지</p></a></div>
 
-                    <%--                    <i class="far fa-user"></i>--%>
+
                 </div>
 
             </div>
             <div class="col leftContainer">
                 <div id="webSearchContainer">
                     <div class="input-group rounded">
-                        <input id="search_bar" type="search" class="form-control rounded" placeholder="경상북도 포항시 북구 양덕동77" aria-label="Search" aria-describedby="search-addon" readonly/>
-                        <%--                        <div id="search_bar"></div>--%>
+                        <input id="webSearch_bar" type="search" class="form-control rounded" placeholder="위치 검색 중.." aria-label="Search" aria-describedby="search-addon" readonly/>
+
                         <span class="input-group-text border-0" id="search-addon">
                         <a href="./"><i class="fas fa-search"></i></a>
                         </span>
@@ -515,186 +481,38 @@
 
                 </div>
                 <div id="webTagsContainer">
-<%--                        <div id="test">hi</div>--%>
-                        <div class="tags clicked">전체</div>
-                        <div class="tags">붕어빵</div>
-                        <div class="tags">호떡</div>
-                        <div class="tags">타코야키</div>
-                        <div class="tags">오뎅</div>
-                        <div class="tags">오뎅</div>
-                        <div class="tags">오뎅</div>
-                        <div class="tags">오뎅</div>
-                        <div class="tags">오뎅</div>
-                        <div class="tags">오뎅</div>
-                        <div class="tags">오뎅</div>
-                        <div class="tags">오뎅</div>
-
+                    <c:forEach var="tagList" items="${allCategories}" varStatus="status">
+                        <c:choose>
+                            <c:when test="${status.first}">
+                                <div class="tags clicked">${tagList.categoryName}</div>
+                            </c:when>
+                            <c:otherwise>
+                            <div class="tags">${tagList.categoryName}</div>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
                 </div>
                 <div id="webStoresContainer">
-                    <c:forEach var="sList" items="${storeList}">
+                    <c:forEach var="sList" items="${allMarkers}">
                         <div class="webStores">
                             <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
                             </div>
                             <div class="storesInfoContainer">
                                 <div class="storesName">
-                                        <%--                                참 붕어빵--%>
                                         ${sList.name}
                                 </div>
                                 <div class="storesTag">
-                                    #붕어빵
+                                    ${sList.categoryName}
                                 </div>
                             </div>
                             <div class="storesDetailContainer">
                                 <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
-                                <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
+                                <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">${sList.likeCnt}</div>
                                 <button class="reportButton">신고하기</button>
                                 <button class="visitButton">방문하기</button>
                             </div>
                         </div>
                     </c:forEach>
-                    <div class="webStores">
-                        <div class="storesIcon"><img src="img/crucianbread.png">
-                        </div>
-                        <div class="storesInfoContainer">
-                            <div class="storesName">
-                                참 붕어빵
-                            </div>
-                            <div class="storesTag">
-                                #붕어빵
-                            </div>
-                        </div>
-                        <div class="storesDetailContainer">
-                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
-                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
-                            <button class="reportButton">신고하기</button>
-                            <button class="visitButton">방문하기</button>
-                        </div>
-                    </div>
-                    <div class="webStores"><div class="storesIcon"><img src="img/crucianbread.png" >
-                    </div>
-                        <div class="storesInfoContainer">
-                            <div class="storesName">
-                                참 붕어빵
-                            </div>
-                            <div class="storesTag">
-                                #붕어빵
-                            </div>
-                        </div>
-                        <div class="storesDetailContainer">
-                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
-                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
-                            <button class="reportButton">신고하기</button>
-                            <button class="visitButton">방문하기</button>
-                        </div>
-                    </div>
-                    <div class="webStores">
-                        <div class="storesIcon"><img src="img/crucianbread.png">
-                        </div>
-                        <div class="storesInfoContainer">
-                            <div class="storesName">
-                                참 붕어빵
-                            </div>
-                            <div class="storesTag">
-                                #붕어빵
-                            </div>
-                        </div>
-                        <div class="storesDetailContainer">
-                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
-                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
-                            <button class="reportButton">신고하기</button>
-                            <button class="visitButton">방문하기</button>
-                        </div>
-                    </div>
-                    <div class="webStores">
-                        <div class="storesIcon"><img src="img/crucianbread.png">
-                        </div>
-                        <div class="storesInfoContainer">
-                            <div class="storesName">
-                                참 붕어빵
-                            </div>
-                            <div class="storesTag">
-                                #붕어빵
-                            </div>
-                        </div>
-                        <div class="storesDetailContainer">
-                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
-                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
-                            <button class="reportButton">신고하기</button>
-                            <button class="visitButton">방문하기</button>
-                        </div>
-                    </div>
-                    <div class="webStores">
-                        <div class="storesIcon"><img src="img/crucianbread.png" >
-                        </div>
-                        <div class="storesInfoContainer">
-                            <div class="storesName">
-                                참 붕어빵
-                            </div>
-                            <div class="storesTag">
-                                #붕어빵
-                            </div>
-                        </div>
-                        <div class="storesDetailContainer">
-                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
-                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
-                            <button class="reportButton">신고하기</button>
-                            <button class="visitButton">방문하기</button>
-                        </div>
-                    </div>
-                    <div class="webStores">
-                        <div class="storesIcon"><img src="img/crucianbread.png" >
-                        </div>
-                        <div class="storesInfoContainer">
-                            <div class="storesName">
-                                참 붕어빵
-                            </div>
-                            <div class="storesTag">
-                                #붕어빵
-                            </div>
-                        </div>
-                        <div class="storesDetailContainer">
-                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
-                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
-                            <button class="reportButton">신고하기</button>
-                            <button class="visitButton">방문하기</button>
-                        </div>
-                    </div>
-                    <div class="webStores">
-                        <div class="storesIcon"><img src="img/crucianbread.png" >
-                        </div>
-                        <div class="storesInfoContainer">
-                            <div class="storesName">
-                                참 붕어빵
-                            </div>
-                            <div class="storesTag">
-                                #붕어빵
-                            </div>
-                        </div>
-                        <div class="storesDetailContainer">
-                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
-                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
-                            <button class="reportButton">신고하기</button>
-                            <button class="visitButton">방문하기</button>
-                        </div>
-                    </div>
-                    <div class="webStores">
-                        <div class="storesIcon"><img src="img/crucianbread.png" >
-                        </div>
-                        <div class="storesInfoContainer">
-                            <div class="storesName">
-                                참 붕어빵
-                            </div>
-                            <div class="storesTag">
-                                #붕어빵
-                            </div>
-                        </div>
-                        <div class="storesDetailContainer">
-                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
-                            <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">4</div>
-                            <button class="reportButton">신고하기</button>
-                            <button class="visitButton">방문하기</button>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -704,9 +522,23 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892&libraries=services,clusterer,drawing"></script>
-
     <script>
+        var latitude;
+        var longitude;
+        var testLon;
+        var testLat;
+
+        window.onload = function(){
+        $(function(){
+            const searchParams = new URLSearchParams(location.search);
+            for (const param of searchParams) {
+                if(param.at(0) === "report"){
+                    if(Boolean(param.at(1))) {
+                        document.getElementById("reportFinished-modal").style.visibility = "visible";
+                    }
+                }
+            }
+        });
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div
             mapOption = {
                 center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -716,40 +548,50 @@
         var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
 
         // 마커를 표시할 위치와 title 객체 배열입니다
-        var positions = [
-            {
-                title: '카카오',
-                latlng: new kakao.maps.LatLng(33.450705, 126.570677)
-            },
-            {
-                title: '생태연못',
-                latlng: new kakao.maps.LatLng(33.450936, 126.569477)
-            },
-            {
-                title: '텃밭',
-                latlng: new kakao.maps.LatLng(33.450879, 126.569940)
-            },
-            {
-                title: '근린공원',
-                latlng: new kakao.maps.LatLng(33.451393, 126.570738)
-            },
-            {
-                title: '참 붕어빵',
-                latlng: new kakao.maps.LatLng(36.082952670249654, 129.40151471459686)
-            },
-            {
-                title: '황금 붕어빵',
-                latlng: new kakao.maps.LatLng(36.084442828651305, 129.38510461130596)
-            },
-            {
-                title: '맛있는 붕어빵',
-                latlng: new kakao.maps.LatLng(36.084097839579634, 129.3897560855043)
-            },
-            {
-                title: '호떡 트럭',
-                latlng: new kakao.maps.LatLng(36.084732871079254, 129.39044130634628)
-            }
-        ];
+        // var positions = [
+        //     {
+        //         title: '카카오',
+        //         latlng: new kakao.maps.LatLng(33.450705, 126.570677)
+        //     },
+        //     {
+        //         title: '생태연못',
+        //         latlng: new kakao.maps.LatLng(33.450936, 126.569477)
+        //     },
+        //     {
+        //         title: '텃밭',
+        //         latlng: new kakao.maps.LatLng(33.450879, 126.569940)
+        //     },
+        //     {
+        //         title: '근린공원',
+        //         latlng: new kakao.maps.LatLng(33.451393, 126.570738)
+        //     },
+        //     {
+        //         title: '참 붕어빵',
+        //         latlng: new kakao.maps.LatLng(36.082952670249654, 129.40151471459686)
+        //     },
+        //     {
+        //         title: '황금 붕어빵',
+        //         latlng: new kakao.maps.LatLng(36.084442828651305, 129.38510461130596)
+        //     },
+        //     {
+        //         title: '맛있는 붕어빵',
+        //         latlng: new kakao.maps.LatLng(36.084097839579634, 129.3897560855043)
+        //     },
+        //     {
+        //         title: '호떡 트럭',
+        //         latlng: new kakao.maps.LatLng(36.084732871079254, 129.39044130634628)
+        //     }
+        // ];
+
+
+
+<%--        <c:forEach items="${allMarkers}" var="location" varStatus="">--%>
+<%--            let temp = ${location.xLocation}--%>
+<%--            console.log(temp);--%>
+
+<%--        </c:forEach>--%>
+
+
         // kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
         //
         //     // 클릭한 위도, 경도 정보를 가져옵니다
@@ -768,10 +610,9 @@
         // 마커 이미지의 이미지 주소입니다
         var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
-        let latitude;
-        let longitude;
 
-        for (var i = 0; i < positions.length; i ++) {
+        <c:forEach items="${allMarkers}" var="location">
+        // for (var i = 0; i < positions.length; i ++) {
 
             // 마커 이미지의 이미지 크기 입니다
             var imageSize = new kakao.maps.Size(24, 35);
@@ -780,10 +621,13 @@
             var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
             // 마커를 생성합니다
+            var latlng = new kakao.maps.LatLng(${location.xLocation}, ${location.yLocation});
             var marker = new kakao.maps.Marker({
                 map: map, // 마커를 표시할 지도
-                position: positions[i].latlng, // 마커를 표시할 위치
-                title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                // position: positions[i].latlng, // 마커를 표시할 위치
+                position: latlng, // 마커를 표시할 위치
+                //title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                title : '${location.name}', // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
                 image : markerImage // 마커 이미지
             });
             // var content = '<div class="wrap">' +
@@ -819,8 +663,8 @@
             // function closeOverlay() {
             //     overlay.setMap(null);
             // }
-        }
-
+        //}
+            </c:forEach>
         function setCenter(position) {
             // var loca = new kakao.maps.LatLng(latitude, longitude);
             map.setCenter(position);
@@ -843,10 +687,23 @@
         function success({ coords, timestamp }) {
             latitude = coords.latitude;   // 위도
             longitude = coords.longitude; // 경도
-            // setCenter();
+            let searchbar = document.getElementById('search_bar');
+            let webSearchbar = document.getElementById('webSearch_bar');
+            let coord = new kakao.maps.LatLng(latitude, longitude);
+            let geocoder = new kakao.maps.services.Geocoder();
+            console.log("현재 위치 불러오기 성공");
+            let callback = function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+
+                    console.log(result[0].address.address_name);
+                    searchbar.placeholder =  result[0].address.address_name;
+                    webSearchbar.placeholder =  result[0].address.address_name;
+                }
+            }
             var position = new kakao.maps.LatLng(latitude, longitude);
             var message = '<div style="padding:5px;">현위치</div>';
             myLocation(position, message)
+            geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
         }
 
         let options = {
@@ -865,8 +722,61 @@
             }
             navigator.geolocation.watchPosition(success, error ,options);
         }
+        function ajaxCall(lat, lon){
+            $.ajax({
+                url: "calDistance", // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+                data: {
+                    xLocation: lat,
+                    yLocation: lon
+                }, // HTTP 요청과 함께 서버로 보낼 데이터
+                method: "GET", // HTTP 요청 메소드(GET, POST 등)
+                dataType: "json", // 서버에서 보내줄 데이터의 타입
+                success:function(data){
+
+                    console.log("ajax 성공!");
+                    console.log(data);
+                },
+                error:function(){
+                    console.log("ajax 실패ㅠ");
+                }
+            });
+        }
+
+        function calculateDistance(){
+
+            var myLat, myLon;
+            // var destLat, destLon;   // Todo : DB 연동해서 목적지 주소 넣기
+            // 목적지 -> 임의로 테스트
+            // destLat =  36.08618059199135;
+            // destLon = 129.41260195413844;
+            // var destLatSec = destLat.toFixed(15)*60*60;
+            // var destLonSec = destLon.toFixed(15)*60*60;
+            // var element = document.getElementsByClassName("storesDistance");
+
+            setInterval(function(){
+                if (navigator.geolocation) {
+                    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        myLat = position.coords.latitude; // 위도
+                        myLon = position.coords.longitude; // 경도
+                        console.log("myLat: " + myLat);
+                        console.log("myLon: " + myLon);
+                        var myLatSec = myLat
+                        var myLonSec = myLon
+                        ajaxCall(myLatSec, myLonSec);
+                    });
+                }
+
+
+                // element.innerHTML = distance + "m";
+            }, 1000);
+
+
+        }
 
         getUserLocation();
+        calculateDistance()
+
 
         function confirm(){
             location.href = "/main";
@@ -893,19 +803,6 @@
             menuLinks[i].addEventListener('click', clickMenuHandler);
         }
 
-
-
-        //좌표를 주소로 변환
-        getAddr(latitude, longitude);
-        function getAddr(curLatitude, curLongitude){
-            let geocoder = new kakao.maps.services.Geocoder();
-
-            let callback = function(result, status) {
-                if (status === kakao.maps.services.Status.OK) {
-                    console.log(result[0].address.address_name);
-                }
-            }
-            geocoder.coord2Address(curLatitude, curLongitude, callback);
         }
     </script>
 </body>

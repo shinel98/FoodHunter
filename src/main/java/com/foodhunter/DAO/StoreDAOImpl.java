@@ -1,12 +1,16 @@
 package com.foodhunter.DAO;
 
+import com.foodhunter.DTO.Category;
+import com.foodhunter.DTO.Likes;
 import com.foodhunter.DTO.Store;
+import com.foodhunter.DTO.StoreMarker;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class StoreDAOImpl implements StoreDAO{
@@ -20,5 +24,25 @@ public class StoreDAOImpl implements StoreDAO{
         stores = sqlSession.selectList(namespace+".getStores");
 
         return stores;
+    }
+
+    @Override
+    public List<Category> readAllCategories() {
+        List<Category> categories = new ArrayList<>();
+        categories = sqlSession.selectList(namespace+".getAllCategories");
+        return categories;
+    }
+
+    @Override
+    public List<StoreMarker> readAllMarkers() {
+        List<StoreMarker> storeMarkerInfo = new ArrayList<>();
+        storeMarkerInfo = sqlSession.selectList(namespace+".getMarkerInfo");
+        return storeMarkerInfo;
+    }
+    @Override
+    public List<Likes> readLikes(){
+        List<Likes> likes = new ArrayList<>();
+        likes = sqlSession.selectList(namespace+".getLikes");
+        return likes;
     }
 }
