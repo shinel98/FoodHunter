@@ -3,23 +3,23 @@ package com.foodhunter.DTO;
 import java.util.Date;
 
 public class Store {
-    private long storeId;
+    private long id;
     private String name;
     private long categoryId;
     private long userId;
     private long visitCnt;
+
     private Date regDate;
 
-    public long getStoreId() {
-        return storeId;
+    public long getId() {
+        return id;
     }
 
-    public void setStoreId(long storeId) {
-        this.storeId = storeId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-
-//    public long getId() {
+    //    public long getId() {
 //        return id;
 //    }
 //
@@ -66,4 +66,6 @@ public class Store {
     public void setRegDate(Date regDate) {
         this.regDate = regDate;
     }
+
+
 }

@@ -1,6 +1,5 @@
 package com.foodhunter.DTO;
 
-
 import java.util.Date;
 
 public class Category {
