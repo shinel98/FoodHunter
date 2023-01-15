@@ -6,7 +6,10 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ReviewFileUpload {
@@ -34,8 +37,8 @@ public class ReviewFileUpload {
         try {
             multipartRequest = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
 
-            for (int i = 0; multipartRequest.getFilesystemName("imageFile" + i) != null; i++) {
-                filenameList.add(multipartRequest.getFilesystemName("imageFile" + i));
+            for (int i = 0; multipartRequest.getFilesystemName("photo" + i) != null; i++) {
+                filenameList.add(multipartRequest.getFilesystemName("photo" + i));
             }
             for (int i = 0; i < filenameList.size(); i++) {
                 if (i == 0) {
@@ -54,6 +57,10 @@ public class ReviewFileUpload {
             review.setStoreId(Long.parseLong(multipartRequest.getParameter("storeId")));
             review.setReviewContent(multipartRequest.getParameter("reviewContent"));
             review.setScore(Integer.parseInt(multipartRequest.getParameter("score")));
+//            review.setReviewContent(multipartRequest.getParameter("content"));
+            review.setUsrId(Long.parseLong(multipartRequest.getParameter("usrId")));
+            review.setPhoto(filenames);
+            review.toString();
 
             System.out.println("reviewId: " + review.getReviewId());
             System.out.println("storeId: " + review.getStoreId());
@@ -61,20 +68,20 @@ public class ReviewFileUpload {
             System.out.println("score: " + review.getScore());
             System.out.println("photo: " + review.getPhoto());
 
-            // Editing review
-            if (reviewId != null && !reviewId.equals("")) {
-                MemoryReviewRepository dao = new MemoryReviewRepository();
-                String oldFilenames = dao.findById(Long.parseLong(reviewId)).orElse(null).getPhoto();
-
-                if (oldFilenames != null) {
-                    ReviewFileUpload.deletePhoto(request, oldFilenames);
-                }
-                // Error 대비
-                if (filenames == null) {
-                    filenames = oldFilenames;
-                }
-            }
-            review.setPhoto(filenames);
+//            // Editing review
+//            if (reviewId != null && !reviewId.equals("")) {
+//                MemoryReviewRepository dao = new MemoryReviewRepository();
+//                String oldFilenames = dao.findById(Long.parseLong(reviewId)).orElse(null).getPhoto();
+//
+//                if (oldFilenames != null) {
+//                    ReviewFileUpload.deletePhoto(request, oldFilenames);
+//                }
+//                // Error 대비
+//                if (filenames == null) {
+//                    filenames = oldFilenames;
+//                }
+//            }
+//            review.setPhoto(filenames);
         } catch (Exception e) {
             e.printStackTrace();
         }

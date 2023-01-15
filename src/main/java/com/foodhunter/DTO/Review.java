@@ -16,7 +16,6 @@ public class Review {
     private String photo;
 
     private long usrId;
-    private String userName;
 
     public String getPhoto() {
         return photo;
@@ -74,11 +73,16 @@ public class Review {
         this.usrId = usrId;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
+    @Override
+    public String toString() {
+        return "Review{" +
+                "reviewId=" + reviewId +
+                ", storeId=" + storeId +
+                ", reviewContent='" + reviewContent + '\'' +
+                ", score=" + score +
+                ", regiDate=" + regiDate +
+                ", photo='" + photo + '\'' +
+                ", usrId=" + usrId +
+                '}';
     }
 }

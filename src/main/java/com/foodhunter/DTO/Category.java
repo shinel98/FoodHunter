@@ -6,7 +6,7 @@ public class Category {
     private long categoryId;
     private String categoryName;
     private String icon;
-    private int requestStatus;
+    private long requestStatus;
     private long requestCnt;
     private Date regDate;
 
@@ -34,11 +34,11 @@ public class Category {
         this.icon = icon;
     }
 
-    public int getRequestStatus() {
+    public long getRequestStatus() {
         return requestStatus;
     }
 
-    public void setRequestStatus(int requestStatus) {
+    public void setRequestStatus(long requestStatus) {
         this.requestStatus = requestStatus;
     }
 

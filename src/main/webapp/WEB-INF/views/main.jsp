@@ -375,18 +375,18 @@
             }
         }
     </style>
-<%--    <script>--%>
-<%--        $(function(){--%>
-<%--            const searchParams = new URLSearchParams(location.search);--%>
-<%--            for (const param of searchParams) {--%>
-<%--                if(param.at(0) === "report"){--%>
-<%--                    if(Boolean(param.at(1))) {--%>
-<%--                        document.getElementById("reportFinished-modal").style.visibility = "visible";--%>
-<%--                    }--%>
-<%--                }--%>
-<%--            }--%>
-<%--        });--%>
-<%--    </script>--%>
+    <script>
+        $(function(){
+            const searchParams = new URLSearchParams(location.search);
+            for (const param of searchParams) {
+                if(param.at(0) === "report"){
+                    if(Boolean(param.at(1))) {
+                        document.getElementById("reportFinished-modal").style.visibility = "visible";
+                    }
+                }
+            }
+        });
+    </script>
 
 </head>
 <body>
