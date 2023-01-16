@@ -15,6 +15,26 @@
         <select id="getStores" resultType="com.foodhunter.DTO.Store">
             select * from stores_table order by visitCnt;
         </select>
+
+<!--        <select id="getStoresLike" resultType="int">-->
+<!--            select count(storeId) from stores_table join like_table where like_table.storeId = stores_table.id;-->
+<!--        </select>-->
+
+        <select id="getAllCategories" resultType="com.foodhunter.DTO.Category">
+            select * from category_table where requestStatus = 0;
+        </select>
+
+        <select id="getMarkerInfo" resultType="com.foodhunter.DTO.StoreMarker">
+            select * from markers_table join stores_table join category_table
+                on stores_table.id = markers_table.storeId
+                    and stores_table.categoryId = category_table.id
+                     where category_table.requestStatus=0
+        </select>
+
+        <select id="getLikes" resultType="com.foodhunter.DTO.Likes">
+--             select storeId, count(storeId) from like_table group by storeId;
+            select storeId, count(storeId) as likeCnt from like_table group by storeId;
+        </select>
     <!--    <select id="getBoardList" resultType="board">-->
     <!--        select * from BOARD order by seq desc-->
     <!--    </select>-->

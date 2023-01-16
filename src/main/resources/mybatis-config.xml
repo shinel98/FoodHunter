@@ -3,6 +3,7 @@
 <configuration>
     <typeAliases>
         <typeAlias alias="main" type="com.foodhunter.DAO.StoreDAO"/>
+        <typeAlias alias="category" type="com.foodhunter.DTO.Category"/>
 
     </typeAliases>
 </configuration>
