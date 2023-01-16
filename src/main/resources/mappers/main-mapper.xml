@@ -35,6 +35,14 @@
 --             select storeId, count(storeId) from like_table group by storeId;
             select storeId, count(storeId) as likeCnt from like_table group by storeId;
         </select>
+        <insert id="insertMarker">
+            insert into markers_table (storeId, url, xLocation, yLocation, regDate)
+            values (#{storeId}, #{url}, #{xLocation}, #{yLocation}, NOW());
+        </insert>
+        <select id="insertStore">
+            insert into stores_table (name, categoryId, userId, visitCnt, regDate)
+            values (#{name}, #{categoryId}, #{userId}, 0, NOW())
+        </select>
     <!--    <select id="getBoardList" resultType="board">-->
     <!--        select * from BOARD order by seq desc-->
     <!--    </select>-->

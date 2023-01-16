@@ -1,3 +1,4 @@
+<%@ page isELIgnored="false" %>
 <%@ page import="com.foodhunter.DTO.Review" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Collections" %>
@@ -132,7 +133,7 @@
                                         </ul>
                                     </div>
                                     <div class="row">
-                                        <p class="review-text col">사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!사장님이 친절하세요!! 추천입니다!</p>
+                                        <p class="review-text col">${reviews.get(0).reviewContent}</p>
                                         <i class="bi bi-trash-fill col-2" style="margin: auto;"></i>
                                     </div>
                                     <div class="row">

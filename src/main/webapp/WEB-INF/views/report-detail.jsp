@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: jang-yujin
@@ -5,6 +6,7 @@
   Time: 2:26 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -223,72 +225,16 @@
           </button>
         </div>
         <div class="row checkbox-row">
-          <div class="col-md-3">
-            <div class="custom-control custom-checkbox image-checkbox">
-              <input type="checkbox" class="custom-control-input" id="1"><span>붕어빵</span>
-              <label class="custom-control-label" for="1">
-                <img src="/img/category-fish-bread.png" alt="#" class="img-fluid">
-              </label>
+          <c:forEach var="category" items="${categoryList}">
+            <div class="col-md-3">
+              <div class="custom-control custom-checkbox image-checkbox">
+                <input type="checkbox" class="custom-control-input" id="${category.categoryId}"><span>${category.categoryName}</span>
+                <label class="custom-control-label" for="${category.categoryId}">
+                  <img src="${category.icon}" alt="#" class="img-fluid">
+                </label>
+              </div>
             </div>
-          </div>
-          <div class="col-md-3">
-            <div class="custom-control custom-checkbox image-checkbox">
-              <input type="checkbox" class="custom-control-input" id="2"><span>붕어빵</span>
-              <label class="custom-control-label" for="2">
-                <img src="/img/category-fish-bread.png" alt="#" class="img-fluid">
-              </label>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="custom-control custom-checkbox image-checkbox">
-              <input type="checkbox" class="custom-control-input" id="3"><span>붕어빵</span>
-              <label class="custom-control-label" for="3">
-                <img src="/img/category-fish-bread.png" alt="#" class="img-fluid">
-              </label>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="custom-control custom-checkbox image-checkbox">
-              <input type="checkbox" class="custom-control-input" id="4"><span>붕어빵</span>
-              <label class="custom-control-label" for="4">
-                <img src="/img/category-fish-bread.png" alt="#" class="img-fluid">
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="row checkbox-row">
-          <div class="col-md-3">
-            <div class="custom-control custom-checkbox image-checkbox">
-              <input type="checkbox" class="custom-control-input" id="5"><span>붕어빵</span>
-              <label class="custom-control-label" for="5">
-                <img src="/img/category-fish-bread.png" alt="#" class="img-fluid">
-              </label>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="custom-control custom-checkbox image-checkbox">
-              <input type="checkbox" class="custom-control-input" id="6"><span>붕어빵</span>
-              <label class="custom-control-label" for="6">
-                <img src="/img/category-fish-bread.png" alt="#" class="img-fluid">
-              </label>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="custom-control custom-checkbox image-checkbox">
-              <input type="checkbox" class="custom-control-input" id="7"><span>붕어빵</span>
-              <label class="custom-control-label" for="7">
-                <img src="/img/category-fish-bread.png" alt="#" class="img-fluid">
-              </label>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="custom-control custom-checkbox image-checkbox">
-              <input type="checkbox" class="custom-control-input" id="8"><span>붕어빵</span>
-              <label class="custom-control-label" for="8">
-                <img src="/img/category-fish-bread.png" alt="#" class="img-fluid">
-              </label>
-            </div>
-          </div>
+          </c:forEach>
         </div>
       </div>
       <div style="position: relative;">
