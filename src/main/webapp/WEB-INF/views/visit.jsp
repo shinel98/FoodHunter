@@ -79,6 +79,38 @@
         </div>
     </div>
 </div>
+
+<script>
+    function calculateDistance(){
+
+        var myLat, myLon;
+        var destLat, destLon;   // Todo : DB 연동해서 목적지 주소 넣기
+        // 목적지 -> 임의로 테스트
+        destLat =  36.08618059199135;
+        destLon = 129.41260195413844;
+        var destLatSec = destLat.toFixed(15)*60*60;
+        var destLonSec = destLon.toFixed(15)*60*60;
+        var element = document.getElementById("left-distance");
+
+        setInterval(function(){
+            if (navigator.geolocation) {
+                // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    myLat = position.coords.latitude; // 위도
+                    myLon = position.coords.longitude; // 경도
+                });
+            }
+            var myLatSec = (myLat.toFixed(15))*60*60;
+            var myLonSec = (myLon.toFixed(15))*60*60;
+            var gapLat = (myLatSec > destLatSec) ? myLatSec - destLatSec : destLatSec - myLatSec;
+            var gapLon = (myLonSec > destLonSec) ? myLonSec - destLonSec : destLonSec - myLonSec;
+            var meterLat = gapLat*30.887;
+            var meterLon = gapLon*24.778;
+            var distance = Math.sqrt(Math.pow(meterLon, 2) + Math.pow(meterLat, 2));
+            element.innerHTML = distance.toFixed(0) + "m";
+        }, 10);
+    }
+</script>
 </body>
 </html>
 

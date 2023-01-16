@@ -115,9 +115,10 @@ function calculateDistance(){
         var meterLat = gapLat*30.887;
         var meterLon = gapLon*24.778;
         var distance = Math.sqrt(Math.pow(meterLon, 2) + Math.pow(meterLat, 2));
+        distance /= 1000;
         distance = distance.toFixed(2);
-        element.innerHTML = distance + "m";
-    }, 1000);
+        element.innerHTML = distance + "km";
+    }, 10);
 }
 
 /** footer: 즐겨찾기 버튼 클릭 **/
