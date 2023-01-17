@@ -1,10 +1,14 @@
 package com.foodhunter;
 
+//import com.foodhunter.DAO.ReviewFileUpload;
 import com.foodhunter.DAO.ReviewFileUpload;
 import com.foodhunter.DTO.Favorite;
 import com.foodhunter.DTO.Review;
+import com.foodhunter.DTO.Store;
 import com.foodhunter.service.FavoriteService;
 import com.foodhunter.service.ReviewService;
+import com.foodhunter.service.StoreService;
+import com.foodhunter.service.StoreServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,25 +22,30 @@ import java.util.List;
 public class StoreController {
     private final ReviewService reviewService;
     private final FavoriteService favoriteService;
+    private final StoreServiceImpl storeService;
 
     @Autowired
-    public StoreController(ReviewService reviewService, FavoriteService favoriteService) {
+    public StoreController(ReviewService reviewService, FavoriteService favoriteService, StoreServiceImpl storeService) {
         this.reviewService = reviewService;
         this.favoriteService = favoriteService;
+        this.storeService = storeService;
     }
 
     /**가게 로드 -> 가게, 리뷰 정보 가져오기**/
     @RequestMapping("/store")
-    public String store(Model model) {
-        // 리뷰 storeId로 필터링해서 가져오기 -> 임의로 1번으로 가져와서 테스트 진행
-        List<Review> reviews = reviewService.readByStoreId(1L);
-        //List<Review> findByUserIdTest = reviewService.readByUserId(1L); -> 구현 성공 : Todo: 마이페이지에서 적용하기
-        // Todo : 가게 객체 전달하기
+    public String store(VisitForm form, Model model) {
+        List<Review> reviews =reviewService.readByStoreId(form.getStoreId());
+        Store store = new Store();
+        if(form.getStoreId() != null) store = storeService.readOneStore(form.getStoreId());
+        System.out.println("store name : " + store.getName());
         Favorite favorite = new Favorite();
         favorite.setStoreId(1L);
-        favorite.setUserId(1L);
+        favorite.setUserId(2L);
         Long currentLike = favoriteService.current(favorite);
-        if(currentLike > 0L) model.addAttribute("like", true);
+        if(currentLike > 0L) {
+            model.addAttribute("like", true);
+        }
+        model.addAttribute("store", store);
         model.addAttribute("reviews", reviews);
         model.addAttribute("reviewError", false);
         model.addAttribute("delete", false);

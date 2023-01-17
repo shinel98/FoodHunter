@@ -46,7 +46,7 @@ public class ReviewService {
         return removedReviewId; // Todo: 삭제할 리뷰가 없는 에러 상황에서는 -1L 반환되니 컨트롤러에서 처리하기
     }
 
-    /** 리뷰 조회 (유저별 -> 마이페이지) **/
+    /** 리뷰 조회 (유저별 -> 마이페이지) 시준학우님 이거 쓰면 됩니다!! **/
     public List<Review> readByUserId(Long userId){
         List<Review> result = reviewDAO.findByUserId(userId);
         return result;

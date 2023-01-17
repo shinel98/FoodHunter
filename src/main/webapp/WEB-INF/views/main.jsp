@@ -272,6 +272,7 @@
             .reportButton {
                 margin-right: -4%;
                 margin-left: 20px;
+                height: 30px;
             }
             .storesIcon img{
                 width: 70px;
@@ -386,6 +387,10 @@
                 }
             }
         });
+
+        function finish(){
+            location.href = "/main";
+        }
     </script>
 
 </head>
@@ -397,7 +402,7 @@
             <div id="reportFinished-modal" class="card shadow bg-white" style="visibility: hidden">
                 <div><h4>가게 제보가 완료되었습니다.</h4></div>
                 <iframe src="https://embed.lottiefiles.com/animation/96081"  width="100%" style="margin: auto"></iframe>
-                <button id="confirm" class="text-white btn btn-review-finished" onclick="confirm()">확인</button>
+                <button id="confirm" class="text-white btn btn-review-finished" onclick="finish()">확인</button>
             </div>
         </div>
         <div class="row g-0 text-center min-vh-100">
@@ -509,7 +514,10 @@
                                 <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">로딩 중..</div>
                                 <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">${sList.likeCnt}</div>
                                 <button class="reportButton">신고하기</button>
-                                <button class="visitButton">방문하기</button>
+                                <form action="${sList.url}">
+                                <input type="hidden" name="storeId" value=${sList.storeId}>
+                                <button class="visitButton" >방문하기</button>
+                                </form>
                             </div>
                         </div>
                     </c:forEach>
@@ -841,11 +849,6 @@
             getUserLocation();
         }
         calculateDistance()
-
-
-        function confirm(){
-            location.href = "/main";
-        }
 
         // 선택한 태그 색상 변경
         var currentMenu;

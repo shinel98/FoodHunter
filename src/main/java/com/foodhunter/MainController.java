@@ -21,10 +21,13 @@ import java.util.Map;
 import java.util.Objects;
 
 @Controller
-
 public class MainController {
-    @Autowired
     private StoreService storeService;
+
+    @Autowired
+    public MainController(StoreService storeService) {
+        this.storeService = storeService;
+    }
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public ModelAndView readStores(Model model,
@@ -82,8 +85,6 @@ public class MainController {
         mv.setViewName("main");
         return mv;
     }
-
-
 
     @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value="/nickname", method= RequestMethod.GET)

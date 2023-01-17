@@ -1,9 +1,7 @@
 package com.foodhunter;
 
 import com.foodhunter.DAO.*;
-import com.foodhunter.service.FavoriteService;
-import com.foodhunter.service.ReviewService;
-import com.foodhunter.service.VisitService;
+import com.foodhunter.service.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +29,12 @@ public class SpringConfig {
     public FavoriteService favoriteService(){ return new FavoriteService(favoriteRepository());}
 
     @Bean
+    public MarkerService markerService(){return new MarkerService(markerRepository());}
+
+    @Bean
+    public StoreServiceImpl storeServiceImpl(){return new StoreServiceImpl(storeRepository());}
+
+    @Bean
     public ReviewDAO reviewRepository() {
          return new ReviewDAOImpl(sqlSession);
     }
@@ -42,4 +46,10 @@ public class SpringConfig {
 
     @Bean
     public FavoriteDAO favoriteRepository(){ return new FavoriteDAOImpl(sqlSession);}
+
+    @Bean
+    public MarkerDAO markerRepository(){return new MarkerDAOImpl(sqlSession);}
+
+    @Bean
+    public StoreDAO storeRepository(){return new StoreDAOImpl(sqlSession);}
 }
