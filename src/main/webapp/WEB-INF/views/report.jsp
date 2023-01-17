@@ -94,7 +94,7 @@
 <script>
   var mapContainer = document.getElementById('map'), // 지도를 표시할 div
           mapOption = {
-            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            center: new kakao.maps.LatLng(36.10367691445477, 129.38881155932162), // 지도의 중심좌표
             level: 3 // 지도의 확대 레벨
           };
   // 지도를 생성합니다
@@ -119,7 +119,7 @@
     marker.setPosition(latlng);
 
     var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-    message += '경도는 ' + latlng.getLon() + ' 입니다';
+    message += '경도는 ' + latlng.getLng() + ' 입니다';
 
     var resultDiv = document.getElementById('centerAddr');
     resultDiv.innerHTML = message;
