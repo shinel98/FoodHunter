@@ -31,19 +31,20 @@ public class VisitController {
         model.addAttribute("visitForm", form);
         return "visit";}
 
-    @PostMapping("/visit/authenticate")
+    @RequestMapping("/visit/authenticate")
     public String authenticate(VisitForm form, Model model){
         Visit visit = new Visit();
         // 임의로 두 값만 설정해서 테스트 진행함
-        visit.setUsrId(form.getUsrId());
+        visit.setUsrId(form.getUserId());
         visit.setStoreId(form.getStoreId());
 
         visitService.authenticate(visit);
 
         Store store = storeService.readOneStore(form.getStoreId());
+        System.out.println(form.getStoreId());
 
         model.addAttribute("visitFinished", true);
-        model.addAttribute("store", store);
+        model.addAttribute("storeId", form.getStoreId());
         return "redirect:/store";
     }
 

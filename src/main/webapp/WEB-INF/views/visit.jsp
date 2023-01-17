@@ -5,6 +5,7 @@
   Time: 9:58 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
@@ -57,25 +58,17 @@
 
             <!--footer-->
             <footer id="footer" class="fixed-bottom border border-black mobile-view bg-white shadow">
-                <form action="/visit/authenticate" method="post">
-                    <!--임의로 1, 1로 설정해서 controller에 넘김-->
-                    <input type="number" name="usrId" value=1 style="display:none">
-                    <input type="number" name="storeId" value=1 style="display:none">
+                <form action="/visit/authenticate" onsubmit="return validateForm();">
+                    <input type="hidden" name="userId" value=1>
+                    <input type="hidden" name="storeId" value=${visitForm.storeId}>
 
-                    <p>5m이내에 접근하면 붕어빵 아이콘을 눌러서 인증하세요.</p>
+                    <p>5m 이내에 접근하면 붕어빵 아이콘을 눌러서 인증하세요.</p>
                     <!--방문인증하기-->
                     <div class="progress">
                         <!--남은 거리에 따라 width %로 진행 상황 표시-->
                         <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
-                            <form action="/visit/authenticate">
-                                <input type="hidden" name="userId" value=${visitForm.userId}>
-                                <input type="hidden" name="categoryId" value=${visitForm.storeId}>
                                 <input class="col btn-category-apply-modal" type="submit" id="submit-btn" value="인증하기">
-                            </form>
-
-                            <!--<img class="categoryImg" src="/img/category-fish-bread.png" class="col" alt="category image">-->
-                            <!--Todo: 남은 거리 계산-->
-                            <p id="left-distance">인증까지 500m</p>
+                            <p id="left-distance">인증까지 m</p>
                         </div>
                     </div>
                 </form>
@@ -86,6 +79,9 @@
 </div>
 
 <script>
+    $(function(){
+        calculateDistance();
+    });
     function calculateDistance(){
 
         var myLat, myLon;
@@ -112,8 +108,17 @@
             var meterLat = gapLat*30.887;
             var meterLon = gapLon*24.778;
             var distance = Math.sqrt(Math.pow(meterLon, 2) + Math.pow(meterLat, 2));
-            element.innerHTML = distance.toFixed(0) + "m";
+            element.innerHTML = "인증까지 " + distance.toFixed(0) + " m";
         }, 10);
+    }
+
+    function validateForm(){
+        var element = document.getElementById("left-distance");
+        var str = element.innerText.split(" ");
+        if(str[1] > 5){
+            alert("5m 이내에 접근해야 인증이 가능합니다.")
+            return false;
+        }
     }
 </script>
 </body>

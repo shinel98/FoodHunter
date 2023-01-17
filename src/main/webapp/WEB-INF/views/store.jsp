@@ -331,7 +331,6 @@
             </div>
         </div>
     </div>
-    // TODO: 파일 업로드 구현
     <div id="black-bg" style="z-index: 99;">
         <div id="review-write-container" class="card shadow bg-white" style="visibility: hidden;">
             <!--취소 버튼-->
@@ -364,14 +363,18 @@
         </div>
     </div>
 
-    <!--방문인증 완료 모달-->
-    <div style="z-index: 100; position: relative; margin: auto;">
-        <div id="visitFinished-modal" class="card shadow bg-white" style="visibility:hidden">
-            <div><h4>방문인증이 완료되었습니다.</h4></div>
-            <iframe src="https://embed.lottiefiles.com/animation/42183" width="100%" style="margin: auto"></iframe>
-            <button id="confirm" class="text-white btn btn-review-finished" onclick="confirm()">확인</button>
+    <form action="/store">
+        <input type="hidden" name="storeId" value=${store.id}>
+        <!--방문인증 완료 모달-->
+        <div style="z-index: 100; position: relative; margin: auto;">
+            <div id="visitFinished-modal" class="card shadow bg-white" style="visibility:hidden">
+                <div><h4>방문인증이 완료되었습니다.</h4></div>
+                <iframe src="https://embed.lottiefiles.com/animation/42183" width="100%" style="margin: auto"></iframe>
+                <button type="submit" id="confirm" class="text-white btn btn-review-finished">확인</button>
+            </div>
         </div>
-    </div>
+    </form>
+
 
     <!--리뷰 에러 모달-->
     <div style="z-index: 100; position: relative; margin: auto;">
@@ -394,6 +397,7 @@
             <button id="deleteConfirm" class="text-white btn btn-review-finished" onclick="confirm()">확인</button>
         </div>
     </div>
+
     <script>
         function randomName(){
             try {
@@ -586,6 +590,7 @@
 <script>
 
     $(function (){
+        console.log("reloaded");
         calculateDistance();
         const searchParams = new URLSearchParams(location.search);
         for (const param of searchParams) {
@@ -606,8 +611,8 @@
                 }
             }
             else if(param.at(0) === "like"){
-                alert("true");
                 if(Boolean(param.at(1))) {
+                    console.log("true");
                     let buttons = document.getElementsByClassName("favoriteBtn");
                     //let icon = buttons.item(0).classList.item(2);
                     for(let i=0; i<buttons.length; i++){
@@ -615,8 +620,9 @@
                         buttons.item(i).classList.add('bi-heart-fill');
                     }
                     console.log("heart=true");
-                    //location.href = "redirect:/store";
+                    location.href = "redirect:/store";
                 }
+                else console.log("false");
             }
         }
 
@@ -718,7 +724,7 @@
                 favoriteBtn[i].classList.remove('bi-heart');
                 favoriteBtn.item(i).classList.add('bi-heart-fill');
             }
-            //location.href = "/store/like";
+            location.href = "/store/like";
         } // 즐겨찾기 해제한 경우
         else {
             for(let i=0; i<favoriteBtn.length; i++){
@@ -726,7 +732,7 @@
                 favoriteBtn.item(i).classList.add('bi-heart');
 
             }
-            //location.href = "/store/unlike";
+            location.href = "/store/unlike";
         }
     }
 

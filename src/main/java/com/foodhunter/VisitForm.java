@@ -1,15 +1,15 @@
 package com.foodhunter;
 
 public class VisitForm {
-    Long usrId;
+    Long userId;
     Long storeId;
 
-    public Long getUsrId() {
-        return usrId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUsrId(Long usrId) {
-        this.usrId = usrId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Long getStoreId() {

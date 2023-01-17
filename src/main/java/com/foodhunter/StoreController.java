@@ -37,11 +37,15 @@ public class StoreController {
         List<Review> reviews =reviewService.readByStoreId(form.getStoreId());
         Store store = new Store();
         if(form.getStoreId() != null) store = storeService.readOneStore(form.getStoreId());
+        System.out.println("store name : " + store.getName());
         Favorite favorite = new Favorite();
         favorite.setStoreId(1L);
-        favorite.setUserId(1L);
+        favorite.setUserId(2L);
         Long currentLike = favoriteService.current(favorite);
-        if(currentLike > 0L) model.addAttribute("like", true);
+        if(currentLike > 0L) {
+            model.addAttribute("like", true);
+        }
+        model.addAttribute("store", store);
         model.addAttribute("reviews", reviews);
         model.addAttribute("reviewError", false);
         model.addAttribute("delete", false);
