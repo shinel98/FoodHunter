@@ -272,6 +272,7 @@
             .reportButton {
                 margin-right: -4%;
                 margin-left: 20px;
+                height: 30px;
             }
             .storesIcon img{
                 width: 70px;
