@@ -203,18 +203,16 @@
   </hearder>
   <!--main-->
   <div id="main" style="width: 500px; height: 100%; margin: auto;">
-    <form id="form-main" method="post" action="/report/finish">
+    <form id="form-main" method="post">
       <input type="number" name="lat" value="${markerForm.lat}" hidden>
       <input type="number" name="lon" value="${markerForm.lon}" hidden>
       <input type="number" value="1" name="userId" hidden>
       <div id="location" class="form-section">
           <div><h5>가게 위치</h5></div>
-          <!--Todo : 기본 값으로 지도에서 선택한 위치 넣기-->
           <div><input class="form-control form-control-lg" type="text" value="포항시 북구 흥해흡 558 한동대학교" aria-label=".form-control-lg example" name="location"></div>
       </div>
       <div id="name" class="form-section">
         <div style="position: relative;"><h5>가게 이름</h5><button id="randomButton" onclick="randomName();">랜덤생성</button></div>
-        <!--Todo : 기본 값으로 이름 자동생성 api 결과 넣기-->
         <div><input id="randomName" class="form-control form-control-lg" type="text" aria-label=".form-control-lg example" name="name"></div>
       </div>
       <div id="category" class="form-section">
@@ -231,8 +229,8 @@
           <c:forEach var="category" items="${categoryList}">
             <div class="col-md-3">
               <div class="custom-control custom-checkbox image-checkbox">
-                <input name="categoryId" type="checkbox" class="custom-control-input" value=${category.categoryId} id="${category.categoryId}"><span>${category.categoryName}</span>
-                <label class="custom-control-label" for="${category.categoryId}">
+                <input name="categoryId" type="checkbox" class="custom-control-input" value=${category.id} id="${category.id}"><span>${category.categoryName}</span>
+                <label class="custom-control-label" for="${category.id}">
                   <img src="${category.icon}" alt="#" class="img-fluid">
                 </label>
               </div>
@@ -312,7 +310,6 @@
                 var arr = name.split(" ");
                 var result="";
                 for(var i=0; i<arr.length-1; i++) result += arr[i] + " ";
-                <!--Todo: 마지막에 카테고리 이름 넣어서 랜덤 이름 만들기-->
                 result += "붕어빵";
                 document.getElementById("randomName").value = result;
               });
