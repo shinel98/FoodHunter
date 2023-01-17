@@ -117,7 +117,7 @@ public class MainController {
 //            distance = distance*100;
 //            System.out.println(distance);
 //           distance = distance.toFixed(2);
-            values[i++] = Double.valueOf(Math.round(distance*100));
+            values[i++] = Double.valueOf(Math.round(distance * 10000) / 100.0);
             System.out.println(values[i-1]);
         }
         // var gapLat = (myLatSec > destLatSec) ? myLatSec - destLatSec : destLatSec - myLatSec;

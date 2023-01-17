@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="resources/css/bootstrap-social.css">
     <!-- 카카오 api 사용을 위한 스크립트 -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+
 
 <%--   구글로그인에 사용하는 스크립 시온 --%>
 <%--    <meta name="google-signin-client_id" content="157055717235-djh98t5kk3atuabnlcoaa9nl9jtvn716.apps.googleusercontent.com">--%>
@@ -41,6 +43,10 @@
                 height: 350px;
             }
         }
+        .login_text {
+            text-decoration: none;
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -52,28 +58,80 @@
                     <img src="/img/login.png" id="login-img" alt="login">
                     <h1>붕어빵 사냥꾼</h1>
                     <div class="d-grid mt-3 mb-2">
-                        <button class="btn btn-kakao btn-login text-uppercase fw-bold" type="submit" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=1501bf8447efb2ba05b4183faf2dd8a2&redirect_uri=http://localhost:8080/main&response_type=code'";>
-                            <i class="fab xi-kakaotalk xi-x me-2"></i>카카오 계정으로 로그인
-                        </button>
+<%--                        <button class="btn btn-kakao btn-login text-uppercase fw-bold" type="submit" onclick="location.href='javascript:kakaoLogin()'";>--%>
+<%--                            <i class="fab xi-kakaotalk xi-x me-2"></i>카카오 계정으로 로그인--%>
+<%--                        </button>--%>
+<%--    <div class="login-btn w-100 p-3 mb-3 rounded border-secondary"><img style="width: 20px;" src="resources/img/teamProject/kakao.png"/><a class="w-100" href="javascript:kakaoLogin();"  >카카오로 로그인하기  </a></div>--%>
+    <div class="btn btn-kakao btn-login text-uppercase fw-bold"><i class="fab xi-kakaotalk xi-x me-2"></i><a class="w-100 login_text" href="javascript:kakaoLogin();"  >카카오로 로그인하기  </a></div>
                     </div>
-                    <div class="d-grid mb-2">
-                        <button class="btn btn-google btn-login text-uppercase fw-bold" type="submit" onclick="test();">
+<%--                    <div class="d-grid mb-2">--%>
+<%--                        <button class="btn btn-google btn-login text-uppercase fw-bold" type="submit" onclick="test();">--%>
 
-                                <div id="g_id_onload"
-                                     data-client_id="157055717235-djh98t5kk3atuabnlcoaa9nl9jtvn716"
-                                     data-ux_mode="redirect"
-                                     data-login_uri="http://localhost:8080/main">
-                                </div>
-                                <div class="g_id_signin" data-type="standard"></div>
+<%--                                <div id="g_id_onload"--%>
+<%--                                     data-client_id="157055717235-djh98t5kk3atuabnlcoaa9nl9jtvn716"--%>
+<%--                                     data-ux_mode="redirect"--%>
+<%--                                     data-login_uri="http://localhost:8080/main">--%>
+<%--                                </div>--%>
+<%--                                <div class="g_id_signin" data-type="standard"></div>--%>
 
-                        </button>
+<%--                        </button>--%>
 
-                    </div>
+<%--                    </div>--%>
 
                 </div>
             </div>
             <div class="col mobile-lr"></div>
         </div>
     </div>
+
+    <script>
+        //kakao login
+        // window.Kakao.init("6427a2da1670b1b5f26b5608136a6892");
+        Kakao.init("6427a2da1670b1b5f26b5608136a6892");
+
+        function kakaoLogin() {
+        window.Kakao.Auth.login({
+            scope: 'profile_nickname, profile_image, account_email',
+            success : function(response) {
+                console.log(response)
+                window.Kakao.API.request({
+                    url: '/v2/user/me',
+                    success: (res) => {
+                        const kakao_account = res.kakao_account;
+                        const name = res.properties.nickname;
+                        const email = res.kakao_account.email;
+
+                        $.ajax({
+                            type: 'POST',
+                            url : 'snsLogin',
+                            async: false,
+                            data: {
+                                name : name,
+                                email : email,
+                            },
+                            success: function(data){
+                                console.log("카카오 로그인 성공");
+                                console.log(data);
+                                <%--location.href="<%=request.getContextPath()%>/nickname"--%>
+                                location.href="<%=request.getContextPath()%>/"+data;
+                                //history.back();
+                            },
+                            error:function(){
+                                console.log("카카오 데이터 가져오기 실패");
+                                //location.reload();
+                            }
+                        })
+                    }
+                });
+
+            },
+            fail : function(error) {
+                console.log(error);
+            }
+        });
+    };
+</script>
 </body>
 </html>
+
+<%--'https://kauth.kakao.com/oauth/authorize?client_id=1501bf8447efb2ba05b4183faf2dd8a2&redirect_uri=http://localhost:8080/main&response_type=code'--%>

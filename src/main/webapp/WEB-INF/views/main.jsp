@@ -121,7 +121,7 @@
         }
         #tagsContainer {
             width: 100%;
-            /*justify-content: center;*/
+            justify-content: center;
             height: 6%;
             display: flex;
             flex-wrap: nowrap;
@@ -420,10 +420,10 @@
                     <c:forEach var="tagList" items="${allCategories}" varStatus="status">
                         <c:choose>
                             <c:when test="${status.first}">
-                                <div class="tags clicked">${tagList.categoryName}</div>
+                                <div class="tags clicked ${status.index}">${tagList.categoryName}</div>
                             </c:when>
                             <c:otherwise>
-                                <div class="tags">${tagList.categoryName}</div>
+                                <div class="tags ${status.index}">${tagList.categoryName}</div>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
@@ -431,7 +431,7 @@
 
                 <div id="storesContainer">
                 <c:forEach var="sList" items="${allMarkers}">
-                    <div class="stores">
+                    <div class="stores ${sList.categoryName} ${sList.xLocation} ${sList.yLocation}">
                         <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
                         </div>
                         <div class="storesInfoContainer">
@@ -440,11 +440,11 @@
                                 ${sList.name}
                             </div>
                             <div class="storesTag">
-                                ${sList.categoryName}
+                                #${sList.categoryName}
                             </div>
                         </div>
                         <div class="storesDetailContainer">
-                            <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
+                            <div class="storesDistance"><img src="img/location.png"  style="width:25px; height:25px;">로딩 중..</div>
                             <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">${sList.likeCnt}</div>
                             <button class="reportButton">신고하기</button>
                             <button class="visitButton">방문하기</button>
@@ -484,17 +484,17 @@
                     <c:forEach var="tagList" items="${allCategories}" varStatus="status">
                         <c:choose>
                             <c:when test="${status.first}">
-                                <div class="tags clicked">${tagList.categoryName}</div>
+                                <div class="tags clicked ${status.index}">${tagList.categoryName}</div>
                             </c:when>
                             <c:otherwise>
-                            <div class="tags">${tagList.categoryName}</div>
+                            <div class="tags ${status.index}">${tagList.categoryName}</div>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
                 </div>
                 <div id="webStoresContainer">
                     <c:forEach var="sList" items="${allMarkers}">
-                        <div class="webStores">
+                        <div class="webStores ${sList.categoryName} ${sList.xLocation} ${sList.yLocation}">
                             <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
                             </div>
                             <div class="storesInfoContainer">
@@ -502,11 +502,11 @@
                                         ${sList.name}
                                 </div>
                                 <div class="storesTag">
-                                    ${sList.categoryName}
+                                    #${sList.categoryName}
                                 </div>
                             </div>
                             <div class="storesDetailContainer">
-                                <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
+                                <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">로딩 중..</div>
                                 <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">${sList.likeCnt}</div>
                                 <button class="reportButton">신고하기</button>
                                 <button class="visitButton">방문하기</button>
@@ -609,71 +609,102 @@
         // });
         // 마커 이미지의 이미지 주소입니다
         var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+        var coordArr = [];
+        var markers = [];
+            function filtering () {
+                const button = document.querySelectorAll('.tags ');
+                const stores = document.querySelectorAll('.stores , .webStores');
+                for(let i=0; i<stores.length/2; i++) {
+                        stores[i].style.display = 'block';
+                        stores[i + stores.length / 2].style.display = 'block';
+                        coordArr.push(stores[i].classList.item(2));
+                        coordArr.push(stores[i].classList.item(3));
+                }
+                console.log(coordArr);
+
+                button.forEach(b => b.addEventListener('click', (e) => {
+                    coordArr.length = 0;
+                    e.preventDefault()
+                    const filter = e.target.innerText;
+
+                    for(let i=0; i<stores.length/2; i++){
+                        if(filter==='전체'){
+                            stores[i].style.display = 'block';
+                            stores[i+stores.length/2].style.display = 'block';
+                            coordArr.push(stores[i].classList.item(2));
+                            coordArr.push(stores[i].classList.item(3));
+                        } else {
+                            if(stores[i].classList.contains(filter)) {
+                                stores[i].style.display = 'block';
+                                stores[i+stores.length/2].style.display = 'block';
+                                coordArr.push(stores[i].classList.item(2));
+                                coordArr.push(stores[i].classList.item(3));
+                            } else {
+                                stores[i].style.display = 'none';
+                                stores[i+stores.length/2].style.display = 'none';
+                            }
+                        }
+                    }
 
 
-        <c:forEach items="${allMarkers}" var="location">
-        // for (var i = 0; i < positions.length; i ++) {
+                    hideMarkers();
+                    showMarkers();
+                }))
 
-            // 마커 이미지의 이미지 크기 입니다
-            var imageSize = new kakao.maps.Size(24, 35);
+                showMarkers();
+            }
 
-            // 마커 이미지를 생성합니다
-            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+            filtering();
 
-            // 마커를 생성합니다
-            var latlng = new kakao.maps.LatLng(${location.xLocation}, ${location.yLocation});
-            var marker = new kakao.maps.Marker({
-                map: map, // 마커를 표시할 지도
-                // position: positions[i].latlng, // 마커를 표시할 위치
-                position: latlng, // 마커를 표시할 위치
-                //title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                title : '${location.name}', // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                image : markerImage // 마커 이미지
-            });
-            // var content = '<div class="wrap">' +
-            //     '    <div class="info">' +
-            //     '        <div class="title">' +
-            //     '            카카오 스페이스닷원' +
-            //     '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
-            //     '        </div>' +
-            //     '        <div class="body">' +
-            //     '            <div class="img">' +
-            //     '                <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
-            //     '           </div>' +
-            //     '            <div class="desc">' +
-            //     '                <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>' +
-            //     '                <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>' +
-            //     '                <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' +
-            //     '            </div>' +
-            //     '        </div>' +
-            //     '    </div>' +
-            //     '</div>';
-            //
-            //
-            // var overlay = new kakao.maps.CustomOverlay({
-            //     content: content,
-            //     map: map,
-            //     position: marker.getPosition()
-            // });
-            //
-            // kakao.maps.event.addListener(marker, 'click', function() {
-            //     overlay.setMap(map);
-            // });
-            //
-            // function closeOverlay() {
-            //     overlay.setMap(null);
-            // }
-        //}
-            </c:forEach>
+
+
+            function setMarkers(map) {
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(map);
+                }
+            }
+
+
+            function hideMarkers() {
+
+                setMarkers(null);
+            }
+
+            function addMarker(position) {
+
+
+                var marker = new kakao.maps.Marker({
+                    position: position
+                });
+
+                marker.setMap(map);
+                markers.push(marker);
+            }
+<%--        <c:forEach items="${allMarkers}" var="location">--%>
+        function showMarkers() {
+
+            for (let i = 0; i < coordArr.length; i = i + 2) {
+
+
+                addMarker(new kakao.maps.LatLng(coordArr[i], coordArr[i + 1]));
+
+
+            }
+        }
         function setCenter(position) {
             // var loca = new kakao.maps.LatLng(latitude, longitude);
             map.setCenter(position);
         }
 
         function myLocation(locPosition, message){
+            var imageSize = new kakao.maps.Size(24, 35);
+
+            // 마커 이미지를 생성합니다
+            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
             var marker = new kakao.maps.Marker({
                 map: map,
-                position: locPosition
+                position: locPosition,
+                image: markerImage // 마커 이미지
             });
 
             var infowindow = new kakao.maps.InfoWindow({
@@ -734,7 +765,21 @@
                 success:function(data){
 
                     console.log("ajax 성공!");
-                    console.log(data);
+                    let storeDistance = document.getElementsByClassName("storesDistance");
+                    // console.log(data);
+
+                    for(let i=0; i<storeDistance.length/2; i++){
+                        // console.log("0부터 절반까지: " + data[i]);
+                        // console.log(storeDistance[i].innerHTML);
+                        storeDistance[i].innerHTML = '<img src="img/location.png"' +  ' style="width:25px; height:25px;">' + data[i] + 'km';
+                    }
+                    for(let i=storeDistance.length/2; i<storeDistance.length; i++){
+                        // console.log("절반부터 0까지: " + data[i%(storeDistance.length/2)]);
+                        // console.log(storeDistance[i].innerHTML);
+                        storeDistance[i].innerHTML = '<img src="img/location.png"' +  ' style="width:25px; height:25px;">' + data[i%(storeDistance.length/2)] + 'km';
+                    }
+
+                    // console.log(storeDistance);
                 },
                 error:function(){
                     console.log("ajax 실패ㅠ");
@@ -775,8 +820,8 @@
                     navigator.geolocation.getCurrentPosition(function(position) {
                         myLat = position.coords.latitude; // 위도
                         myLon = position.coords.longitude; // 경도
-                        console.log("myLat: " + myLat);
-                        console.log("myLon: " + myLon);
+                        // console.log("myLat: " + myLat);
+                        // console.log("myLon: " + myLon);
                         var myLatSec = myLat
                         var myLonSec = myLon
                         ajaxCall(myLatSec, myLonSec);
@@ -812,10 +857,17 @@
             // }
             for (var i = 0; i < menuLinks.length; i++){
                 menuLinks[i].classList.remove('clicked');
-                console.log(menuLinks[i]);
+                // console.log(menuLinks[i]);
             }
             this.classList.add('clicked');
-            currentMenu = this;
+
+            console.log(menuLinks[this.classList.item(1)]);
+
+            let index = Number(this.classList.item(1))+ Number(menuLinks.length/2);
+            menuLinks[this.classList.item(1)].classList.add('clicked');
+            menuLinks[index].classList.add('clicked');
+
+            // currentMenu = this;
         }
 
 
