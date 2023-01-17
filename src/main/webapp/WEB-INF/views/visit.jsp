@@ -67,7 +67,12 @@
                     <div class="progress">
                         <!--남은 거리에 따라 width %로 진행 상황 표시-->
                         <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
-                            <input class="col btn-category-apply-modal" type="submit" id="submit-btn" value="인증하기">
+                            <form action="/visit/authenticate">
+                                <input type="hidden" name="userId" value=${visitForm.userId}>
+                                <input type="hidden" name="categoryId" value=${visitForm.storeId}>
+                                <input class="col btn-category-apply-modal" type="submit" id="submit-btn" value="인증하기">
+                            </form>
+
                             <!--<img class="categoryImg" src="/img/category-fish-bread.png" class="col" alt="category image">-->
                             <!--Todo: 남은 거리 계산-->
                             <p id="left-distance">인증까지 500m</p>

@@ -35,7 +35,8 @@ public class StoreController {
     @RequestMapping("/store")
     public String store(VisitForm form, Model model) {
         List<Review> reviews =reviewService.readByStoreId(form.getStoreId());
-        Store store = storeService.readOneStore(form.getStoreId());
+        Store store = new Store();
+        if(form.getStoreId() != null) store = storeService.readOneStore(form.getStoreId());
         Favorite favorite = new Favorite();
         favorite.setStoreId(1L);
         favorite.setUserId(1L);
@@ -44,8 +45,6 @@ public class StoreController {
         model.addAttribute("reviews", reviews);
         model.addAttribute("reviewError", false);
         model.addAttribute("delete", false);
-        model.addAttribute("store", store);
-        System.out.println(store.getName());
         return "store";
     }
 
