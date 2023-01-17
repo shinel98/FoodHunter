@@ -87,7 +87,7 @@
   <div class="row g-0 text-center min-vh-100">
     <div class="col leftContainer"></div>
     <div class="col mobile">
-      <form action="./main" method="get">
+        <form method="post" action="<%=request.getContextPath()%>/loginPost">
       <div class="mainContainer">
         <div class="my">저는 닉네임 </div>
         <div class="name">
@@ -95,7 +95,6 @@
                minlength="4" maxlength="8">
         </div>
         <div class="is">로 시작할래요</div>
-<%--        <input id="send" type="submit" value="">--%>
         <button id="send" type="submit" value=""><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
         </svg></button>
@@ -105,7 +104,7 @@
       </form>
         <div>
             <button class="btn btn-dark" onclick="recreate();">랜덤생성</button>
-            <button class="btn btn-dark" onclick="use();">사용하기</button>
+<%--            <button class="btn btn-dark" onclick="use();">사용하기</button>--%>
         </div>
     </div>
     <div class="col rightContainer"></div>

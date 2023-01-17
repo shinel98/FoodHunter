@@ -3,19 +3,20 @@ package com.foodhunter.DTO;
 import java.util.Date;
 
 public class Category {
-    private long categoryId;
+    private long id;
     private String categoryName;
     private String icon;
     private long requestStatus;
     private long requestCnt;
     private Date regDate;
 
-    public long getCategoryId() {
-        return categoryId;
+
+    public long getId() {
+        return id;
     }
 
-    public void setCategoryId(long categoryId) {
-        this.categoryId = categoryId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getCategoryName() {
