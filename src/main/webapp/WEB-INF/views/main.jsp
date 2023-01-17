@@ -410,7 +410,7 @@
                         <input id="search_bar" type="search" class="form-control rounded" placeholder="위치 검색 중.." aria-label="Search" aria-describedby="search-addon" readonly/>
                         <%--                        <div id="search_bar"></div>--%>
                         <span class="input-group-text border-0" id="search-addon">
-                        <a href="./"><i class="fas fa-search"></i></a>
+                        <a href="/search"><i class="fas fa-search"></i></a>
                         </span>
                     </div>
                 </div>
@@ -475,7 +475,7 @@
                         <input id="webSearch_bar" type="search" class="form-control rounded" placeholder="위치 검색 중.." aria-label="Search" aria-describedby="search-addon" readonly/>
 
                         <span class="input-group-text border-0" id="search-addon">
-                        <a href="./"><i class="fas fa-search"></i></a>
+                        <a href="/search"><i class="fas fa-search"></i></a>
                         </span>
                     </div>
 
@@ -742,6 +742,22 @@
             });
         }
 
+        function getSearchLocation(){
+            latitude = '${searchLat}';
+            longitude = '${searchLng}';
+            let searchbar = document.getElementById('search_bar');
+            let webSearchbar = document.getElementById('webSearch_bar');
+            console.log("검색 위치 불러오기 성공");
+
+            searchbar.value = '${searchPlaceName}';
+            webSearchbar.value = '${searchPlaceName}';
+            console.log('${searchPlaceName}');
+
+            let position = new kakao.maps.LatLng(latitude, longitude);
+            let message = '<div style="padding:5px;">${searchPlaceName}</div>';
+            myLocation(position, message);
+        }
+
         function calculateDistance(){
 
             var myLat, myLon;
@@ -774,7 +790,11 @@
 
         }
 
-        getUserLocation();
+        if (${retSearch == "true"}) {
+            getSearchLocation();
+        } else {
+            getUserLocation();
+        }
         calculateDistance()
 
 
