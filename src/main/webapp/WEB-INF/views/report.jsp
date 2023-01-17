@@ -14,6 +14,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
   <style>
     #header {
       border-radius: 0 0 20px 20px;
@@ -75,7 +76,9 @@
           <div class="d-grid mt-3">
             <p class="font-weight-bold">맛집 위치는 바로 여기!</p>
           </div>
-          <form name="aform" id="aform" method="post">
+          <form name="aform" id="aform" method="post" action="/report/detail">
+            <input id="lat" name="lat" type="text" hidden="hidden" value="129.4020908227123423">
+            <input id="lon" name="lon" type="text" hidden="hidden" value="36.081094115491084">
             <input type="text" class="form-control mb-3" id="location" readonly><span id="centerAddr"></span>
             <div class="d-grid my-3">
               <button class="btn btn-block btn-warning" type="submit" value="위치설정">위치 설정하기</button>
@@ -116,7 +119,7 @@
     marker.setPosition(latlng);
 
     var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-    message += '경도는 ' + latlng.getLng() + ' 입니다';
+    message += '경도는 ' + latlng.getLon() + ' 입니다';
 
     var resultDiv = document.getElementById('centerAddr');
     resultDiv.innerHTML = message;

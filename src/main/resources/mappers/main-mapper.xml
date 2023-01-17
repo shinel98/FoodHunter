@@ -15,6 +15,12 @@
         <select id="getStores" resultType="com.foodhunter.DTO.Store">
             select * from stores_table order by visitCnt;
         </select>
+    <select id="getOneStore" parameterType="int" resultType="com.foodhunter.DTO.Store">
+        select * from stores_table where id = ${storeId};
+    </select>
+    <select id="getStoresDescending" resultType="com.foodhunter.DTO.Store">
+        select * from stores_table order by id desc ;
+    </select>
 
 <!--        <select id="getStoresLike" resultType="int">-->
 <!--            select count(storeId) from stores_table join like_table where like_table.storeId = stores_table.id;-->
@@ -34,6 +40,14 @@
         <select id="getLikes" resultType="com.foodhunter.DTO.Likes">
 --             select storeId, count(storeId) from like_table group by storeId;
             select storeId, count(storeId) as likeCnt from like_table group by storeId;
+        </select>
+        <insert id="insertMarker">
+            insert into markers_table (storeId, url, xLocation, yLocation, regDate)
+            values (#{storeId}, #{url}, #{xLocation}, #{yLocation}, NOW());
+        </insert>
+        <select id="insertStore">
+            insert into stores_table (name, categoryId, userId, visitCnt, regDate)
+            values (#{name}, #{categoryId}, #{userId}, 0, NOW())
         </select>
     <!--    <select id="getBoardList" resultType="board">-->
     <!--        select * from BOARD order by seq desc-->

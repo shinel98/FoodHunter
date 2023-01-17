@@ -1,10 +1,7 @@
 package com.foodhunter;
 
 
-import com.foodhunter.DTO.Category;
-import com.foodhunter.DTO.Likes;
-import com.foodhunter.DTO.Store;
-import com.foodhunter.DTO.StoreMarker;
+import com.foodhunter.DTO.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,18 +14,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
-
 public class MainController {
-    @Autowired
     private StoreService storeService;
 
+    @Autowired
+    public MainController(StoreService storeService) {
+        this.storeService = storeService;
+    }
+
     @RequestMapping(value = "/main", method = RequestMethod.GET)
-    public ModelAndView readStores(Model model) {
+    public ModelAndView readStores(Model model,
+//            HttpServletRequest request) {
+        @RequestParam(value = "retSearch", required = false, defaultValue = "false") String retSearch,
+        @RequestParam(value = "searchLat", required = false, defaultValue = "") String searchLat,
+        @RequestParam(value = "searchLng", required = false, defaultValue = "") String searchLng,
+        @RequestParam(value = "searchPlaceName", required = false, defaultValue = "") String searchPlaceName
+    ) {
         ModelAndView mv = new ModelAndView();
         System.out.println("main page loaded");
 
@@ -51,16 +59,32 @@ public class MainController {
             }
         }
 
-
         mv.addObject("likes", likes);
         mv.addObject("storeList", storeList);
         mv.addObject("allCategories", allCategories);
         mv.addObject("allMarkers", allMarkers);
+
+        if (Objects.equals(retSearch, "true")) {
+            mv.addObject("retSearch", "true");
+        } else {
+            mv.addObject("retSearch", "false");
+        }
+            mv.addObject("searchLat", searchLat);
+            mv.addObject("searchLng", searchLng);
+            mv.addObject("searchPlaceName", searchPlaceName);
+
+//        if (Objects.equals(request.getParameter("retSearch"), "true")) {
+//            mv.addObject("retSearch", "true");
+//        } else {
+//            mv.addObject("retSearch", "false");
+//        }
+//        mv.addObject("searchLat", request.getParameter("searchLat"));
+//        mv.addObject("searchLng", request.getParameter("searchLng"));
+//        mv.addObject("searchPlaceName", request.getParameter("searchPlaceName"));
+
         mv.setViewName("main");
         return mv;
     }
-
-
 
     @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value="/nickname", method= RequestMethod.GET)
