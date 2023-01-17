@@ -34,7 +34,11 @@ public class SpringConfig {
     @Bean
     public StoreServiceImpl storeServiceImpl(){return new StoreServiceImpl(storeRepository());}
 
-    @Bean StoreCategoryService storeCategoryService(){return new StoreCategoryService(storeCategoryRepository());}
+    @Bean
+    public StoreCategoryService storeCategoryService(){return new StoreCategoryService(storeCategoryRepository());}
+
+    @Bean
+    public OpenDayService openDayService(){return new OpenDayService(openDayRepository());}
 
     @Bean
     public ReviewDAO reviewRepository() {
@@ -57,4 +61,7 @@ public class SpringConfig {
 
     @Bean
     public StoreCategoryDAOImpl storeCategoryRepository(){return new StoreCategoryDAOImpl(sqlSession);}
+
+    @Bean
+    public OpenDayDAOImpl openDayRepository(){return new OpenDayDAOImpl(sqlSession);}
 }

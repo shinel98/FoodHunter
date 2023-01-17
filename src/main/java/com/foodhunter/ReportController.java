@@ -1,13 +1,7 @@
 package com.foodhunter;
 
-import com.foodhunter.DTO.Category;
-import com.foodhunter.DTO.Store;
-import com.foodhunter.DTO.StoreCategory;
-import com.foodhunter.DTO.StoreMarker;
-import com.foodhunter.service.CategoryServiceImpl;
-import com.foodhunter.service.MarkerService;
-import com.foodhunter.service.StoreCategoryService;
-import com.foodhunter.service.StoreService;
+import com.foodhunter.DTO.*;
+import com.foodhunter.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,13 +17,15 @@ public class ReportController {
     private final CategoryServiceImpl categoryService;
     private final StoreService storeService;
     private final StoreCategoryService storeCategoryService;
+    private final OpenDayService openDayService;
 
     @Autowired
-    public ReportController(MarkerService markerService, CategoryServiceImpl categoryService, StoreService storeService, StoreCategoryService storeCategoryService) {
+    public ReportController(MarkerService markerService, CategoryServiceImpl categoryService, StoreService storeService, StoreCategoryService storeCategoryService, OpenDayService openDayService) {
         this.markerService = markerService;
         this.categoryService = categoryService;
         this.storeService = storeService;
         this.storeCategoryService = storeCategoryService;
+        this.openDayService = openDayService;
     }
 
     @RequestMapping("/report")
@@ -72,6 +68,17 @@ public class ReportController {
         for(int i=1; i<category.length; i++){
             storeCategory.setCategoryId(Long.parseLong(category[i]));
             storeCategoryService.save(storeCategory);
+        }
+
+
+        // 출몰 요일
+        String openDays = form.getOpenDay();
+        String[] openDay = openDays.split(",");
+        OpenDay day = new OpenDay();
+        day.setStoreId(list.get(0).getId());
+        for(int i=0; i<openDay.length; i++){
+            day.setOpenDay(Integer.parseInt(openDay[i]));
+            openDayService.save(day);
         }
 
         model.addAttribute("report", true);
