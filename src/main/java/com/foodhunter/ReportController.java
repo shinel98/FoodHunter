@@ -54,8 +54,8 @@ public class ReportController {
         // 마커 생성 -> setStoreId를 해줘야 하기 때문에 나중에 생성
         StoreMarker marker = new StoreMarker();
         marker.setUrl("/store");
-        marker.setxLocation(Double.parseDouble(form.getLon()));
-        marker.setyLocation(Double.parseDouble(form.getLat()));
+        marker.setxLocation(Double.parseDouble(form.getLat()));
+        marker.setyLocation(Double.parseDouble(form.getLon()));
         List<Store> list = storeService.readStoresById();
         marker.setStoreId(list.get(0).getId());
         markerService.createMarker(marker);

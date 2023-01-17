@@ -77,8 +77,8 @@
             <p class="font-weight-bold">맛집 위치는 바로 여기!</p>
           </div>
           <form name="aform" id="aform" method="post" action="/report/detail">
-            <input id="lat" name="lat" type="text" hidden="hidden" value="129.4020908227123423">
-            <input id="lon" name="lon" type="text" hidden="hidden" value="36.081094115491084">
+            <input id="lat" name="lat" type="hidden">
+            <input id="lon" name="lon" type="hidden">
             <input type="text" class="form-control mb-3" id="location" readonly><span id="centerAddr"></span>
             <div class="d-grid my-3">
               <button class="btn btn-block btn-warning" type="submit" value="위치설정">위치 설정하기</button>
@@ -123,6 +123,8 @@
 
     var resultDiv = document.getElementById('centerAddr');
     resultDiv.innerHTML = message;
+    document.getElementById("lat").value = latlng.getLat();
+    document.getElementById("lon").value = latlng.getLng();
 
   });
 </script>
