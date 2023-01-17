@@ -53,7 +53,7 @@
     <header class="container-fluid fixed-top p-0">
       <div id="header-box" class="container bg-beige shadow">
         <div class="item d-flex my-auto">
-          <img src="/img/close_FILL0_wght400_GRAD0_opsz48.png" onclick="" alt="close" width="30" height="30">
+          <img src="/img/close_FILL0_wght400_GRAD0_opsz48.png" class="clickable" onclick="location.href='/main'" alt="close" width="30" height="30">
         </div>
         <div class="item d-flex m-auto">
           <p class="h5 py-0">위치 검색</p>
