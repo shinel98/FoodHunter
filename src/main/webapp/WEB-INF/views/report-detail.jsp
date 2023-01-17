@@ -242,19 +242,19 @@
         <div><h5>영업 요일</h5></div>
         <span class="multiple-text" class="smallTxt" style="left: 80px;">다중선택 가능</span>
         <div id="days">
-          <input type="checkbox" id="sun" name="sun" style="margin-left: 30px;">
+          <input type="checkbox" id="sun" name="openDay" value=1 class="open-day" style="margin-left: 30px;">
           <label for="sun">일</label>
-          <input type="checkbox" id="mon" name="mon">
+          <input type="checkbox" id="mon" name="openDay" value=2 class="open-day">
           <label for="mon">월</label>
-          <input type="checkbox" id="tue" name="tue">
+          <input type="checkbox" id="tue" name="openDay" value=3 class="open-day">
           <label for="tue">화</label>
-          <input type="checkbox" id="wed" name="wed">
+          <input type="checkbox" id="wed" name="openDay" value=4 class="open-day">
           <label for="wed">수</label>
-          <input type="checkbox" id="thu" name="thu">
+          <input type="checkbox" id="thu" name="openDay" value=5 class="open-day">
           <label for="thu">목</label>
-          <input type="checkbox" id="fri" name="fri">
+          <input type="checkbox" id="fri" name="openDay" value=6 class="open-day">
           <label for="fri">금</label>
-          <input type="checkbox" id="sat" name="sat">
+          <input type="checkbox" id="sat" name="openDay" value=7 class="open-day">
           <label for="sat">토</label>
         </div>
       </div>
@@ -319,7 +319,6 @@
   }
 
   function validate(){
-    console.log("validate()");
     var element = document.getElementsByClassName("custom-control-input");
     var atLeastOneChecked = false;
     for (var i = 0; i < element.length; i++) {
@@ -331,7 +330,20 @@
       alert("최소 하나 이상의 카테고리 설정이 필요합니다.");
       return false;
     }
-    else return true;
+    else {
+      var element = document.getElementsByClassName("open-day");
+      var atLeastOneChecked = false;
+      for (var i = 0; i < element.length; i++) {
+        if (element[i].checked === true) {
+          atLeastOneChecked = true;
+        }
+      }
+      if(atLeastOneChecked == false) {
+        alert("오픈 요일을 하나이상 선택해 주세요");
+        return false;
+      }
+      else return true;
+    }
   }
 </script>
 </body>

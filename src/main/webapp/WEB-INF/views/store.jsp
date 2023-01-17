@@ -5,6 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
+<c:set var="representCategoryId" value="${store.categoryId}" />
 <html>
 <head>
     <title>가게 상세 페이지</title>
@@ -30,7 +31,13 @@
                     </div>
                     <!--카테고리 이미지-->
                     <div style="width: 80%; float:left;">
-                        <img id="categoryImg" src="/img/category-fish-bread.png" class="col" alt="category image">
+                        <!--<img id="categoryImg" src="/img/category-fish-bread.png" class="col" alt="category image">-->
+                        <c:forEach var="cat" items="${categoryList}">
+                            <c:if test="${cat.id == representCategoryId}">
+                                <img id="categoryImg" src="${cat.icon}" class="col" alt="category image">
+                            </c:if>
+                        </c:forEach>
+
                     </div>
                 </hearder>
                 <div id="content">
@@ -46,7 +53,7 @@
                             <!--현재 내 위치로 이동 버튼-->
                             <button id="my-location" onclick="mylocation();" title="현재 내 위치로 이동"><i class="bi bi-geo-alt-fill"></i></button>
                             000 님의 제보
-                            <h2>그할마 붕어빵</h2>
+                            <h2>${store.name}</h2>
                             <div class="center">
                                 <div id="distance" type="button">
                                     <i class="bi bi-compass"></i>
@@ -111,10 +118,7 @@
                             <a href="#main-row">
                                 <button id="btn-review" type="button" class="btn" onclick="reviewWrite();" >리뷰작성하기</button>
                             </a>
-
-                            <!--Todo : 리뷰 총 개수 DB 연동-->
-                            <!--Todo : js로 동적으로 코드 생산하기-->
-                            <h4>리뷰 0개</h4>
+                            <h4>리뷰 ${reviews.size()}개</h4>
                             <div id="review-container">
                                 <!--리뷰 카드-->
                                 <div class="shadow border card review">

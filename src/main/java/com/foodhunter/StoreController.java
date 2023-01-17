@@ -2,13 +2,11 @@ package com.foodhunter;
 
 //import com.foodhunter.DAO.ReviewFileUpload;
 import com.foodhunter.DAO.ReviewFileUpload;
+import com.foodhunter.DTO.Category;
 import com.foodhunter.DTO.Favorite;
 import com.foodhunter.DTO.Review;
 import com.foodhunter.DTO.Store;
-import com.foodhunter.service.FavoriteService;
-import com.foodhunter.service.ReviewService;
-import com.foodhunter.service.StoreService;
-import com.foodhunter.service.StoreServiceImpl;
+import com.foodhunter.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,17 +22,21 @@ public class StoreController {
     private final FavoriteService favoriteService;
     private final StoreServiceImpl storeService;
 
+    private final CategoryServiceImpl categoryService;
+
     @Autowired
-    public StoreController(ReviewService reviewService, FavoriteService favoriteService, StoreServiceImpl storeService) {
+    public StoreController(ReviewService reviewService, FavoriteService favoriteService, StoreServiceImpl storeService, CategoryServiceImpl categoryService) {
         this.reviewService = reviewService;
         this.favoriteService = favoriteService;
         this.storeService = storeService;
+        this.categoryService = categoryService;
     }
 
     /**가게 로드 -> 가게, 리뷰 정보 가져오기**/
     @RequestMapping("/store")
     public String store(VisitForm form, Model model) {
         List<Review> reviews =reviewService.readByStoreId(form.getStoreId());
+        List<Category> categoryList = categoryService.getCategoryList();
         Store store = new Store();
         if(form.getStoreId() != null) store = storeService.readOneStore(form.getStoreId());
         System.out.println("store name : " + store.getName());
@@ -47,6 +49,7 @@ public class StoreController {
         }
         model.addAttribute("store", store);
         model.addAttribute("reviews", reviews);
+        model.addAttribute("categoryList", categoryList);
         model.addAttribute("reviewError", false);
         model.addAttribute("delete", false);
         return "store";
