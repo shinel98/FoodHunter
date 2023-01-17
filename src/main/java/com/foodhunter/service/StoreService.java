@@ -10,7 +10,10 @@ import java.util.Map;
 
 public interface StoreService {
     public List<Store> readStores();
+    public List<Store> readStoresById();
     public List<Category> readAllCategories();
     public List<StoreMarker> readMarkerInfo();
     public List<Likes> readLikes();
+
+    public long reportStore(Store store);
 }

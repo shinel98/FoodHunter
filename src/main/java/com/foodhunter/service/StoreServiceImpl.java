@@ -13,14 +13,22 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-@Service
 public class StoreServiceImpl implements StoreService {
-    @Autowired
     private StoreDAO storeDAO;
+
+    public StoreServiceImpl(StoreDAO storeDAO) {
+        this.storeDAO = storeDAO;
+    }
 
     @Override
     public List<Store> readStores() {
         List<Store> stores = storeDAO.readStores();
+        return stores;
+    }
+
+    @Override
+    public List<Store> readStoresById() {
+        List<Store> stores = storeDAO.readStoresDescById();
         return stores;
     }
 
@@ -39,5 +47,12 @@ public class StoreServiceImpl implements StoreService {
     public List<Likes> readLikes() {
         List<Likes> likes = storeDAO.readLikes();
         return likes;
+    }
+
+    @Override
+    public long reportStore(Store store) {
+        Store result = storeDAO.save(store);
+        System.out.println("result : " + result.getName());
+        return result.getCategoryId();
     }
 }

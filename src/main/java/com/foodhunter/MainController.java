@@ -23,8 +23,12 @@ import java.util.Map;
 
 @Controller
 public class MainController {
-    @Autowired
     private StoreService storeService;
+
+    @Autowired
+    public MainController(StoreService storeService) {
+        this.storeService = storeService;
+    }
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public ModelAndView readStores(Model model) {

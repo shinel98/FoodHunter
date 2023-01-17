@@ -203,7 +203,10 @@
   </hearder>
   <!--main-->
   <div id="main" style="width: 500px; height: 100%; margin: auto;">
-    <form id="form-main" method="post">
+    <form id="form-main" method="post" action="/report/finish">
+      <input type="number" name="lat" value="${markerForm.lat}" hidden>
+      <input type="number" name="lon" value="${markerForm.lon}" hidden>
+      <input type="number" value="1" name="userId" hidden>
       <div id="location" class="form-section">
           <div><h5>가게 위치</h5></div>
           <!--Todo : 기본 값으로 지도에서 선택한 위치 넣기-->
@@ -228,7 +231,7 @@
           <c:forEach var="category" items="${categoryList}">
             <div class="col-md-3">
               <div class="custom-control custom-checkbox image-checkbox">
-                <input type="checkbox" class="custom-control-input" id="${category.categoryId}"><span>${category.categoryName}</span>
+                <input name="categoryId" type="checkbox" class="custom-control-input" value=${category.categoryId} id="${category.categoryId}"><span>${category.categoryName}</span>
                 <label class="custom-control-label" for="${category.categoryId}">
                   <img src="${category.icon}" alt="#" class="img-fluid">
                 </label>

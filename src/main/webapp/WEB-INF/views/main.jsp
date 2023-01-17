@@ -777,11 +777,6 @@
         getUserLocation();
         calculateDistance()
 
-
-        function confirm(){
-            location.href = "/main";
-        }
-
         // 선택한 태그 색상 변경
         var currentMenu;
         var menuLinks = document.querySelectorAll('.tags');

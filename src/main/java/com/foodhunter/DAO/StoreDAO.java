@@ -10,7 +10,10 @@ import java.util.Map;
 
 public interface StoreDAO {
     public List<Store> readStores();
+    public List<Store> readStoresDescById();
     public List<Category> readAllCategories();
     public List<StoreMarker> readAllMarkers();
     public List<Likes> readLikes();
+
+    public Store save(Store store);
 }
