@@ -10,7 +10,7 @@
     </parameterMap>
 
     <resultMap id="CategoryResultMap" type="category">
-        <result property="categoryId" column="id"/>
+        <result property="id" column="id"/>
         <result property="categoryName" column="categoryName"/>
         <result property="icon" column="icon"/>
         <result property="requestStatus" column="requestStatus"/>
