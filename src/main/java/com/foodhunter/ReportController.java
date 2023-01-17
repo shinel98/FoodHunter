@@ -2,9 +2,11 @@ package com.foodhunter;
 
 import com.foodhunter.DTO.Category;
 import com.foodhunter.DTO.Store;
+import com.foodhunter.DTO.StoreCategory;
 import com.foodhunter.DTO.StoreMarker;
 import com.foodhunter.service.CategoryServiceImpl;
 import com.foodhunter.service.MarkerService;
+import com.foodhunter.service.StoreCategoryService;
 import com.foodhunter.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,12 +22,14 @@ public class ReportController {
     private final MarkerService markerService;
     private final CategoryServiceImpl categoryService;
     private final StoreService storeService;
+    private final StoreCategoryService storeCategoryService;
 
     @Autowired
-    public ReportController(MarkerService markerService, CategoryServiceImpl categoryService, StoreService storeService) {
+    public ReportController(MarkerService markerService, CategoryServiceImpl categoryService, StoreService storeService, StoreCategoryService storeCategoryService) {
         this.markerService = markerService;
         this.categoryService = categoryService;
         this.storeService = storeService;
+        this.storeCategoryService = storeCategoryService;
     }
 
     @RequestMapping("/report")
@@ -50,7 +54,6 @@ public class ReportController {
         String categories = form.getCategoryId();
         String[] category = categories.split(",");
         store.setCategoryId(Long.parseLong(category[0]));   // 대표 카테고리 id 설정
-        //store.setCategoryId(Long.parseLong(form.getCategoryId()));
         store.setUserId(form.getUserId());
         storeService.reportStore(store);
 
@@ -62,6 +65,14 @@ public class ReportController {
         List<Store> list = storeService.readStoresById();
         marker.setStoreId(list.get(0).getId());
         markerService.createMarker(marker);
+
+        // 카테고리 여러개 선택했을 경우
+        StoreCategory storeCategory = new StoreCategory();
+        storeCategory.setStoreId(list.get(0).getId());
+        for(int i=1; i<category.length; i++){
+            storeCategory.setCategoryId(Long.parseLong(category[i]));
+            storeCategoryService.save(storeCategory);
+        }
 
         model.addAttribute("report", true);
         return "redirect:/main";
