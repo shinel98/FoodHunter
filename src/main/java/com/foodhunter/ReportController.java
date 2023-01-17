@@ -47,7 +47,10 @@ public class ReportController {
         // store 생성
         Store store = new Store();
         store.setName(form.getName());
-        store.setCategoryId(Long.parseLong(form.getCategoryId()));
+        String categories = form.getCategoryId();
+        String[] category = categories.split(",");
+        store.setCategoryId(Long.parseLong(category[0]));   // 대표 카테고리 id 설정
+        //store.setCategoryId(Long.parseLong(form.getCategoryId()));
         store.setUserId(form.getUserId());
         storeService.reportStore(store);
 

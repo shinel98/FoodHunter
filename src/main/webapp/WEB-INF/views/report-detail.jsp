@@ -203,7 +203,7 @@
   </hearder>
   <!--main-->
   <div id="main" style="width: 500px; height: 100%; margin: auto;">
-    <form id="form-main" method="post">
+    <form id="form-main" method="post" onsubmit="return validate();">
       <input type="number" name="lat" value="${markerForm.lat}" hidden>
       <input type="number" name="lon" value="${markerForm.lon}" hidden>
       <input type="number" value="1" name="userId" hidden>
@@ -213,7 +213,7 @@
       </div>
       <div id="name" class="form-section">
         <div style="position: relative;"><h5>가게 이름</h5><button id="randomButton" onclick="randomName();">랜덤생성</button></div>
-        <div><input id="randomName" class="form-control form-control-lg" type="text" aria-label=".form-control-lg example" name="name"></div>
+        <div><input id="randomName" class="form-control form-control-lg" type="text" aria-label=".form-control-lg example" name="name" required></div>
       </div>
       <div id="category" class="form-section">
         <div style="position: relative;">
@@ -316,6 +316,22 @@
     } catch(err) {
       alert(err); // TypeError: Failed to fetch
     }
+  }
+
+  function validate(){
+    console.log("validate()");
+    var element = document.getElementsByClassName("custom-control-input");
+    var atLeastOneChecked = false;
+    for (var i = 0; i < element.length; i++) {
+      if (element[i].checked === true) {
+        atLeastOneChecked = true;
+      }
+    }
+    if(atLeastOneChecked == false) {
+      alert("최소 하나 이상의 카테고리 설정이 필요합니다.");
+      return false;
+    }
+    else return true;
   }
 </script>
 </body>
