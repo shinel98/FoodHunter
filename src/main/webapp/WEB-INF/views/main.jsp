@@ -386,6 +386,10 @@
                 }
             }
         });
+
+        function finish(){
+            location.href = "/main";
+        }
     </script>
 
 </head>
@@ -397,7 +401,7 @@
             <div id="reportFinished-modal" class="card shadow bg-white" style="visibility: hidden">
                 <div><h4>가게 제보가 완료되었습니다.</h4></div>
                 <iframe src="https://embed.lottiefiles.com/animation/96081"  width="100%" style="margin: auto"></iframe>
-                <button id="confirm" class="text-white btn btn-review-finished" onclick="confirm()">확인</button>
+                <button id="confirm" class="text-white btn btn-review-finished" onclick="finish()">확인</button>
             </div>
         </div>
         <div class="row g-0 text-center min-vh-100">
