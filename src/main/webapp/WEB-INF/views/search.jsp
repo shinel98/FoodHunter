@@ -10,6 +10,7 @@
   <head>
     <title>위치 검색하기</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <style>
       #header-box {
         max-width: none;
@@ -53,7 +54,7 @@
     <header class="container-fluid fixed-top p-0">
       <div id="header-box" class="container bg-beige shadow">
         <div class="item d-flex my-auto">
-          <img src="/img/close_FILL0_wght400_GRAD0_opsz48.png" onclick="" alt="close" width="30" height="30">
+          <img src="/img/close_FILL0_wght400_GRAD0_opsz48.png" class="clickable" onclick="location.href='/main'" alt="close" width="30" height="30">
         </div>
         <div class="item d-flex m-auto">
           <p class="h5 py-0">위치 검색</p>
@@ -89,6 +90,13 @@
           </div>
         </div>
       </div>
+      <form method="get" action="/main" id="placeForm" name="placeForm">
+        <!-- Content will be inserted by selectPlace() -->
+        <input type="hidden" name="retSearch" value="">
+        <input type="hidden" name="searchLat" value="">
+        <input type="hidden" name="searchLng" value="">
+        <input type="hidden" name="searchPlaceName" value="">
+      </form>
     </main>
   </body>
 </html>
@@ -146,7 +154,7 @@
           var template = searchResultTemplate;
           template = template.replace('{name}', place.place_name);
           template = template.replace('{address}', place.address_name);
-          template = template.replace('{placeSelect}', 'selectPlace(' + place.y + ', ' + place.x + ')');
+          template = template.replace('{placeSelect}', 'selectPlace(' + place.y + ', ' + place.x + ', \'' + place.place_name + '\')');
 
           searchResult.insertAdjacentHTML('beforeend', template);
       }
@@ -160,9 +168,25 @@
       searchResult.insertAdjacentHTML('beforeend', template);
   }
 
-  function selectPlace(lat, lng) {
-      console.log(lat, lng);
+  function selectPlace(lat, lng, placeName) {
+      console.log(lat, lng, placeName);
 
       // Passing Coordinates and Redirecting to the main page
+      $(document).ready(function () {
+          var form = document.placeForm;
+          form.retSearch.value = "true";
+          form.searchLat.value = lat;
+          form.searchLng.value = lng;
+          form.searchPlaceName.value = placeName;
+          form.submit();
+      });
+
+      //   $('#placeForm').append("<input type='hidden' name='retSearch' value='1'>");
+      //   $('#placeForm').append("<input type='hidden' name='searchLat' value='" + lat + "'>");
+      //   $('#placeForm').append("<input type='hidden' name='searchLng' value='" + lng + "'>");
+      //   $('#placeForm').append("<input type='hidden' name='searchPlaceName' value='" + placeName + "'>");
+      // );
+
+      // document.placeForm.submit();
   }
 </script>
