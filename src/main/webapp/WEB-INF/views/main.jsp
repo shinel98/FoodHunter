@@ -121,7 +121,7 @@
         }
         #tagsContainer {
             width: 100%;
-            /*justify-content: center;*/
+            justify-content: center;
             height: 6%;
             display: flex;
             flex-wrap: nowrap;
