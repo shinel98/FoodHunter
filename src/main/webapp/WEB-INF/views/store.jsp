@@ -133,7 +133,7 @@
                                         </ul>
                                     </div>
                                     <div class="row">
-                                        <p class="review-text col">${reviews.get(0).reviewContent}</p>
+                                        <p class="review-text col">맛있슈</p>
                                         <i class="bi bi-trash-fill col-2" style="margin: auto;"></i>
                                     </div>
                                     <div class="row">

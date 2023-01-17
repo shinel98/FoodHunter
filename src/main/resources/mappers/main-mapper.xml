@@ -15,6 +15,9 @@
         <select id="getStores" resultType="com.foodhunter.DTO.Store">
             select * from stores_table order by visitCnt;
         </select>
+    <select id="getOneStore" parameterType="int" resultType="com.foodhunter.DTO.Store">
+        select * from stores_table where id = ${storeId};
+    </select>
     <select id="getStoresDescending" resultType="com.foodhunter.DTO.Store">
         select * from stores_table order by id desc ;
     </select>

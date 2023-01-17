@@ -32,7 +32,7 @@ public class SpringConfig {
     public MarkerService markerService(){return new MarkerService(markerRepository());}
 
     @Bean
-    public StoreService storeService(){return new StoreServiceImpl(storeRepository());}
+    public StoreServiceImpl storeServiceImpl(){return new StoreServiceImpl(storeRepository());}
 
     @Bean
     public ReviewDAO reviewRepository() {

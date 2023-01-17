@@ -513,7 +513,10 @@
                                 <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">1.0km</div>
                                 <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">${sList.likeCnt}</div>
                                 <button class="reportButton">신고하기</button>
-                                <button class="visitButton">방문하기</button>
+                                <form action="${sList.url}">
+                                <input type="hidden" name="storeId" value=${sList.storeId}>
+                                <button class="visitButton" >방문하기</button>
+                                </form>
                             </div>
                         </div>
                     </c:forEach>
