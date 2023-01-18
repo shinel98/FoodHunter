@@ -9,7 +9,7 @@
             where (userId, storeId, regDate) in (
                     select userId, storeId, max(regDate)
                     from visited_table group by storeId, userId
-                ) and userId = 1
+                ) and userId = ${userId}
             order by regDate desc
             ) as recently_vistied
             left join (
