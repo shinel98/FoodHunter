@@ -1,10 +1,10 @@
 package com.foodhunter;
 
-import com.foodhunter.DTO.Category;
-import com.foodhunter.DTO.RecentlyVisited;
-import com.foodhunter.DTO.User;
+import com.foodhunter.DTO.*;
+import com.foodhunter.service.FavoriteService;
 import com.foodhunter.service.RecentlyVisitedService;
 import com.foodhunter.service.StoreService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +18,8 @@ import java.util.List;
 public class myController {
     @Autowired
     RecentlyVisitedService recentlyVisitedService;
+    @Autowired
+    FavoriteService favoriteService;
     @Autowired
     StoreService storeService;
 
@@ -39,7 +41,21 @@ public class myController {
     }
 
     @RequestMapping(value="/my/favorites")
-    public String favorites(){
+    public String favorites(Model model, HttpSession session) {
+        long userId = ((User) session.getAttribute("user")).getId();
+        System.out.println("userId: " + userId);
+        List<Favorite> favoriteList = favoriteService.readByUserId(userId);
+        List<Category> allCategories = storeService.readAllCategories();
+        List<Store> storeList = storeService.readStores();
+
+        for (Favorite favorite : favoriteList) {
+            System.out.println(favorite.getStoreId());
+        }
+
+        model.addAttribute("favoriteList", favoriteList);
+        model.addAttribute("allCategories", allCategories);
+        model.addAttribute("storeList", storeList);
+
         return "favorites";
     }
 }
