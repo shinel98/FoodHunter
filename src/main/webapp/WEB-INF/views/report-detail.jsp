@@ -209,7 +209,7 @@
       <input type="hidden" value="1" name="userId">
       <div id="location" class="form-section">
           <div><h5>가게 위치</h5></div>
-          <div><input class="form-control form-control-lg" type="text" value="위도 : ${markerForm.lat}, 경도 : ${markerForm.lon}" aria-label=".form-control-lg example" name="location" readonly></div>
+          <div><input id="addressName" class="form-control form-control-lg" type="text" aria-label=".form-control-lg example" name="location" readonly></div>
       </div>
       <div id="name" class="form-section">
         <div style="position: relative;"><h5>가게 이름</h5><button id="randomButton" onclick="randomName();" type="button">랜덤생성</button></div>
@@ -276,7 +276,7 @@
       </form>
   </div>
 </div>
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892&libraries=services"></script>
 <script>
   function add(){
     document.getElementById("add").style.display = "block";
@@ -298,6 +298,7 @@
 <script>
   $(function(){
       randomName();
+      getAddressName();
   });
 
   function randomName(){
@@ -317,6 +318,19 @@
     } catch(err) {
       alert(err); // TypeError: Failed to fetch
     }
+  }
+
+  function getAddressName(){
+    // 주소-좌표 변환 객체를 생성합니다
+    var geocoder = new kakao.maps.services.Geocoder();
+    // 좌표로 법정동 상세 주소 정보를 요청합니다
+    geocoder.coord2Address(${markerForm.lon}, ${markerForm.lat}, function(result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        var detailAddr =result[0].address.address_name;
+        document.getElementById("addressName").value = detailAddr;
+      }
+    });
+
   }
 
   function validate(){
