@@ -203,7 +203,7 @@
   </hearder>
   <!--main-->
   <div id="main" style="width: 500px; height: 100%; margin: auto;">
-    <form id="form-main" method="post" onsubmit="return validate();">
+    <form id="form-main" method="post">
       <input type="hidden" name="lat" value="${markerForm.lat}">
       <input type="hidden" name="lon" value="${markerForm.lon}">
       <input type="hidden" value="1" name="userId">
@@ -259,20 +259,20 @@
         </div>
       </div>
       <div id="finish">
-        <button formaction="/report/finish" id="btn-report" type="submit" class="btn btn-category-apply shadow">제보하기</button>
+        <button formaction="/report/finish" onsubmit="return validate();" id="btn-report" type="submit" class="btn btn-category-apply shadow">제보하기</button>
       </div>
-    </form>
-
   </div>
   <div id="add" class="fixed-bottom border border-black bg-white shadow">
-    <form id="form-category" action="/report/category-apply" method="post">
-      <div id="category-name">
-        <input type="text" placeholder="새로운 카테고리 이름을 작성해주세요" id="form-category-name" name="categoryName">
+      <div id="form-category">
+        <div id="category-name">
+          <input type="text" placeholder="새로운 카테고리 이름을 작성해주세요" id="form-category-name" name="categoryApplyName">
+        </div>
+        <div style="margin-left: 12%;">
+          <button type="submit" formaction="/report/category-apply" onsubmit="return validateCategory();"  class="text-white btn btn-category-apply-modal float-right">추가신청</button>
+          <button type="button" class="text-white btn btn-category-apply-modal float-right" onclick="cancel();">취소</button>
+        </div>
       </div>
-      <div style="margin-left: 12%;">
-        <button type="submit" class="text-white btn btn-category-apply-modal float-right">추가신청</button>
-        <button type="button" class="text-white btn btn-category-apply-modal float-right" onclick="cancel();">취소</button>
-      </div>
+
       </form>
   </div>
 </div>
@@ -283,7 +283,7 @@
   }
 
   function cancel() {
-    document.getElementById("form-category").reset();
+    document.getElementById("form-category-name").value="";
     document.getElementById("add").style.display = "none";
   }
 
@@ -359,6 +359,11 @@
       }
       else return true;
     }
+  }
+
+
+  function validateCategory(){
+    return true;
   }
 </script>
 </body>

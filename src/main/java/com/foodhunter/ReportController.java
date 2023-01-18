@@ -92,11 +92,12 @@ public class ReportController {
     }
 
     @RequestMapping("/report/category-apply")
-    public String categoryApply(CategoryApplyForm form){
+    public String categoryApply(ReportForm form, Model model){
         Category category = new Category();
-        category.setCategoryName(form.getCategoryName());
+        category.setCategoryName(form.getCategoryApplyName());
         categoryService.applyCategory(category);
-        return "redirect:/report";
+        model.addAttribute("reportForm", form);
+        return "category-applyForm";
     }
 
     @RequestMapping("/category-request")

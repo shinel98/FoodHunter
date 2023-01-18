@@ -6,17 +6,26 @@ public class ReportForm {
     long userId;
     String name;
     String categoryId;
+    String addressName;
+    String openDay;
+    String lat;
+    String lon;
+    String categoryApplyName;
+    public String getCategoryApplyName() {
+        return categoryApplyName;
+    }
+
+    public void setCategoryApplyName(String categoryApplyName) {
+        this.categoryApplyName = categoryApplyName;
+    }
+
 
     public String getAddressName() {
         return addressName;
     }
-
     public void setAddressName(String addressName) {
         this.addressName = addressName;
     }
-
-    String addressName;
-
     public String getOpenDay() {
         return openDay;
     }
@@ -25,9 +34,6 @@ public class ReportForm {
         this.openDay = openDay;
     }
 
-    String openDay;
-
-    String lat;
 
     public String getLat() {
         return lat;
@@ -45,7 +51,7 @@ public class ReportForm {
         this.lon = lon;
     }
 
-    String lon;
+
 
     public long getUserId() {
         return userId;
