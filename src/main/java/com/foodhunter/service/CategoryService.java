@@ -11,4 +11,5 @@ public interface CategoryService {
     public Category getCategory(int category_id);
     public List<Category> getCategoryList();
     public List<Category> getCategoryListByRequestStatus(int requestStatus);
+    public void applyCategory(Category category);
 }

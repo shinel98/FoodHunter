@@ -92,7 +92,7 @@
         <div class="my">저는 닉네임 </div>
         <div class="name">
         <input type="text" id="nickname" name="nickname" required
-               minlength="4" maxlength="8">
+               minlength="4" maxlength="12">
         </div>
         <div class="is">로 시작할래요</div>
         <button id="send" type="submit" value=""><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">

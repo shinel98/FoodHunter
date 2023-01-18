@@ -28,4 +28,11 @@ public class VisitDAOImpl implements VisitDAO {
         result = sqlSession.selectList("visit.selectVisitByUserId", userId);
         return result;
     }
+
+    @Override
+    public List<Visit> findAllByStoreId(Long storeId) {
+        List<Visit> result;
+        result = sqlSession.selectList("visit.selectVisitByStoreId", storeId);
+        return result;
+    }
 }
