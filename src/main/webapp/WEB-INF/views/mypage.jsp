@@ -296,7 +296,7 @@
                     </div>
                     <div class = 'd-flex  flex-row justify-content-between'>
                         <label class = 'mx-4 exText '>최근 들린 가게는? ></label>
-                        <label class = 'bg-lightbeige align-middle rounded-pill button moreText px-3 py-2 me-4 '>더보기</label>
+                        <label class = 'bg-lightbeige align-middle rounded-pill button moreText px-3 py-2 me-4 clickable' onclick="location.href = '/my/recently-visited'">더보기</label>
                     </div>
                 </div>
 
@@ -305,7 +305,7 @@
                         <c:when test="${fn:length(recentlyVisitedList) > 0}">
                             <c:forEach var="recentlyVisited" items="${recentlyVisitedList}" varStatus="status">
                                 <c:if test="${status.index < 5}">
-                                    <div id="recently-visited-div" class="border bg-lightbeige recently-visited-grid py-2 clickable" onclick="location.href = '/store?storeId' + ${recentlyVisited.id}">
+                                    <div id="recently-visited-div" class="border bg-lightbeige recently-visited-grid py-2 clickable" onclick="location.href = '/store?storeId=' + ${recentlyVisited.id}">
                                         <div class="d-flex flex-column justify-content-center">
                                             <p class="h5 align-baseline text-start ms-2 my-0">${recentlyVisited.name}</p>
                                             <c:forEach var="tag" items="${allCategories}">
@@ -328,7 +328,6 @@
                                     <p class="align-top text-start text-secondary ms-2 my-0">방문 인증으로 정확도를 높혀봐요</p>
                                 </div>
                                 <div class="d-flex my-auto">
-                                    <img src="" alt="" width="30" height="30">
                                 </div>
                             </div>
                         </c:otherwise>
@@ -345,7 +344,7 @@
                     </div>
                     <div class = 'd-flex flex-row justify-content-between'>
                         <label class = 'mx-4 exText '>나만의 맛집은? ></label>
-                        <label class = 'bg-lightbeige align-middle rounded-pill button moreText px-3 py-2 me-4 '>더보기</label>
+                        <label class = 'bg-lightbeige align-middle rounded-pill button moreText px-3 py-2 me-4 clickable' onclick="location.href = '/my/favorites'">더보기</label>
                     </div>
                 </div>
 
@@ -353,7 +352,7 @@
                     <c:choose>
                         <c:when test="${fn:length(favoriteList) > 0}">
                             <c:forEach var="favoriteStore" items="${favoriteList}">
-                                <div id="favorite-div" class="border bg-lightbeige favorite-grid py-2 clickable" onclick="location.href = '/store?storeId' + ${favoriteStore.storeId}">
+                                <div id="favorite-div" class="border bg-lightbeige favorite-grid py-2 clickable" onclick="location.href = '/store?storeId=' + ${favoriteStore.storeId}">
                                     <div class="d-flex flex-column justify-content-center">
                                         <c:forEach var="store" items="${storeList}">
                                             <c:if test="${store.id == favoriteStore.storeId}">
@@ -379,12 +378,6 @@
                                     <p class="align-top text-start text-secondary ms-2 my-0">자주 찾는 맛집을 즐겨찾기 해봐요</p>
                                 </div>
                                 <div class="d-flex my-auto">
-                                    <img src="" alt="" width="30" height="30">
-                                </div>
-                            </div>
-                            <div class="py-5">
-                                <div class="d-flex flex-column justify-content-center">
-                                    <p class="h5 text-center text-secondary my-0">즐겨찾기한 가게가 없습니다.</p>
                                 </div>
                             </div>
                         </c:otherwise>
