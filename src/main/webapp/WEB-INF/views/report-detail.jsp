@@ -209,7 +209,7 @@
       <input type="hidden" value="1" name="userId">
       <div id="location" class="form-section">
           <div><h5>가게 위치</h5></div>
-          <div><input id="addressName" class="form-control form-control-lg" type="text" aria-label=".form-control-lg example" name="location" readonly></div>
+          <div><input id="addressName" class="form-control form-control-lg" type="text" aria-label=".form-control-lg example" name="addressName" readonly></div>
       </div>
       <div id="name" class="form-section">
         <div style="position: relative;"><h5>가게 이름</h5><button id="randomButton" onclick="randomName();" type="button">랜덤생성</button></div>

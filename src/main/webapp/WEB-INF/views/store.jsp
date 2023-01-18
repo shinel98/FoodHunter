@@ -15,10 +15,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"> <!--icon-->
     <link rel="canonical" href="https://nickname.hwanmoo.kr" />
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=453d03fdea794867e41a9d927cff2cac"></script>
+    <!--<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892&libraries=services"></script>-->
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js" integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
     <style>
         body {
@@ -511,8 +510,8 @@
     </style>
 </head>
 <body>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892&libraries=services"></script>
 <script>
-
     $(function (){
         calculateDistance();
         openDay();
@@ -564,7 +563,7 @@
         Kakao.Share.createDefaultButton({
             container: '#kakaotalk-sharing-btn',
             objectType: 'location',
-            address: '경상북도 포항시 흥해읍 558', // Todo : 좌표 주소를 가지고 도로명 주소로 바꿔서 넣어주어야 함.
+            address: '${store.addressName}',
             addressTitle:'${store.name}', // 카카오 지도 내 지도 뷰에서 사용될 타이틀
             content: {
                 title: '${store.name}',      // 가게 이름
@@ -596,6 +595,18 @@
 
 
     });
+
+    <%--function getAddressName(){--%>
+    <%--    // 주소-좌표 변환 객체를 생성합니다--%>
+    <%--    var geocoder = new kakao.maps.services.Geocoder();--%>
+    <%--    // 좌표로 법정동 상세 주소 정보를 요청합니다--%>
+    <%--    geocoder.coord2Address(${storeMarker.xLocation}, ${storeMarker.yLocation}, function(result, status) {--%>
+    <%--        if (status === kakao.maps.services.Status.OK) {--%>
+    <%--            addressName = result[0].address.address_name;--%>
+    <%--        }--%>
+    <%--    });--%>
+
+    <%--}--%>
 
     function storeLocation(){
 
@@ -968,7 +979,6 @@
             </div>
         </div>
     </div>
-    // TODO: 파일 업로드 구현
     <div id="black-bg" style="z-index: 99;">
         <div id="review-write-container" class="card shadow bg-white" style="visibility: hidden;">
             <!--취소 버튼-->

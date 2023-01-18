@@ -7,6 +7,16 @@ public class ReportForm {
     String name;
     String categoryId;
 
+    public String getAddressName() {
+        return addressName;
+    }
+
+    public void setAddressName(String addressName) {
+        this.addressName = addressName;
+    }
+
+    String addressName;
+
     public String getOpenDay() {
         return openDay;
     }

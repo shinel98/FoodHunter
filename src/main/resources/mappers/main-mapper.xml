@@ -46,8 +46,8 @@
             values (#{storeId}, #{url}, #{xLocation}, #{yLocation}, NOW());
         </insert>
         <select id="insertStore">
-            insert into stores_table (name, categoryId, userId, visitCnt, regDate)
-            values (#{name}, #{categoryId}, #{userId}, 0, NOW())
+            insert into stores_table (name, categoryId, userId, visitCnt, regDate, addressName)
+            values (#{name}, #{categoryId}, #{userId}, 0, NOW(), #{addressName})
         </select>
 <!--    <select id="getBoardList" resultType="board">-->
 <!--        select * from BOARD order by seq desc-->

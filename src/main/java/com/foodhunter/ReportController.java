@@ -56,6 +56,7 @@ public class ReportController {
         String[] category = categories.split(",");
         store.setCategoryId(Long.parseLong(category[0]));   // 대표 카테고리 id 설정
         store.setUserId(form.getUserId());
+        store.setAddressName(form.getAddressName());
         storeService.reportStore(store);
 
         // 마커 생성 -> setStoreId를 해줘야 하기 때문에 나중에 생성
