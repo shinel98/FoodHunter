@@ -204,16 +204,16 @@
   <!--main-->
   <div id="main" style="width: 500px; height: 100%; margin: auto;">
     <form id="form-main" method="post" onsubmit="return validate();">
-      <input type="number" name="lat" value="${markerForm.lat}" hidden>
-      <input type="number" name="lon" value="${markerForm.lon}" hidden>
-      <input type="number" value="1" name="userId" hidden>
+      <input type="hidden" name="lat" value="${markerForm.lat}">
+      <input type="hidden" name="lon" value="${markerForm.lon}">
+      <input type="hidden" value="1" name="userId">
       <div id="location" class="form-section">
           <div><h5>가게 위치</h5></div>
-          <div><input class="form-control form-control-lg" type="text" value="포항시 북구 흥해흡 558 한동대학교" aria-label=".form-control-lg example" name="location"></div>
+          <div><input class="form-control form-control-lg" type="text" value="위도 : ${markerForm.lat}, 경도 : ${markerForm.lon}" aria-label=".form-control-lg example" name="location" readonly></div>
       </div>
       <div id="name" class="form-section">
-        <div style="position: relative;"><h5>가게 이름</h5><button id="randomButton" onclick="randomName();">랜덤생성</button></div>
-        <div><input id="randomName" class="form-control form-control-lg" type="text" aria-label=".form-control-lg example" name="name" required></div>
+        <div style="position: relative;"><h5>가게 이름</h5><button id="randomButton" onclick="randomName();" type="button">랜덤생성</button></div>
+        <div><input id="rN" class="form-control form-control-lg" type="text" aria-label=".form-control-lg example" name="name" required></div>
       </div>
       <div id="category" class="form-section">
         <div style="position: relative;">
@@ -265,9 +265,9 @@
 
   </div>
   <div id="add" class="fixed-bottom border border-black bg-white shadow">
-    <form id="form-category" action="" method="post">
+    <form id="form-category" action="/report/category-apply" method="post">
       <div id="category-name">
-        <input type="text" placeholder="새로운 카테고리 이름을 작성해주세요" id="form-category-name" name="categoryNameApply">
+        <input type="text" placeholder="새로운 카테고리 이름을 작성해주세요" id="form-category-name" name="categoryName">
       </div>
       <div style="margin-left: 12%;">
         <button type="submit" class="text-white btn btn-category-apply-modal float-right">추가신청</button>
@@ -311,7 +311,8 @@
                 var result="";
                 for(var i=0; i<arr.length-1; i++) result += arr[i] + " ";
                 result += "붕어빵";
-                document.getElementById("randomName").value = result;
+                console.log("random : " + result);
+                document.getElementById("rN").value = result;
               });
     } catch(err) {
       alert(err); // TypeError: Failed to fetch

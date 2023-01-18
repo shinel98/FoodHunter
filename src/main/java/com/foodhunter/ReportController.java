@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -37,8 +38,12 @@ public class ReportController {
     @PostMapping("/report/detail")
     public String categorySelect(MarkerForm form, Model model) {
         List<Category> categoryList = categoryService.getCategoryList();
+        List<Category> categories = new ArrayList<>();
+        for(int i=0; i<categoryList.size(); i++){
+            if(categoryList.get(i).getRequestStatus() == 0) categories.add(categoryList.get(i));
+        }
         model.addAttribute("markerForm", form);
-        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("categoryList", categories);
         return "report-detail";
     }
 
@@ -83,6 +88,14 @@ public class ReportController {
 
         model.addAttribute("report", true);
         return "redirect:/main";
+    }
+
+    @RequestMapping("/report/category-apply")
+    public String categoryApply(CategoryApplyForm form){
+        Category category = new Category();
+        category.setCategoryName(form.getCategoryName());
+        categoryService.applyCategory(category);
+        return "redirect:/report";
     }
 
     @RequestMapping("/category-request")
