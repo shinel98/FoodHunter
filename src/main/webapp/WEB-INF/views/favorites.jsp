@@ -77,7 +77,7 @@
 <header class="container-fluid fixed-top p-0">
   <div id="header-box" class="container bg-white shadow">
     <div class="item d-flex my-auto">
-      <img src="/img/arrow_back_ios_FILL0_wght400_GRAD0_opsz48.png" onclick="" class="clickable-non-hover" alt="back" width="30" height="30">
+      <img src="/img/arrow_back_ios_FILL0_wght400_GRAD0_opsz48.png" onclick="pageBack()" class="clickable-non-hover" alt="back" width="30" height="30">
     </div>
     <div class="item d-flex m-auto">
       <p class="h5 py-0">즐겨찾기한 가게</p>
@@ -91,7 +91,7 @@
         <div id="favorite-list" class="mt-3 mx-4">
           <%--즐겨찾기한 가게 템플릿--%>
           <template id="favorite-template">
-            <div id="favorite-div" class="border bg-lightbeige favorite-grid py-2 clickable" onclick="{placeSelect}">
+            <div id="favorite-div" class="border bg-lightbeige favorite-grid py-2 clickable" onclick="">
               <div class="m-auto">
                 <img src="{image-source}" alt="store image" width="100" height="100">
               </div>
@@ -131,6 +131,7 @@
         if (favoriteList.length === 0) {
             const noFavoriteElement = document.importNode(noFavoriteTemplate.content, true);
             favoriteListElement.appendChild(noFavoriteElement);
+
         } else {
             favoriteList.forEach((favorite) => {
                 let template = favoriteTemplate;
@@ -142,7 +143,7 @@
                     selectPlace(favorite.y, favorite.x);
                 };
                 const favoriteElement = document.importNode(template.content, true);
-                favoriteListElement.appendChild(favoriteElement);
+              favoriteListElement.appendChild(favoriteElement);
             });
         }
     });
@@ -187,5 +188,7 @@
 
         // Passing Coordinates and Redirecting to the main page
     }
-
+    function pageBack(){
+      history.back();
+    }
 </script>

@@ -9,4 +9,13 @@ public class MypageController {
     public String myPage(){
         return "mypage";
     }
+
+    @RequestMapping("/mypage/favorites")
+    public String favorites(){
+        return "favorites";
+    }
+    @RequestMapping("/mypage/recentlyvisited")
+    public String recentlyvisited(){
+        return "recentlyVisited";
+    }
 }
