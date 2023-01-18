@@ -43,11 +43,15 @@ public class StoreController {
         if(form.getStoreId() != null) store = storeService.readOneStore(form.getStoreId());
         System.out.println("store name : " + store.getName());
         Favorite favorite = new Favorite();
-        favorite.setStoreId(1L);
-        favorite.setUserId(2L);
+        favorite.setStoreId(form.getStoreId());
+        favorite.setUserId(1L);
         Long currentLike = favoriteService.current(favorite);
         if(currentLike > 0L) {
-            model.addAttribute("like", true);
+            System.out.println("좋아요 여부 : true");
+        }
+        else {
+            System.out.println("좋아요 여부 : false");
+            favorite.setUserId(-1L);
         }
 
         List<Visit> visitList = visitService.readByStoreId(store.getId());
@@ -73,6 +77,7 @@ public class StoreController {
         model.addAttribute("visitList", visitList);
         model.addAttribute("reviewError", false);
         model.addAttribute("delete", false);
+        model.addAttribute("favorite", favorite);
         return "store";
     }
 
@@ -113,11 +118,13 @@ public class StoreController {
 
 
     @RequestMapping("/store/like")
-    public String like(){
+    public String like(VisitForm form, Model model){
         Favorite favorite = new Favorite();
-        favorite.setStoreId(1L);
-        favorite.setUserId(2L);
+        favorite.setStoreId(form.getStoreId());
+        favorite.setUserId(form.getUserId());
         favoriteService.like(favorite);
-        return "redirect:/store";
+
+        model.addAttribute("storeId", form.getStoreId());
+        return "review-deleteForm";
     }
 }

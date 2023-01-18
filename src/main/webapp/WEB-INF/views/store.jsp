@@ -516,6 +516,15 @@
         calculateDistance();
         openDay();
 
+        if(${favorite.userId != -1}){
+            let buttons = document.getElementsByClassName("favoriteBtn");
+            //let icon = buttons.item(0).classList.item(2);
+            for(let i=0; i<buttons.length; i++){
+                buttons[i].classList.remove('bi-heart');
+                buttons.item(i).classList.add('bi-heart-fill');
+            }
+        }
+
         const searchParams = new URLSearchParams(location.search);
         for (const param of searchParams) {
             console.log(param);
@@ -689,7 +698,7 @@
                 favoriteBtn[i].classList.remove('bi-heart');
                 favoriteBtn.item(i).classList.add('bi-heart-fill');
             }
-            location.href = "/store/like";
+            document.favoriteForm.submit();
         } // 즐겨찾기 해제한 경우
         else {
             for(let i=0; i<favoriteBtn.length; i++){
@@ -828,10 +837,15 @@
                                     <i class="bi bi-share"></i>
                                     공유하기
                                 </button>
-                                <button type="button" class="btn favorite" onclick="favorite();">
-                                    <i class="bi favoriteBtn bi-heart"></i>
-                                    즐겨찾기
-                                </button>
+                                <form name="favoriteForm" action="/store/like">
+                                    <input type="hidden" name="userId" value=1>
+                                    <input type="hidden" name="storeId" value=${store.id}>
+                                    <button type="button" class="btn favorite" onclick="favorite();">
+                                        <i class="bi favoriteBtn bi-heart"></i>
+                                        즐겨찾기
+                                    </button>
+                                </form>
+
                             </div>
                             <!-- Todo: 방문인증한 사람 수 DB 연동 -->
                             <div id="monthly">
