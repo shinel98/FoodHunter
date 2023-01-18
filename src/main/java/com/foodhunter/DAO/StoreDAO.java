@@ -19,4 +19,5 @@ public interface StoreDAO {
     public Store save(Store store);
 
     public List<Store> getStoresByUserId(long userId);
+    public void deleteStore(int id);
 }

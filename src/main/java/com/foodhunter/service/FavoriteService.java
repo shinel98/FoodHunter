@@ -36,4 +36,10 @@ public class FavoriteService {
         result = favoriteDAO.findOne(favorite);
         return result;
     }
+
+    public List<Favorite> readByStoreId(long storeId){
+        List<Favorite> result;
+        result = favoriteDAO.findByStoreId(storeId);
+        return result;
+    }
 }

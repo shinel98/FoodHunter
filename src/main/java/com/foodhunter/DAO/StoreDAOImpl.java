@@ -76,4 +76,9 @@ public class StoreDAOImpl implements StoreDAO{
         stores = sqlSession.selectList(namespace+".getStoresByUserId", userId);
         return stores;
     }
+
+    @Override
+    public void deleteStore(int id) {
+        sqlSession.delete(namespace + ".deleteStore", id);
+    }
 }

@@ -19,4 +19,5 @@ public interface StoreService {
     public long reportStore(Store store);
 
     public List<Store> getStoresByUserId(long userId);
+    public void deleteStore(int id);
 }

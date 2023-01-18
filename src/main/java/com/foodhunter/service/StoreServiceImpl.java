@@ -67,4 +67,9 @@ public class StoreServiceImpl implements StoreService {
         List<Store> stores = storeDAO.getStoresByUserId(userId);
         return stores;
     }
+
+    @Override
+    public void deleteStore(int id) {
+        storeDAO.deleteStore(id);
+    }
 }

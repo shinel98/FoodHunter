@@ -2,13 +2,8 @@ package com.foodhunter;
 
 //import com.foodhunter.DAO.ReviewFileUpload;
 import com.foodhunter.DAO.ReviewFileUpload;
-import com.foodhunter.DTO.Favorite;
-import com.foodhunter.DTO.Review;
-import com.foodhunter.DTO.Store;
-import com.foodhunter.service.FavoriteService;
-import com.foodhunter.service.ReviewService;
-import com.foodhunter.service.StoreService;
-import com.foodhunter.service.StoreServiceImpl;
+import com.foodhunter.DTO.*;
+import com.foodhunter.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,17 +19,25 @@ public class StoreController {
     private final FavoriteService favoriteService;
     private final StoreServiceImpl storeService;
 
+    private final CategoryServiceImpl categoryService;
+    private final VisitService visitService;
+    private final OpenDayService openDayService;
+
     @Autowired
-    public StoreController(ReviewService reviewService, FavoriteService favoriteService, StoreServiceImpl storeService) {
+    public StoreController(ReviewService reviewService, FavoriteService favoriteService, StoreServiceImpl storeService, CategoryServiceImpl categoryService, VisitService visitService, OpenDayService openDayService) {
         this.reviewService = reviewService;
         this.favoriteService = favoriteService;
         this.storeService = storeService;
+        this.categoryService = categoryService;
+        this.visitService = visitService;
+        this.openDayService = openDayService;
     }
 
     /**가게 로드 -> 가게, 리뷰 정보 가져오기**/
     @RequestMapping("/store")
     public String store(VisitForm form, Model model) {
         List<Review> reviews =reviewService.readByStoreId(form.getStoreId());
+        List<Category> categoryList = categoryService.getCategoryList();
         Store store = new Store();
         if(form.getStoreId() != null) store = storeService.readOneStore(form.getStoreId());
         System.out.println("store name : " + store.getName());
@@ -45,8 +48,28 @@ public class StoreController {
         if(currentLike > 0L) {
             model.addAttribute("like", true);
         }
+
+        List<Visit> visitList = visitService.readByStoreId(store.getId());
+        List<StoreMarker> allMarkers = storeService.readMarkerInfo();
+        List<Favorite> favoriteList = favoriteService.readByStoreId(store.getId());
+        StoreMarker storeMarker = new StoreMarker();
+        for(int i=0; i<allMarkers.size(); i++){
+            if(allMarkers.get(i).getStoreId() == store.getId()) {
+                storeMarker = allMarkers.get(i);
+                break;
+            }
+        }
+
+        List<OpenDay> openDayList = openDayService.readByStoreId(store.getId());
+        System.out.println("openDayList size : " + openDayList.size());
+
         model.addAttribute("store", store);
         model.addAttribute("reviews", reviews);
+        model.addAttribute("storeMarker", storeMarker);
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("favoriteList", favoriteList);
+        model.addAttribute("openDayList", openDayList);
+        model.addAttribute("visitList", visitList);
         model.addAttribute("reviewError", false);
         model.addAttribute("delete", false);
         return "store";
@@ -57,7 +80,7 @@ public class StoreController {
     public String create(HttpServletRequest request, Model model){
         ReviewFileUpload fileUpload = new ReviewFileUpload();
         Review review = fileUpload.uploadPhoto(request);
-
+        System.out.println("storeId: " + review.getStoreId());
         Long result = reviewService.write(review);
         if(result == -1L) { // 에러 발생
             model.addAttribute("reviewError", true);
@@ -66,19 +89,22 @@ public class StoreController {
     }
 
     /**가게 삭제 요청**/
-    @RequestMapping("/store/delete")
-    public String delete(Model model){
+    @RequestMapping(value = "store/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") int id, Model model){
+        storeService.deleteStore(id);
         model.addAttribute("delete", true);
-        return "redirect:/store";
+        return "redirect:/main";
     }
 
-    /**리뷰 삭제**/
     @RequestMapping("/store/review-delete")
-    public String reviewDelete(){
+    public String reviewDelete(ReviewForm form, Model model){
+        long storeId = form.getStoreId();
+        long userId = form.getUserId();
         Review review = new Review();
-        review.setUsrId(1);
-        review.setStoreId(1);
-        Long result = reviewService.delete(review);
+        review.setStoreId(storeId);
+        review.setUsrId(userId);
+        reviewService.delete(review);
+        model.addAttribute("delete", true);
         return "redirect:/store";
     }
 

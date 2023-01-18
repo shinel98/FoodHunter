@@ -27,4 +27,9 @@ public class VisitService {
         return visitDAO.findAll(userId);
     }
 
+    /** 가게별 방문인증 조회 **/
+    public List<Visit> readByStoreId(Long storeId){
+        return visitDAO.findAllByStoreId(storeId);
+    }
+
 }

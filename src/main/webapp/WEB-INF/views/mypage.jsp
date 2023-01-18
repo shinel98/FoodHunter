@@ -390,74 +390,23 @@
                         </c:otherwise>
                     </c:choose>
                 </div>
-
-<%--                <div class="stores swiper mySwiper  ms-4 ps-2 ">--%>
-<%--                  <div class="swiper-wrapper">--%>
-<%--                        <div class="swiper-slide  rounded bg-secondary  ">--%>
-<%--                            <div class="d-flex flex-row ">--%>
-<%--                                <div  class='mt-4 mb-4 ms-4 me-2'>--%>
-<%--                                    <i class="fa-solid fa-burger fa-3x"></i>--%>
-<%--                                </div>--%>
-<%--                                <div class='storeEx mt-3 mb-4 ms-2 me-2 '>--%>
-<%--                                    <div class="">--%>
-<%--                                        호떡 트럭 이름--%>
-<%--                                    </div>--%>
-<%--                                    <div class="pt-1 tag" >--%>
-<%--                                        #태그--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                      <div class="swiper-slide  rounded bg-secondary  ">--%>
-<%--                          <div class="d-flex flex-row ">--%>
-<%--                              <div  class='mt-4 mb-4 ms-4 me-2'>--%>
-<%--                                  <i class="fa-solid fa-burger fa-3x"></i>--%>
-<%--                              </div>--%>
-<%--                              <div class='storeEx mt-3 mb-4 ms-2 me-2 '>--%>
-<%--                                  <div class="">--%>
-<%--                                      호떡 트럭 이름--%>
-<%--                                  </div>--%>
-<%--                                  <div class="pt-1 tag" >--%>
-<%--                                      #태그--%>
-<%--                                  </div>--%>
-<%--                              </div>--%>
-<%--                          </div>--%>
-<%--                      </div>--%>
-<%--                      <div class="swiper-slide  rounded bg-secondary  ">--%>
-<%--                      <div class="d-flex flex-row ">--%>
-<%--                          <div  class='mt-4 mb-4 ms-4 me-2'>--%>
-<%--                              <i class="fa-solid fa-burger fa-3x"></i>--%>
-<%--                          </div>--%>
-<%--                          <div class='storeEx mt-3 mb-4 ms-2 me-2 '>--%>
-<%--                              <div class="">--%>
-<%--                                  호떡 트럭 이름--%>
-<%--                              </div>--%>
-<%--                              <div class="pt-1 tag" >--%>
-<%--                                  #태그--%>
-<%--                              </div>--%>
-<%--                          </div>--%>
-<%--                      </div>--%>
-<%--                  </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-
-        <div class ='navigationBar bg-white shadow d-flex flex-row justify-content-around'>
+        <div class ='navigationBar bg-dark d-flex flex-row justify-content-around text-white'>
         <div>
-            <a href="./">
+            <a href="/main">
                 <i class="fas fa-home fa-2x"></i>
                 <br>
                 <label class="menu-label">홈 </label>
             </a>
         </div>
         <div>
-            <a href="./">
+            <a href="/report">
                 <i class="fas fa-pen fa-2x"></i>
                 <br>
                 <label class="menu-label">제보 하기</label>
             </a>
         </div>
         <div>
-            <a href="./">
+            <a href="/my">
                 <i class="fas fa-user fa-2x"></i><br>
                 <label class="menu-label">마이페이지</label>
             </a>
