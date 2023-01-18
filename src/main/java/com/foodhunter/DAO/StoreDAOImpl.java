@@ -71,6 +71,13 @@ public class StoreDAOImpl implements StoreDAO{
     }
 
     @Override
+    public List<Store> getStoresByUserId(long userId) {
+        List<Store> stores = new ArrayList<>();
+        stores = sqlSession.selectList(namespace+".getStoresByUserId", userId);
+        return stores;
+    }
+
+    @Override
     public void deleteStore(int id) {
         sqlSession.delete(namespace + ".deleteStore", id);
     }

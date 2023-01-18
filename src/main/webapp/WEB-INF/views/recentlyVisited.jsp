@@ -5,7 +5,10 @@
   Time: 오전 1:12
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
 <html>
   <head>
     <title>최근 방문한 가게</title>
@@ -40,7 +43,7 @@
       }
       .recently-visited-grid {
         display: grid;
-        grid-template-columns: 120px 1fr 30px;
+        grid-template-columns: 1fr 30px;
         margin: 1rem;
         border-radius: 1rem;
       }
@@ -74,7 +77,7 @@
     <header class="container-fluid fixed-top p-0">
       <div id="header-box" class="container bg-white shadow">
         <div class="item d-flex my-auto">
-          <img src="/img/arrow_back_ios_FILL0_wght400_GRAD0_opsz48.png" onclick="" alt="back" width="30" height="30">
+          <img src="/img/arrow_back_ios_FILL0_wght400_GRAD0_opsz48.png" class="clickable" onclick="location.href = '/my'" alt="back" width="30" height="30">
         </div>
         <div class="item d-flex m-auto">
           <p class="h5 py-0">최근 방문한 가게</p>
@@ -84,109 +87,38 @@
     <main>
       <div class="container-fluid p-0">
         <div class="row g-0 text-center min-vh-100">
-<%--          <div class="col"></div>--%>
           <div class="col border border-black">
             <div id="recently-visited-list" class="mt-3 mx-4">
-              <%--최근 방문한 가게 템플릿--%>
-              <template id="recently-visited-template">
-                <div id="recently-visited-div" class="border bg-lightbeige recently-visited-grid py-2 clickable" onclick="pageBack()">
-                  <div class="m-auto">
-                    <img src="{image-source}" alt="store image" width="100" height="100">
+              <c:choose>
+                <c:when test="${fn:length(recentlyVisitedList) > 0}">
+                  <c:forEach var="recentlyVisited" items="${recentlyVisitedList}">
+                    <div id="recently-visited-div" class="border bg-lightbeige recently-visited-grid py-2 clickable" onclick="location.href = '/store?storeId' + ${recentlyVisited.id}">
+                      <div class="d-flex flex-column justify-content-center">
+                        <p class="h5 align-baseline text-start ms-2 my-0">${recentlyVisited.name}</p>
+                        <c:forEach var="tag" items="${allCategories}">
+                          <c:if test="${tag.id == recentlyVisited.categoryId}">
+                            <p class="align-top text-start text-secondary ms-2 my-0">#${tag.categoryName}</p>
+                          </c:if>
+                        </c:forEach>
+                      </div>
+                      <div class="d-flex my-auto">
+                        <img id="place-select-button" src="/img/arrow_forward_ios_FILL0_wght400_GRAD0_opsz48.png" alt="arrow" width="30" height="30">
+                      </div>
+                    </div>
+                  </c:forEach>
+                </c:when>
+                <c:otherwise>
+                  <div class="py-5">
+                    <div class="d-flex flex-column justify-content-center">
+                      <p class="h5 text-center text-secondary my-0">방문 인증 내역이 없습니다.</p>
+                    </div>
                   </div>
-                  <div class="d-flex flex-column justify-content-center">
-                    <p class="h5 align-baseline text-start ms-2 my-0">{name}</p>
-                    <p class="align-top text-start text-secondary ms-2 my-0">{address}</p>
-                  </div>
-                  <div class="d-flex my-auto">
-                    <img id="place-select-button" src="/img/arrow_forward_ios_FILL0_wght400_GRAD0_opsz48.png" alt="arrow" width="30" height="30">
-                  </div>
-                </div>
-              </template>
-              <template id="no-recently-visited-template">
-                <div class="py-5">
-                  <div class="d-flex flex-column justify-content-center">
-                    <p class="h5 text-center text-secondary my-0">방문 인증 내역이 없습니다.</p>
-                  </div>
-                </div>
-              </template>
+                </c:otherwise>
+              </c:choose>
             </div>
           </div>
-<%--          <div class="col"></div>--%>
         </div>
       </div>
     </main>
   </body>
 </html>
-<script>
-  const recentlyVisitedListElement = document.getElementById('recently-visited-list');
-  const recentlyVisitedTemplate = document.getElementById('recently-visited-template');
-  const noRecentlyVisitedTemplate = document.getElementById('no-recently-visited-template');
-  const recentlyVisitedList = getRecentlyVisitedList();
-
-  $(document).ready(function () {
-    $("#recently-visited-list").empty();
-
-    if (recentlyVisitedList.length === 0) {
-      const noRecentlyVisitedElement = document.importNode(noRecentlyVisitedTemplate.content, true);
-      recentlyVisitedListElement.appendChild(noRecentlyVisitedElement);
-    } else {
-        recentlyVisitedList.forEach((recentlyVisited) => {
-            let template = recentlyVisitedTemplate;
-
-            template.content.querySelector('img').src = recentlyVisited.image;
-            template.content.querySelector('p').textContent = recentlyVisited.name;
-            template.content.querySelector('p').nextElementSibling.textContent = recentlyVisited.address;
-            template.content.querySelector('div').onclick = () => {
-                selectPlace(recentlyVisited.y, recentlyVisited.x);
-            };
-            const recentlyVisitedElement = document.importNode(template.content, true);
-            recentlyVisitedListElement.appendChild(recentlyVisitedElement);
-        });
-    }
-  });
-
-  function getRecentlyVisitedList() {
-    let list = [
-        {
-            image: "http://via.placeholder.com/100",
-            name: "테스트",
-            address: "테스트",
-            y: 37.566826,
-            x: 126.9786567
-        },
-        {
-            image: "http://via.placeholder.com/100",
-            name: "테스트",
-            address: "테스트",
-            y: 37.566826,
-            x: 126.9786567
-        },
-        {
-            image: "http://via.placeholder.com/100",
-            name: "테스트",
-            address: "테스트",
-            y: 37.566826,
-            x: 126.9786567
-        },
-        {
-            image: "http://via.placeholder.com/100",
-            name: "테스트",
-            address: "테스트",
-            y: 37.566826,
-            x: 126.9786567
-        },
-    ];
-    // Load Data from DB
-    return list;
-  };
-
-  function selectPlace(lat, lng) {
-    console.log(lat, lng);
-
-    // Passing Coordinates and Redirecting to the main page
-  }
-  function pageBack(){
-    history.back();
-  }
-
-</script>

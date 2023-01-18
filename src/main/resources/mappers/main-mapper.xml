@@ -55,4 +55,10 @@
         <delete id="deleteStore">
             delete from stores_table where id=#{id}
         </delete>
+    <!--    <select id="getBoardList" resultType="board">-->
+    <!--        select * from BOARD order by seq desc-->
+    <!--    </select>-->
+    <select id="getStoresByUserId" resultType="com.foodhunter.DTO.Store">
+        select * from stores_table where userId = #{userId};
+    </select>
 </mapper>
