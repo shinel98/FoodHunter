@@ -523,6 +523,7 @@
                 buttons[i].classList.remove('bi-heart');
                 buttons.item(i).classList.add('bi-heart-fill');
             }
+            document.getElementById("favoriteForm").action = "/store/unlike";
         }
 
         const searchParams = new URLSearchParams(location.search);
@@ -706,7 +707,7 @@
                 favoriteBtn.item(i).classList.add('bi-heart');
 
             }
-            location.href = "/store/unlike";
+            document.favoriteForm.submit();
         }
     }
 
@@ -837,7 +838,7 @@
                                     <i class="bi bi-share"></i>
                                     공유하기
                                 </button>
-                                <form name="favoriteForm" action="/store/like">
+                                <form name="favoriteForm" id="favoriteForm" action="/store/like">
                                     <input type="hidden" name="userId" value=1>
                                     <input type="hidden" name="storeId" value=${store.id}>
                                     <button type="button" class="btn favorite" onclick="favorite();">

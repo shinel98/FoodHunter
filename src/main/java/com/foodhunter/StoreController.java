@@ -127,4 +127,16 @@ public class StoreController {
         model.addAttribute("storeId", form.getStoreId());
         return "review-deleteForm";
     }
+
+    @RequestMapping("/store/unlike")
+    public String unlike(VisitForm form, Model model){
+        Favorite favorite = new Favorite();
+        favorite.setUserId(form.getUserId());
+        favorite.setStoreId(form.getStoreId());
+        System.out.println("unlike - storeId : " + form.getStoreId());
+        favoriteService.unlike(favorite);
+
+        model.addAttribute("storeId", form.getStoreId());
+        return "review-deleteForm";
+    }
 }
