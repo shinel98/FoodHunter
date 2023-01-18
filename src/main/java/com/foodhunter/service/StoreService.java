@@ -17,4 +17,5 @@ public interface StoreService {
     public List<Likes> readLikes();
 
     public long reportStore(Store store);
+    public long deleteStore(long id);
 }

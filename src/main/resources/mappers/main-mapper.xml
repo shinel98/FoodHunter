@@ -49,7 +49,7 @@
             insert into stores_table (name, categoryId, userId, visitCnt, regDate)
             values (#{name}, #{categoryId}, #{userId}, 0, NOW())
         </select>
-    <!--    <select id="getBoardList" resultType="board">-->
-    <!--        select * from BOARD order by seq desc-->
-    <!--    </select>-->
+        <delete id="deleteStore">
+            delete from stores_table where id = #{id}
+        </delete>
 </mapper>

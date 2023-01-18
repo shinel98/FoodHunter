@@ -61,4 +61,9 @@ public class StoreServiceImpl implements StoreService {
         System.out.println("result : " + result.getName());
         return result.getCategoryId();
     }
+
+    public long deleteStore(long id) {
+        long result = storeDAO.deleteStore(id);
+        return result;
+    }
 }

@@ -375,6 +375,20 @@
                 left: 0;
             }
         }
+        #my-location {
+            position: absolute;
+            top: -40px;
+            width: 30px;
+            height: 30px;
+            padding: 4px;
+            border-radius: 50px;
+        }
+
+        #my-location{
+            right: 5px;
+            background-color: white;
+            border: 1px solid #f55425;
+        }
     </style>
     <script>
         $(function(){
@@ -408,13 +422,14 @@
         <div class="row g-0 text-center min-vh-100">
             <div class="col mobile">
                 <div id="map" style="width:100%;height:100%;" class="mobileMap"></div>
+<%--                <button id="my-location" onclick="mylocation();" title="현재 내 위치로 이동"><i class="bi bi-geo-alt-fill"></i></button>--%>
                 <%--                <div id="clickLatlng"></div>--%>
 
                 <div id="searchContainer">
                     <div class="input-group rounded">
-                        <input id="search_bar" type="search" class="form-control rounded" placeholder="위치 검색 중.." aria-label="Search" aria-describedby="search-addon" readonly/>
+                        <input id="search_bar" type="search" class="form-control rounded" placeholder="위치 검색 중.." aria-label="Search" aria-describedby="search-addon2" readonly/>
                         <%--                        <div id="search_bar"></div>--%>
-                        <span class="input-group-text border-0" id="search-addon">
+                        <span class="input-group-text border-0" id="search-addon2">
                         <a href="/search"><i class="fas fa-search"></i></a>
                         </span>
                     </div>
@@ -433,15 +448,14 @@
                         </c:choose>
                     </c:forEach>
                 </div>
-
+<%--                onClick="location.href='<%=request.getContextPath()%>/' + 'store?storeId=' + ${sList.storeId}"--%>
                 <div id="storesContainer">
                 <c:forEach var="sList" items="${allMarkers}">
-                    <div class="stores ${sList.categoryName} ${sList.xLocation} ${sList.yLocation}">
+                    <div class="stores ${sList.categoryName} ${sList.xLocation} ${sList.yLocation}" >
                         <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
                         </div>
                         <div class="storesInfoContainer">
                             <div class="storesName">
-
                                 ${sList.name}
                             </div>
                             <div class="storesTag">
@@ -451,7 +465,7 @@
                         <div class="storesDetailContainer">
                             <div class="storesDistance"><img src="img/location.png"  style="width:25px; height:25px;">로딩 중..</div>
                             <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">${sList.likeCnt}</div>
-                            <button class="reportButton">신고하기</button>
+                            <button class="reportButton ${sList.storeId}">신고하기</button>
                             <button class="visitButton">방문하기</button>
                         </div>
                     </div>
@@ -461,13 +475,13 @@
 
                 <div id="menuContainer">
                     <div class="menuIcon">
-                        <a href="./">
+                        <a href="/main">
                             <i class="fas fa-home fa-2x"></i>
                             <p>홈</p>
                         </a>
                     </div>
                     <div class="menuIcon">
-                        <a href="./"><i class="fas fa-pen fa-2x"></i><p>제보하기</p></a></div>
+                        <a href="/report"><i class="fas fa-pen fa-2x"></i><p>제보하기</p></a></div>
                     <div class="menuIcon"><a href="/mypage"><i class="fas fa-user fa-2x"></i><p>마이페이지</p></a></div>
 
 
@@ -499,6 +513,7 @@
                 </div>
                 <div id="webStoresContainer">
                     <c:forEach var="sList" items="${allMarkers}">
+<%--                        onClick="location.href='<%=request.getContextPath()%>/' + 'store?storeId=' + ${sList.storeId}"--%>
                         <div class="webStores ${sList.categoryName} ${sList.xLocation} ${sList.yLocation}">
                             <div class="storesIcon"><img src="img/crucianbread.png" style="width:50px; height:50px;">
                             </div>
@@ -513,7 +528,7 @@
                             <div class="storesDetailContainer">
                                 <div class="storesDistance"><img src="img/location.png" style="width:25px; height:25px;">로딩 중..</div>
                                 <div class="storesRate"><img src="img/like.png" style="width:25px; height:25px; margin-bottom:5px">${sList.likeCnt}</div>
-                                <button class="reportButton">신고하기</button>
+                                <button class="reportButton ${sList.storeId}">신고하기</button>
                                 <form action="${sList.url}">
                                 <input type="hidden" name="storeId" value=${sList.storeId}>
                                 <button class="visitButton" >방문하기</button>
@@ -794,6 +809,45 @@
                 }
             });
         }
+            let reportBtns = document.querySelectorAll('.reportButton');
+            for (var i = 0; i < reportBtns.length; i++){
+                reportBtns[i].addEventListener('click', deleteStore);
+            }
+            // document.getElementsByClassName("reportButton").addEventListener("click", deleteStore());
+            function deleteStore(){
+                let check = 0;
+                if (!confirm("정말 신고하시겠습니까? (신고하시면 삭제 처리됩니다.)")) {
+                    // 아니오 버튼 클릭 시
+                    check = 0;
+                } else {
+                    // 예 버튼 클릭 시
+                    check = 1;
+                }
+                if(check == 1) {
+                    let id = this.classList.item(1);
+
+                    // console.log(reportBtns);
+                    $.ajax({
+                        url: "deleteStore", // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+                        data: {
+                            storeId: id
+                        }, // HTTP 요청과 함께 서버로 보낼 데이터
+                        method: "GET", // HTTP 요청 메소드(GET, POST 등)
+                        // dataType: "int", // 서버에서 보내줄 데이터의 타입
+                        success: function (data) {
+                            console.log("ajax 성공!");
+                            location.reload();
+                        },
+                        error: function () {
+                            console.log("ajax 실패ㅠ");
+                            location.reload();
+                        }
+                    });
+                } else {
+                    location.reload();
+                }
+            }
+
 
         function getSearchLocation(){
             latitude = '${searchLat}';
@@ -877,7 +931,39 @@
         for (var i = 0; i < menuLinks.length; i++){    /* 단점: 메뉴가 백만개라면....? 또한 addEventListener는 시스템 성능에 악영향을 끼친다고 함 */
             menuLinks[i].addEventListener('click', clickMenuHandler);
         }
+            function mylocation(){
+                const container = document.getElementById('map-section'); //지도를 담을 영역의 DOM 레퍼런스
+                // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
+                if (navigator.geolocation) {
+                    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+                    navigator.geolocation.getCurrentPosition(function(position) {
 
+                        const lat = position.coords.latitude; // 위도
+                        const lon = position.coords.longitude; // 경도
+
+                        const options = { //지도를 생성할 때 필요한 기본 옵션
+                            center: new kakao.maps.LatLng(lat, lon), //지도의 중심좌표.
+                            level: 3 //지도의 레벨(확대, 축소 정도)
+                        };
+                        const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+                        // 마커 이미지의 이미지 주소입니다
+                        const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+                        const imageSize = new kakao.maps.Size(24, 35);
+
+                        // 마커 이미지를 생성합니다
+                        const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+                        new kakao.maps.Marker({
+                            map: map, // 마커를 표시할 지도
+                            position: new kakao.maps.LatLng(lat, lon), // 마커를 표시할 위치
+                            title: "내 위치", // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                            image: markerImage // 마커 이미지
+                        });
+                    });
+                }
+            }
         }
     </script>
 </body>
