@@ -661,8 +661,8 @@
     function openDay(){
         var list = document.getElementById("dayList");
         <c:forEach var="day" items="${openDayList}">
-            list.children.item(${day.openDay}).style.color = "red";
-            list.children.item(${day.openDay}).style.borderColor = "red";
+            list.children.item(${day.openDay}-1).style.color = "red";
+            list.children.item(${day.openDay}-1).style.borderColor = "red";
         </c:forEach>
     }
 
@@ -785,7 +785,7 @@
                             <a id="kakao-location" href="https://map.kakao.com/link/to/${store.name},${storeMarker.xLocation},${storeMarker.yLocation}" title="길찾기"><i class="bi bi-map-fill"></i></a>
                             <!--현재 내 위치로 이동 버튼-->
                             <button id="my-location" onclick="mylocation();" title="현재 내 위치로 이동"><i class="bi bi-geo-alt-fill"></i></button>
-                            <!--현재 내 위치로 이동 버튼-->
+                            <!--가게 위치로 이동 버튼-->
                             <button id="store-location" onclick="storeLocation();" title="가게 위치로 이동"><i class="bi bi-shop"></i></button>
                             000 님의 제보
                             <h2>${store.name}</h2>
@@ -923,7 +923,11 @@
 <%--                                            <c:if test="${review.usrId == user.userId}">--%>
 <%--                                                <i class="bi bi-trash-fill col-2" style="margin: auto;"></i>--%>
 <%--                                            </c:if>--%>
-                                            <i class="bi bi-trash-fill col-2" style="margin: auto;"></i>
+                                            <form action="/store/delete">
+                                                <input type="hidden" name="storeId" value=${store.id}>
+                                                <input type="hidden" name="userId" value=1>
+                                                <button type="submit"><i class="bi bi-trash-fill col-2" style="margin: auto;"></i></button>
+                                            </form>
                                         </div>
                                         <c:if test="${review.photo != null}">
                                             <div class="row">
