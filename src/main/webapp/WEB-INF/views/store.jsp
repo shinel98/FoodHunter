@@ -82,7 +82,7 @@
                         <!--상세 정보-->
                         <div id="content-information">
                             <!--수정하기 버튼-->
-                            <button id="btn-edit" type="button" class="btn" onclick="infoEdit();">정보수정하기</button>
+                            <button id="btn-edit" type="button" class="btn" onclick="location.href='http://localhost:8080/report'";>정보수정하기</button>
                             <!--가게 정보 update 날짜-->
                             <!--Todo : 업데이트 날짜 DB 연동-->
                             <span id="updateInfo">2022.12.31 업데이트</span>
@@ -748,9 +748,10 @@
 
     /** 삭제 요청 **/
     function deletion() {
-        location.href = "/store/delete";
+        const urlParams = new URL(window.location.href).searchParams;
+        const storeId = urlParams.get('storeId');
+        location.href = "/store/delete/" + storeId;
     }
-
 
     /** 리뷰 작성하기 **/
     function reviewWrite() {
@@ -767,7 +768,6 @@
 
     /** 정보 수정하기 **/
     function infoEdit() {
-
     }
 
     function mylocation(){
@@ -805,7 +805,7 @@
     }
 
     function confirm(){
-        location.href = "/store";
+        location.href = "/main"
     }
 
 </script>

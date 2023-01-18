@@ -15,6 +15,6 @@ public interface StoreDAO {
     public List<Category> readAllCategories();
     public List<StoreMarker> readAllMarkers();
     public List<Likes> readLikes();
-
     public Store save(Store store);
+    public void deleteStore(int id);
 }

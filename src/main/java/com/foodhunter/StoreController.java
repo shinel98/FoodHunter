@@ -66,10 +66,11 @@ public class StoreController {
     }
 
     /**가게 삭제 요청**/
-    @RequestMapping("/store/delete")
-    public String delete(Model model){
+    @RequestMapping(value = "store/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") int id, Model model){
+        storeService.deleteStore(id);
         model.addAttribute("delete", true);
-        return "redirect:/store";
+        return "redirect:/main";
     }
 
     /**리뷰 삭제**/

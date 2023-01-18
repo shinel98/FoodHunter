@@ -69,4 +69,9 @@ public class StoreDAOImpl implements StoreDAO{
         sqlSession.insert(namespace + ".insertStore", store);
         return store;
     }
+
+    @Override
+    public void deleteStore(int id) {
+        sqlSession.delete(namespace + ".deleteStore", id);
+    }
 }

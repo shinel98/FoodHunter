@@ -15,6 +15,6 @@ public interface StoreService {
     public List<Category> readAllCategories();
     public List<StoreMarker> readMarkerInfo();
     public List<Likes> readLikes();
-
     public long reportStore(Store store);
+    public void deleteStore(int id);
 }
