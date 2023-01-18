@@ -90,7 +90,13 @@ public class StoreController {
 
     /**가게 삭제 요청**/
     @RequestMapping("/store/delete")
-    public String delete(Model model){
+    public String delete(ReviewForm form, Model model){
+        long storeId = form.getStoreId();
+        long userId = form.getUserId();
+        Review review = new Review();
+        review.setStoreId(storeId);
+        review.setUsrId(userId);
+        reviewService.delete(review);
         model.addAttribute("delete", true);
         return "redirect:/store";
     }
