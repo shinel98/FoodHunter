@@ -89,7 +89,7 @@
             <div id="recently-visited-list" class="mt-3 mx-4">
               <%--최근 방문한 가게 템플릿--%>
               <template id="recently-visited-template">
-                <div id="recently-visited-div" class="border bg-lightbeige recently-visited-grid py-2 clickable" onclick="{placeSelect}">
+                <div id="recently-visited-div" class="border bg-lightbeige recently-visited-grid py-2 clickable" onclick="pageBack()">
                   <div class="m-auto">
                     <img src="{image-source}" alt="store image" width="100" height="100">
                   </div>
@@ -184,6 +184,9 @@
     console.log(lat, lng);
 
     // Passing Coordinates and Redirecting to the main page
+  }
+  function pageBack(){
+    history.back();
   }
 
 </script>
