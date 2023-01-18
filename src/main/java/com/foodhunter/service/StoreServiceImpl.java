@@ -77,4 +77,9 @@ public class StoreServiceImpl implements StoreService {
     public void deleteStore(int id) {
         storeDAO.deleteStore(id);
     }
+
+    @Override
+    public void updateStoreName(Store store) {
+        storeDAO.updateStoreName(store);
+    }
 }

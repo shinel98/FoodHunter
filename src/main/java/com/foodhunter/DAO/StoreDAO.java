@@ -22,4 +22,6 @@ public interface StoreDAO {
 
     public List<Store> getStoresByUserId(long userId);
     public void deleteStore(int id);
+
+    public void updateStoreName(Store store);
 }
