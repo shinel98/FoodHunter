@@ -12,10 +12,10 @@ public class Review {
     private long storeId;
     private String reviewContent;
     private int score;
-    private Date regiDate;
+    private Date regDate;
     private String photo;
 
-    private long usrId;
+    private long userId;
 
     public String getPhoto() {
         return photo;
@@ -58,19 +58,19 @@ public class Review {
     }
 
     public Date getRegiDate() {
-        return regiDate;
+        return regDate;
     }
 
-    public void setRegiDate(Date regiDate) {
-        this.regiDate = regiDate;
+    public void setRegiDate(Date regDate) {
+        this.regDate = regDate;
     }
 
     public long getUsrId() {
-        return usrId;
+        return userId;
     }
 
-    public void setUsrId(long usrId) {
-        this.usrId = usrId;
+    public void setUsrId(long userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -80,9 +80,9 @@ public class Review {
                 ", storeId=" + storeId +
                 ", reviewContent='" + reviewContent + '\'' +
                 ", score=" + score +
-                ", regiDate=" + regiDate +
+                ", regDate=" + regDate +
                 ", photo='" + photo + '\'' +
-                ", usrId=" + usrId +
+                ", userId=" + userId +
                 '}';
     }
 }
