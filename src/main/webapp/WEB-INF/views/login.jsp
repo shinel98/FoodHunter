@@ -53,7 +53,7 @@
     <div class="container-fluid p-0">
         <div class="row g-0 text-center min-vh-100">
             <div class="col mobile-lr"></div>
-            <div class="col border border-black mobile-center">
+            <div class="col mobile-center">
                 <div class="row align-items-center justify-content-center">
                     <img src="/img/login.png" id="login-img" alt="login">
                     <h1>붕어빵 사냥꾼</h1>
