@@ -203,19 +203,17 @@
   </hearder>
   <!--main-->
   <div id="main" style="width: 500px; height: 100%; margin: auto;">
-    <form id="form-main" method="post" action="/report/finish">
-      <input type="number" name="lat" value="${markerForm.lat}" hidden>
-      <input type="number" name="lon" value="${markerForm.lon}" hidden>
-      <input type="number" value="1" name="userId" hidden>
+    <form id="form-main" method="post" onsubmit="return validate();">
+      <input type="hidden" name="lat" value="${markerForm.lat}">
+      <input type="hidden" name="lon" value="${markerForm.lon}">
+      <input type="hidden" value="1" name="userId">
       <div id="location" class="form-section">
           <div><h5>가게 위치</h5></div>
-          <!--Todo : 기본 값으로 지도에서 선택한 위치 넣기-->
-          <div><input class="form-control form-control-lg" type="text" value="포항시 북구 흥해흡 558 한동대학교" aria-label=".form-control-lg example" name="location"></div>
+          <div><input class="form-control form-control-lg" type="text" value="위도 : ${markerForm.lat}, 경도 : ${markerForm.lon}" aria-label=".form-control-lg example" name="location" readonly></div>
       </div>
       <div id="name" class="form-section">
-        <div style="position: relative;"><h5>가게 이름</h5><button id="randomButton" onclick="randomName();">랜덤생성</button></div>
-        <!--Todo : 기본 값으로 이름 자동생성 api 결과 넣기-->
-        <div><input id="randomName" class="form-control form-control-lg" type="text" aria-label=".form-control-lg example" name="name"></div>
+        <div style="position: relative;"><h5>가게 이름</h5><button id="randomButton" onclick="randomName();" type="button">랜덤생성</button></div>
+        <div><input id="rN" class="form-control form-control-lg" type="text" aria-label=".form-control-lg example" name="name" required></div>
       </div>
       <div id="category" class="form-section">
         <div style="position: relative;">
@@ -231,8 +229,8 @@
           <c:forEach var="category" items="${categoryList}">
             <div class="col-md-3">
               <div class="custom-control custom-checkbox image-checkbox">
-                <input name="categoryId" type="checkbox" class="custom-control-input" value=${category.categoryId} id="${category.categoryId}"><span>${category.categoryName}</span>
-                <label class="custom-control-label" for="${category.categoryId}">
+                <input name="categoryId" type="checkbox" class="custom-control-input" value=${category.id} id="${category.id}"><span>${category.categoryName}</span>
+                <label class="custom-control-label" for="${category.id}">
                   <img src="${category.icon}" alt="#" class="img-fluid">
                 </label>
               </div>
@@ -244,19 +242,19 @@
         <div><h5>영업 요일</h5></div>
         <span class="multiple-text" class="smallTxt" style="left: 80px;">다중선택 가능</span>
         <div id="days">
-          <input type="checkbox" id="sun" name="sun" style="margin-left: 30px;">
+          <input type="checkbox" id="sun" name="openDay" value=1 class="open-day" style="margin-left: 30px;">
           <label for="sun">일</label>
-          <input type="checkbox" id="mon" name="mon">
+          <input type="checkbox" id="mon" name="openDay" value=2 class="open-day">
           <label for="mon">월</label>
-          <input type="checkbox" id="tue" name="tue">
+          <input type="checkbox" id="tue" name="openDay" value=3 class="open-day">
           <label for="tue">화</label>
-          <input type="checkbox" id="wed" name="wed">
+          <input type="checkbox" id="wed" name="openDay" value=4 class="open-day">
           <label for="wed">수</label>
-          <input type="checkbox" id="thu" name="thu">
+          <input type="checkbox" id="thu" name="openDay" value=5 class="open-day">
           <label for="thu">목</label>
-          <input type="checkbox" id="fri" name="fri">
+          <input type="checkbox" id="fri" name="openDay" value=6 class="open-day">
           <label for="fri">금</label>
-          <input type="checkbox" id="sat" name="sat">
+          <input type="checkbox" id="sat" name="openDay" value=7 class="open-day">
           <label for="sat">토</label>
         </div>
       </div>
@@ -267,9 +265,9 @@
 
   </div>
   <div id="add" class="fixed-bottom border border-black bg-white shadow">
-    <form id="form-category" action="" method="post">
+    <form id="form-category" action="/report/category-apply" method="post">
       <div id="category-name">
-        <input type="text" placeholder="새로운 카테고리 이름을 작성해주세요" id="form-category-name" name="categoryNameApply">
+        <input type="text" placeholder="새로운 카테고리 이름을 작성해주세요" id="form-category-name" name="categoryName">
       </div>
       <div style="margin-left: 12%;">
         <button type="submit" class="text-white btn btn-category-apply-modal float-right">추가신청</button>
@@ -312,12 +310,40 @@
                 var arr = name.split(" ");
                 var result="";
                 for(var i=0; i<arr.length-1; i++) result += arr[i] + " ";
-                <!--Todo: 마지막에 카테고리 이름 넣어서 랜덤 이름 만들기-->
                 result += "붕어빵";
-                document.getElementById("randomName").value = result;
+                console.log("random : " + result);
+                document.getElementById("rN").value = result;
               });
     } catch(err) {
       alert(err); // TypeError: Failed to fetch
+    }
+  }
+
+  function validate(){
+    var element = document.getElementsByClassName("custom-control-input");
+    var atLeastOneChecked = false;
+    for (var i = 0; i < element.length; i++) {
+      if (element[i].checked === true) {
+        atLeastOneChecked = true;
+      }
+    }
+    if(atLeastOneChecked == false) {
+      alert("최소 하나 이상의 카테고리 설정이 필요합니다.");
+      return false;
+    }
+    else {
+      var element = document.getElementsByClassName("open-day");
+      var atLeastOneChecked = false;
+      for (var i = 0; i < element.length; i++) {
+        if (element[i].checked === true) {
+          atLeastOneChecked = true;
+        }
+      }
+      if(atLeastOneChecked == false) {
+        alert("오픈 요일을 하나이상 선택해 주세요");
+        return false;
+      }
+      else return true;
     }
   }
 </script>

@@ -7,6 +7,16 @@ public class ReportForm {
     String name;
     String categoryId;
 
+    public String getOpenDay() {
+        return openDay;
+    }
+
+    public void setOpenDay(String openDay) {
+        this.openDay = openDay;
+    }
+
+    String openDay;
+
     String lat;
 
     public String getLat() {

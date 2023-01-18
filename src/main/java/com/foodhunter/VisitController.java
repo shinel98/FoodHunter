@@ -1,7 +1,8 @@
 package com.foodhunter;
 
-import com.foodhunter.DTO.Store;
-import com.foodhunter.DTO.Visit;
+import com.foodhunter.DTO.*;
+import com.foodhunter.service.CategoryServiceImpl;
+import com.foodhunter.service.FavoriteService;
 import com.foodhunter.service.StoreServiceImpl;
 import com.foodhunter.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,34 @@ public class VisitController {
 
     private final VisitService visitService;
     private final StoreServiceImpl storeService;
+    private final CategoryServiceImpl categoryService;
 
     @Autowired
-    public VisitController(VisitService visitService, StoreServiceImpl storeService) {
+    public VisitController(VisitService visitService, StoreServiceImpl storeService, CategoryServiceImpl categoryService) {
         this.visitService = visitService;
         this.storeService = storeService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/visit")
     public String visit(VisitForm form, Model model) {
+        List<StoreMarker> allMarkers = storeService.readMarkerInfo();
+        List<Category> categoryList = categoryService.getCategoryList();
+
+        Store store = new Store();
+        if(form.getStoreId() != null) store = storeService.readOneStore(form.getStoreId());
+        System.out.println("store name : " + store.getName());
+
+        StoreMarker storeMarker = new StoreMarker();
+        for(int i=0; i<allMarkers.size(); i++){
+            if(allMarkers.get(i).getStoreId() == form.getStoreId()) {
+                storeMarker = allMarkers.get(i);
+                break;
+            }
+        }
+        model.addAttribute("store", store);
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("storeMarker", storeMarker);
         model.addAttribute("visitForm", form);
         return "visit";}
 

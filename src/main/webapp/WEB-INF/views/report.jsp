@@ -17,6 +17,7 @@
   <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
   <style>
     #header {
+      padding: 15px;
       border-radius: 0 0 20px 20px;
     }
 
@@ -64,10 +65,10 @@
           </button>
         </div>
         <div style="width: 80%; float:left;">
-          <h5 class="card-title text-center my-2 fw-light fs-5">제보하기</h5>
+          <h5 class="card-title text-center my-2 fs-5">제보하기</h5>
         </div>
       </header>
-      <div class="card border-0 shadow rounded-3 my-5">
+      <div class="card border-0 shadow rounded-3 my-5" style="height: 100%;">
         <div class="card-body bg-light p-4 p-sm-5">
           <!-- 지도 -->
           <div class="card map-card" id="map">
@@ -75,11 +76,11 @@
           </div>
           <div class="d-grid mt-3">
             <p class="font-weight-bold">맛집 위치는 바로 여기!</p>
+            <small>클릭을 통해 위치를 설정할 수 있습니다.</small>
           </div>
           <form name="aform" id="aform" method="post" action="/report/detail">
-            <input id="lat" name="lat" type="text" hidden="hidden" value="129.4020908227123423">
-            <input id="lon" name="lon" type="text" hidden="hidden" value="36.081094115491084">
-            <input type="text" class="form-control mb-3" id="location" readonly><span id="centerAddr"></span>
+            <div><input id="lat" name="lat" placeholder="위도" required></div>
+            <div><input id="lon" name="lon" placeholder="경도" required></div>
             <div class="d-grid my-3">
               <button class="btn btn-block btn-warning" type="submit" value="위치설정">위치 설정하기</button>
             </div>
@@ -94,7 +95,7 @@
 <script>
   var mapContainer = document.getElementById('map'), // 지도를 표시할 div
           mapOption = {
-            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            center: new kakao.maps.LatLng(36.10367691445477, 129.38881155932162), // 지도의 중심좌표
             level: 3 // 지도의 확대 레벨
           };
   // 지도를 생성합니다
@@ -118,11 +119,8 @@
     // 마커 위치를 클릭한 위치로 옮깁니다
     marker.setPosition(latlng);
 
-    var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-    message += '경도는 ' + latlng.getLon() + ' 입니다';
-
-    var resultDiv = document.getElementById('centerAddr');
-    resultDiv.innerHTML = message;
+    document.getElementById("lat").value = latlng.getLat();
+    document.getElementById("lon").value = latlng.getLng();
 
   });
 </script>

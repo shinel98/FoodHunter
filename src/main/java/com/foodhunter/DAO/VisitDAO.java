@@ -9,4 +9,6 @@ public interface VisitDAO {
     Visit save(Visit visit);
     /**내가 방문인증한 가게 모두 조회**/
     List<Visit> findAll(Long userId);
+    List<Visit> findAllByStoreId(Long storeId);
+
 }

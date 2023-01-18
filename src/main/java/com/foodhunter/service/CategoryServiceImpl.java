@@ -41,4 +41,9 @@ public class CategoryServiceImpl implements CategoryService {
     public List<Category> getCategoryListByRequestStatus(int requestStatus) {
         return categoryDAO.getCategoryListByRequestStatus(requestStatus);
     }
+
+    @Override
+    public void applyCategory(Category category) {
+        categoryDAO.applyCategory(category);
+    }
 }

@@ -131,7 +131,7 @@ public class MainController {
     @ResponseBody
     public String reportStore(@RequestParam("storeId") long id) {
         System.out.println("id = " + id);
-         long result = storeService.deleteStore(id);
+         long result = storeService.deleteMainStore(id);
         System.out.println("result = " + result);
          if(result == 0){
              System.out.println("가게 삭제 실패");

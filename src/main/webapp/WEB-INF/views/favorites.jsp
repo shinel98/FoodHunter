@@ -5,7 +5,10 @@
   Time: 오전 1:53
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
   <title>즐겨찾기한 가게</title>
@@ -40,7 +43,7 @@
       }
       .favorite-grid {
           display: grid;
-          grid-template-columns: 120px 1fr 30px;
+          grid-template-columns: 1fr 30px;
           margin: 1rem;
           border-radius: 1rem;
       }
@@ -57,7 +60,7 @@
           background-color: rgba(0, 0, 0, 0.05);
       }
       .clickable-non-hover {
-        cursor: pointer;
+          cursor: pointer;
       }
 
       @media screen and (max-width: 768px) {
@@ -77,7 +80,7 @@
 <header class="container-fluid fixed-top p-0">
   <div id="header-box" class="container bg-white shadow">
     <div class="item d-flex my-auto">
-      <img src="/img/arrow_back_ios_FILL0_wght400_GRAD0_opsz48.png" onclick="" class="clickable-non-hover" alt="back" width="30" height="30">
+      <img src="/img/arrow_back_ios_FILL0_wght400_GRAD0_opsz48.png" onclick="location.href = '/my'" class="clickable-non-hover" alt="back" width="30" height="30">
     </div>
     <div class="item d-flex m-auto">
       <p class="h5 py-0">즐겨찾기한 가게</p>
@@ -89,28 +92,36 @@
     <div class="row g-0 text-center min-vh-100">
       <div class="col border border-black">
         <div id="favorite-list" class="mt-3 mx-4">
-          <%--즐겨찾기한 가게 템플릿--%>
-          <template id="favorite-template">
-            <div id="favorite-div" class="border bg-lightbeige favorite-grid py-2 clickable" onclick="{placeSelect}">
-              <div class="m-auto">
-                <img src="{image-source}" alt="store image" width="100" height="100">
+          <c:choose>
+            <c:when test="${fn:length(favoriteList) > 0}">
+              <c:forEach var="favoriteStore" items="${favoriteList}">
+                <div id="favorite-div" class="border bg-lightbeige favorite-grid py-2 clickable" onclick="location.href = '/store?storeId' + ${favoriteStore.storeId}">
+                  <div class="d-flex flex-column justify-content-center">
+                    <c:forEach var="store" items="${storeList}">
+                      <c:if test="${store.id == favoriteStore.storeId}">
+                        <p class="h5 align-baseline text-start ms-2 my-0">${store.name}</p>
+                        <c:forEach var="tag" items="${allCategories}">
+                          <c:if test="${tag.id == store.categoryId}">
+                            <p class="align-top text-start text-secondary ms-2 my-0">#${tag.categoryName}</p>
+                          </c:if>
+                        </c:forEach>
+                      </c:if>
+                    </c:forEach>
+                  </div>
+                  <div class="d-flex my-auto">
+                    <img id="place-select-button" src="/img/arrow_forward_ios_FILL0_wght400_GRAD0_opsz48.png" alt="arrow" width="30" height="30">
+                  </div>
+                </div>
+              </c:forEach>
+            </c:when>
+            <c:otherwise>
+              <div class="py-5">
+                <div class="d-flex flex-column justify-content-center">
+                  <p class="h5 text-center text-secondary my-0">즐겨찾기한 가게가 없습니다.</p>
+                </div>
               </div>
-              <div class="d-flex flex-column justify-content-center">
-                <p class="h5 align-baseline text-start ms-2 my-0">{name}</p>
-                <p class="align-top text-start text-secondary ms-2 my-0">{address}</p>
-              </div>
-              <div class="d-flex my-auto">
-                <img id="place-select-button" src="/img/arrow_forward_ios_FILL0_wght400_GRAD0_opsz48.png" alt="arrow" width="30" height="30">
-              </div>
-            </div>
-          </template>
-          <template id="no-favorite-template">
-            <div class="py-5">
-              <div class="d-flex flex-column justify-content-center">
-                <p class="h5 text-center text-secondary my-0">즐겨찾기한 가게가 없습니다.</p>
-              </div>
-            </div>
-          </template>
+            </c:otherwise>
+          </c:choose>
         </div>
       </div>
     </div>
@@ -118,74 +129,3 @@
 </main>
 </body>
 </html>
-
-<script>
-    const favoriteListElement = document.getElementById('favorite-list');
-    const favoriteTemplate = document.getElementById('favorite-template');
-    const noFavoriteTemplate = document.getElementById('no-favorite-template');
-    const favoriteList = getFavoriteList();
-
-    $(document).ready(function () {
-        $("#favorite-list").empty();
-
-        if (favoriteList.length === 0) {
-            const noFavoriteElement = document.importNode(noFavoriteTemplate.content, true);
-            favoriteListElement.appendChild(noFavoriteElement);
-        } else {
-            favoriteList.forEach((favorite) => {
-                let template = favoriteTemplate;
-
-                template.content.querySelector('img').src = favorite.image;
-                template.content.querySelector('p').textContent = favorite.name;
-                template.content.querySelector('p').nextElementSibling.textContent = favorite.address;
-                template.content.querySelector('div').onclick = () => {
-                    selectPlace(favorite.y, favorite.x);
-                };
-                const favoriteElement = document.importNode(template.content, true);
-                favoriteListElement.appendChild(favoriteElement);
-            });
-        }
-    });
-
-    function getFavoriteList() {
-        let list = [
-            {
-                image: "http://via.placeholder.com/100",
-                name: "테스트",
-                address: "테스트",
-                y: 37.566826,
-                x: 126.9786567
-            },
-            {
-                image: "http://via.placeholder.com/100",
-                name: "테스트",
-                address: "테스트",
-                y: 37.566826,
-                x: 126.9786567
-            },
-            {
-                image: "http://via.placeholder.com/100",
-                name: "테스트",
-                address: "테스트",
-                y: 37.566826,
-                x: 126.9786567
-            },
-            {
-                image: "http://via.placeholder.com/100",
-                name: "테스트",
-                address: "테스트",
-                y: 37.566826,
-                x: 126.9786567
-            },
-        ];
-        // Load Data from DB
-        return list;
-    };
-
-    function selectPlace(lat, lng) {
-        console.log(lat, lng);
-
-        // Passing Coordinates and Redirecting to the main page
-    }
-
-</script>

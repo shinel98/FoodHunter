@@ -10,7 +10,6 @@ public class Category {
     private long requestCnt;
     private Date regDate;
 
-
     public long getId() {
         return id;
     }

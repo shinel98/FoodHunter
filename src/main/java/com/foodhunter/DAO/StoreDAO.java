@@ -18,5 +18,8 @@ public interface StoreDAO {
 
     public Store save(Store store);
 
-    public long deleteStore(long id);
+    public long deleteMainStore(long id);
+
+    public List<Store> getStoresByUserId(long userId);
+    public void deleteStore(int id);
 }
