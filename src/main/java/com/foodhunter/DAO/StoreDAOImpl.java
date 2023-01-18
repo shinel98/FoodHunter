@@ -69,4 +69,11 @@ public class StoreDAOImpl implements StoreDAO{
         sqlSession.insert(namespace + ".insertStore", store);
         return store;
     }
+
+    @Override
+    public List<Store> getStoresByUserId(long userId) {
+        List<Store> stores = new ArrayList<>();
+        stores = sqlSession.selectList(namespace+".getStoresByUserId", userId);
+        return stores;
+    }
 }

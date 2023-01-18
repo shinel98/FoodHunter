@@ -61,4 +61,10 @@ public class StoreServiceImpl implements StoreService {
         System.out.println("result : " + result.getName());
         return result.getCategoryId();
     }
+
+    @Override
+    public List<Store> getStoresByUserId(long userId) {
+        List<Store> stores = storeDAO.getStoresByUserId(userId);
+        return stores;
+    }
 }

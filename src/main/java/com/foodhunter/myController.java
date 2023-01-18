@@ -1,17 +1,17 @@
 package com.foodhunter;
 
 import com.foodhunter.DTO.*;
-import com.foodhunter.service.FavoriteService;
-import com.foodhunter.service.RecentlyVisitedService;
-import com.foodhunter.service.StoreService;
+import com.foodhunter.service.*;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.RequestWrapper;
 import java.util.List;
 
 @Controller
@@ -22,6 +22,36 @@ public class myController {
     FavoriteService favoriteService;
     @Autowired
     StoreService storeService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    ReviewService reviewService;
+
+    @RequestMapping(value="/my")
+    public String myPage(HttpSession session, Model model) {
+        long userId = ((User) session.getAttribute("user")).getId();
+        System.out.println("userId: " + userId);
+
+        User user = userService.getUser((int) userId);
+        List<RecentlyVisited> recentlyVisitedList = recentlyVisitedService.getRecentlyVisitedList(userId);
+        List<Favorite> favoriteList = favoriteService.readByUserId(userId);
+        List<Category> allCategories = storeService.readAllCategories();
+        List<Store> storeList = storeService.readStores();
+        List<Store> reportedStoreList = storeService.getStoresByUserId(userId);
+        int reportedStoreCount = reportedStoreList.size();
+        List<Review> reviewList = reviewService.readByUserId(userId);
+        int reviewCount = reviewList.size();
+
+        model.addAttribute("user", user);
+        model.addAttribute("recentlyVisitedList", recentlyVisitedList);
+        model.addAttribute("favoriteList", favoriteList);
+        model.addAttribute("allCategories", allCategories);
+        model.addAttribute("storeList", storeList);
+        model.addAttribute("reportedStoreCount", reportedStoreCount);
+        model.addAttribute("reviewCount", reviewCount);
+
+        return "mypage";
+    }
 
     @RequestMapping(value="/my/recently-visited")
     public String recentlyVisited(HttpSession session, Model model){

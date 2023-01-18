@@ -17,4 +17,6 @@ public interface StoreDAO {
     public List<Likes> readLikes();
 
     public Store save(Store store);
+
+    public List<Store> getStoresByUserId(long userId);
 }
