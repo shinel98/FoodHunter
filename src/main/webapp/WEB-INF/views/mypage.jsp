@@ -11,7 +11,7 @@
 <%--    부트스트립--%>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <%--제이쿼리--%>
-    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <%--    fontawesome--%>
     <script src="https://kit.fontawesome.com/221ffbaa00.js" crossorigin="anonymous"></script>
 <%--    swipper slider css--%>
@@ -221,174 +221,172 @@
             </div>
 
             <div id = 'bottom' class ="bottom text-white">
+                <div id="visited-list">
+                    <template id="no-visited-template">
+                        <div id ='visitText' class='text-start mt-3'>
 
-<%--           <div id="visit" class ="">   </div>--%>
-                <div id ='visitText' class='text-start mt-3'>
+                            <div>
+                                <div class = 'mx-4 mt-3 pb-3 pt-4' >
+                                    <i class="fa-solid fa-certificate"></i>
+                                    <label >방문 인증</label><br>
+                                </div>
+                            </div>
+                            <div class = 'd-flex  flex-row justify-content-between'>
+                                <label class = 'mx-4 exText '>최근 들린 가게는? ></label>
 
-                    <div>
-                        <div class = 'mx-4 mt-3 pb-3 pt-4' >
-                            <i class="fa-solid fa-certificate"></i>
-                            <label >방문 인증</label><br>
+                            </div>
                         </div>
-                    </div>
-                    <div class = 'd-flex  flex-row justify-content-between'>
-                        <label class = 'mx-4 exText '>최근 들린 가게는? ></label>
-<%--                        <label class = 'align-middle rounded-pill button moreText px-3 py-2 me-4 '>더보기</label>--%>
-                    </div>
+
+                        <div id ='visitStore' class = ' mt-2 mx-4 mb-2'>
+                            <div>
+                                <div id='item1' class ='emty mt-4 rounded  d-flex flex-row '>
+
+                                    <div id="img1" class=' pt-2 mt-4 mb-4 ms-4 me-2'>
+                                        <i class="fa-3x fa-solid fa-face-frown"></i>
+                                    </div>
+                                    <div id='storetext1' class='mt-4 mb-4 ms-2 me-2 text-left' >
+                                        <div class ="pb-1 tag">
+                                            방문 인증 내역이 없어요!
+                                        </div>
+                                        <div class="tag">
+                                            방문 인증으로 정확도를 높혀봐요
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </template>
+                    <template id="visited-template">
+
+                        <div id ='visitedText' class='text-start'>
+                            <div>
+                                <div  class = 'mx-4 mt-2 pb-3 pt-4 '>
+                                    <i class="fa-regular fa-thumbs-up"></i>
+                                    <label>방문 인증</label><br>
+                                </div>
+                            </div>
+                            <div class = 'd-flex flex-row justify-content-between'>
+                                <label class = 'mx-4 exText '>최근 들린 가게는? ></label>
+                                <button class = 'align-middle rounded-pill button moreText px-3 py-2 me-4' onclick="location.href='/mypage/recentlyvisitedd'">더보기</button>
+                            </div>
+                        </div>
+
+
+                    </template>
+
+                    <template id="visited-item">
+                        <div class="storeContainer">
+                            <div class ="storeitem">
+                                <div class="d-flex flex-row ">
+                                    <div  class='mt-3 mb-4 ms-4 me-2'>
+                                        <img src="{image-source}" alt="store image" width="100" height="100">
+                                    </div>
+                                    <div class='storeEx mt-3 mb-4 ms-2 me-2 '>
+                                        <div class="" >
+                                            <label id="v_namebox">{name}</label>
+                                        </div>
+                                        <div class="pt-1 tag"  >
+                                            <label id="v_tagebox"># {tage}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+               </div>
+
+                <div id="like-list">
+                    <template id="no-like-template">
+                        <div  class='text-start mt-3'>
+
+                            <div>
+                                <div class = 'mx-4 mt-3 pb-3 pt-4' >
+                                    <i class="fa-solid fa-certificate"></i>
+                                    <label >즐겨 찾기</label><br>
+                                </div>
+                            </div>
+                            <div class = 'd-flex  flex-row justify-content-between'>
+                                <label class = 'mx-4 exText '>나만의 맛집은? ></label>
+
+                            </div>
+                        </div>
+
+                        <div  class = ' mt-2 mx-4 mb-2'>
+                            <div>
+                                <div class ='emty mt-4 rounded  d-flex flex-row '>
+
+                                    <div  class=' pt-2 mt-4 mb-4 ms-4 me-2'>
+                                        <i class="fa-3x fa-solid fa-face-frown"></i>
+                                    </div>
+                                    <div  class='mt-4 mb-4 ms-2 me-2 text-left' >
+                                        <div class ="pb-1 tag">
+                                             즐겨찾기 내역이 없어요!
+                                        </div>
+                                        <div class="tag">
+                                            좋아요를 눌러 리스트를 늘려봐요!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template id="like-template">
+
+                        <div id ='likeText' class='text-start'>
+                            <div>
+                                <div  class = 'mx-4 mt-2 pb-3 pt-4 '>
+                                    <i class="fa-regular fa-thumbs-up"></i>
+                                    <label>즐겨찾기</label><br>
+                                </div>
+                            </div>
+                            <div class = 'd-flex flex-row justify-content-between'>
+                                <label class = 'mx-4 exText '>나만의 맛집은? ></label>
+                                <button class = 'align-middle rounded-pill button moreText px-3 py-2 me-4' onclick="location.href='/mypage/favorites'">더보기</button>
+                            </div>
+                        </div>
+
+
+                    </template>
+
+                    <template id="like-item">
+                        <div class="storeContainer">
+                            <div class ="storeitem">
+                                <div class="d-flex flex-row ">
+                                    <div  class='mt-3 mb-4 ms-4 me-2'>
+                                        <img src="{image-source}" alt="store image" width="100" height="100">
+                                    </div>
+                                    <div class='storeEx mt-3 mb-4 ms-2 me-2 '>
+                                        <div class="" >
+                                             <label id="l_namebox">{name}</label>
+                                        </div>
+                                        <div class="pt-1 tag"  >
+                                            <label id="l_tagebox"># {tage}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
                 </div>
-
-                <div id ='visitStore' class = ' mt-2 mx-4 mb-2'>
-                    <div>
-                        <div id='item1' class ='emty mt-4 rounded  d-flex flex-row '>
-
-                            <div id="img1" class=' pt-2 mt-4 mb-4 ms-4 me-2'>
-                                <i class="fa-3x fa-solid fa-face-frown"></i>
-                            </div>
-                            <div id='storetext1' class='mt-4 mb-4 ms-2 me-2 text-left' >
-                                <div class ="pb-1 tag">
-                                    방문 인증 내역이 없어요!
-                                </div>
-                                <div class="tag">
-                                    방문 인증으로 정확도를 높혀봐요
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div clss ='like'>           </div>
-                <div id ='likeText' class='text-start'>
-                    <div>
-                        <div  class = 'mx-4 mt-2 pb-3 pt-4 '>
-                            <i class="fa-regular fa-thumbs-up"></i>
-                            <label>즐겨찾기</label><br>
-                        </div>
-                    </div>
-                    <div class = 'd-flex flex-row justify-content-between'>
-                        <label class = 'mx-4 exText '>나만의 맛집은? ></label>
-                        <label class = 'align-middle rounded-pill button moreText px-3 py-2 me-4 '>더보기</label>
-                    </div>
-                </div>
-
-                <div id="container1" class="storeContainer">
-                    <div id="items1" class ="storeitem">
-                        <div class="d-flex flex-row ">
-                            <div  class='mt-3 mb-4 ms-4 me-2'>
-                                <i class="fa-solid fa-burger fa-3x"></i>
-                            </div>
-                            <div class='storeEx mt-3 mb-4 ms-2 me-2 '>
-                                <div class="">
-                                    호떡 트럭 이름
-                                </div>
-                                <div class="pt-1 tag" >
-                                    #태그
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div  class ="storeitem ">
-                        <div class="d-flex flex-row ">
-                            <div  class='mt-3 mb-4 ms-4 me-2'>
-                                <i class="fa-solid fa-burger fa-3x"></i>
-                            </div>
-                            <div class='storeEx mt-3 mb-4 ms-2 me-2 '>
-                                <div class="">
-                                    호떡 트럭 이름
-                                </div>
-                                <div class="pt-1 tag" >
-                                    #태그
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div  class ="storeitem ">
-                        <div class="d-flex flex-row ">
-                            <div  class='mt-3 mb-4 ms-4 me-2'>
-                                <i class="fa-solid fa-burger fa-3x"></i>
-                            </div>
-                            <div class='storeEx mt-3 mb-4 ms-2 me-2 '>
-                                <div class="">
-                                    호떡 트럭 이름
-                                </div>
-                                <div class="pt-1 tag" >
-                                    #태그
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-<%--                    <div id="items3" class ="storeitem">--%>
-<%--                        item3--%>
-<%--                    </div>--%>
-                </div>
-
-<%--                <div class="stores swiper mySwiper  ms-4 ps-2 ">--%>
-<%--                  <div class="swiper-wrapper">--%>
-<%--                        <div class="swiper-slide  rounded bg-secondary  ">--%>
-<%--                            <div class="d-flex flex-row ">--%>
-<%--                                <div  class='mt-4 mb-4 ms-4 me-2'>--%>
-<%--                                    <i class="fa-solid fa-burger fa-3x"></i>--%>
-<%--                                </div>--%>
-<%--                                <div class='storeEx mt-3 mb-4 ms-2 me-2 '>--%>
-<%--                                    <div class="">--%>
-<%--                                        호떡 트럭 이름--%>
-<%--                                    </div>--%>
-<%--                                    <div class="pt-1 tag" >--%>
-<%--                                        #태그--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                      <div class="swiper-slide  rounded bg-secondary  ">--%>
-<%--                          <div class="d-flex flex-row ">--%>
-<%--                              <div  class='mt-4 mb-4 ms-4 me-2'>--%>
-<%--                                  <i class="fa-solid fa-burger fa-3x"></i>--%>
-<%--                              </div>--%>
-<%--                              <div class='storeEx mt-3 mb-4 ms-2 me-2 '>--%>
-<%--                                  <div class="">--%>
-<%--                                      호떡 트럭 이름--%>
-<%--                                  </div>--%>
-<%--                                  <div class="pt-1 tag" >--%>
-<%--                                      #태그--%>
-<%--                                  </div>--%>
-<%--                              </div>--%>
-<%--                          </div>--%>
-<%--                      </div>--%>
-<%--                      <div class="swiper-slide  rounded bg-secondary  ">--%>
-<%--                      <div class="d-flex flex-row ">--%>
-<%--                          <div  class='mt-4 mb-4 ms-4 me-2'>--%>
-<%--                              <i class="fa-solid fa-burger fa-3x"></i>--%>
-<%--                          </div>--%>
-<%--                          <div class='storeEx mt-3 mb-4 ms-2 me-2 '>--%>
-<%--                              <div class="">--%>
-<%--                                  호떡 트럭 이름--%>
-<%--                              </div>--%>
-<%--                              <div class="pt-1 tag" >--%>
-<%--                                  #태그--%>
-<%--                              </div>--%>
-<%--                          </div>--%>
-<%--                      </div>--%>
-<%--                  </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-
         <div class ='navigationBar bg-dark d-flex flex-row justify-content-around text-white'>
         <div>
-            <a href="./">
+            <a href="./main">
                 <i class="fas fa-home fa-2x"></i>
                 <br>
                 <label>홈 </label>
             </a>
         </div>
         <div>
-            <a href="./">
+            <a href="./main">
                 <i class="fas fa-pen fa-2x"></i>
                 <br>
                 <label>제보 하기</label>
             </a>
         </div>
         <div>
-            <a href="./">
+            <a href="./mypage">
                 <i class="fas fa-user fa-2x"></i><br>
                 <label>마이페이지</label>
             </a>
@@ -409,8 +407,109 @@
 </body>
 <!--   자바스크립트 -->
 
-
 <script>
+    const visitedListElement = document.getElementById('visited-list');
+    const visitedTemplate = document.getElementById('visited-template');
+    const novisitedTemplate = document.getElementById('no-visited-template');
+    const visiteditemTemplate = document.getElementById("visited-item");
+    const visitedList = getVisitList();
+
+    const likeListElement = document.getElementById('like-list');
+    const likeTemplate = document.getElementById('like-template');
+    const nolikeTemplate = document.getElementById('no-like-template');
+    const likeitemTemplate = document.getElementById("like-item");
+    const likeList = getlikeList();
+
+    $(document).ready(function () {
+        console.log("마이페이지 출력");
+        $("#like-list").empty();
+        $('#visited-list').empty();
+
+        if (visitedList.length === 0) {
+            console.log("방문한 가게가 존재하지 않습니다.");
+            const novisitedElement = document.importNode(novisitedTemplate.content, true);
+            likeListElement.appendChild(novisitedElement);
+        } else {
+            console.log("방문한 가게가 존재합니다.");
+            //방문인증, 최근 들린 가게 txt, 버튼 삽입
+            const visitedElement = document.importNode(visitedTemplate.content, true);
+            likeListElement.appendChild(visitedElement);
+
+            likeList.forEach((visit) => {
+                console.log("아이템 입력시작");
+                let template = null;
+                template =visiteditemTemplate;
+                template.content.querySelector('img').src = visit.image;
+                template.content.querySelector('#namebox').textContent = visit.name;
+                template.content.querySelector('#tagebox').nextElementSibling.textContent = visit.tage;
+
+                const visitItem = document.importNode(template.content, true);
+                likeListElement.appendChild(visitItem);
+            });
+        }
+
+        if (likeList.length === 0) {
+            console.log("즐겨찾은 가계가 존재하지 않습니다.");
+            const nolikeElement = document.importNode(nolikeTemplate.content, true);
+            likeListElement.appendChild(nolikeElement);
+        } else {
+
+            console.log("즐겨찾은 가계가 존재합니다.");
+            //즐겨찾기, 나만의 맛집 txt, 버튼 삽입
+            const likeElement = document.importNode(likeTemplate.content, true);
+            likeListElement.appendChild(likeElement);
+
+            likeList.forEach((like) => {
+                console.log("아이템 입력시작");
+                let template = null;
+                template =likeitemTemplate;
+                template.content.querySelector('img').src = like.image;
+                template.content.querySelector('#namebox').textContent = like.name;
+                template.content.querySelector('#tagebox').nextElementSibling.textContent = like.tage;
+
+                const likeItem = document.importNode(template.content, true);
+                likeListElement.appendChild(likeItem);
+            });
+        }
+    });
+    function  insertlikeItem(like){
+
+    }
+    function getVisitList(){
+        let list= [
+
+        ];
+        return list;
+    }
+    function getlikeList(){
+        let list = [
+            {
+                image: "http://via.placeholder.com/100",
+                name: "테스트",
+                tage: "태그 테스트"
+            },
+            {
+                image: "http://via.placeholder.com/100",
+                name: "테스트",
+                tage: "태그 테스트"
+            },
+            {
+                image: "http://via.placeholder.com/100",
+                name: "테스트",
+                tage: "태그 테스트"
+            },
+            {
+                image: "http://via.placeholder.com/100",
+                name: "테스트",
+                tage: "태그 테스트"
+            },
+        ];
+
+        return list;
+
+    }
+
+    //이름 수정
     let defaltName = $('.idBox').val();
     var swiper = new Swiper(".mySwiper", {});
     $(function() {
@@ -445,12 +544,11 @@
             clickable: true,
         },
     });
-</script>
 
-<!--랜덤 닉네임 생성 api
-임의로 랜덤생성 버튼 만들어서 연결해놨으니 의도한 페이지 동작 방식 대로 가져다가 쓰시면 됩니다.
--->
-<script>
+    <!--랜덤 닉네임 생성 api
+
+    -->
+
     function randomName(){
         try {
             fetch('https://nickname.hwanmoo.kr/?format=json&count=1',{
@@ -462,4 +560,5 @@
         }
     }
 </script>
+
 </html>
