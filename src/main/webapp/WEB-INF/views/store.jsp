@@ -837,7 +837,7 @@
                         <!--상세 정보-->
                         <div id="content-information">
                             <!--수정하기 버튼-->
-                            <button id="btn-edit" type="button" class="btn" onclick="infoEdit();">정보수정하기</button>
+                            <button id="btn-edit" type="button" class="btn" onclick="location.href='http://localhost:8080/report'";>정보수정하기</button>
                             <!--가게 정보 update 날짜-->
                             <!--Todo : 업데이트 날짜 DB 연동-->
                             <span id="updateInfo"><fmt:formatDate pattern="yyyy-MM-dd" value="${store.regDate}"></fmt:formatDate> 업데이트</span>
@@ -968,6 +968,7 @@
             </div>
         </div>
     </div>
+    // TODO: 파일 업로드 구현
     <div id="black-bg" style="z-index: 99;">
         <div id="review-write-container" class="card shadow bg-white" style="visibility: hidden;">
             <!--취소 버튼-->

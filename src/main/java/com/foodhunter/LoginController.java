@@ -139,9 +139,13 @@ public class LoginController {
         String email  = ((User)request.getSession().getAttribute("tempUser")).getEmail();
         String name  = ((User)request.getSession().getAttribute("tempUser")).getName();
         String nickname = request.getParameter("nickname");
+        User u = new User();
+        u.setName(name);
+        u.setEmail(email);
+        u.setEmail(nickname);
 
         System.out.println("email name nickname:" + email + " " + name + " " + nickname);
-
+        request.getSession().setAttribute("user", u);
         dto.setEmail(email) ;
         dto.setName(name);
         dto.setNickname(nickname);
@@ -151,7 +155,7 @@ public class LoginController {
 
         int i = userService.insertUser(dto);
 
-        session.invalidate();
+//        session.invalidate();
 
         if(i==0) {
             return "redirect:nickname" ;
@@ -172,5 +176,10 @@ public class LoginController {
     public String alert(ModelAndView mv) {
 
         return "alert";
+    }
+    @RequestMapping(value = "/alert2", method = RequestMethod.GET)
+    public String alert2(ModelAndView mv) {
+
+        return "alert2";
     }
 }
