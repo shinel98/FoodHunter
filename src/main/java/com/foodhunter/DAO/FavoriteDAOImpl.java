@@ -26,6 +26,13 @@ public class FavoriteDAOImpl implements FavoriteDAO{
     }
 
     @Override
+    public List<Favorite> findByStoreId(long storeId) {
+        List<Favorite> result;
+        result = sqlSession.selectList("favorite.selectFavoriteByStoreId", storeId);
+        return result;
+    }
+
+    @Override
     public Long delete(Favorite favorite) {
         sqlSession.delete("favorite.deleteFavorite", favorite);
         return favorite.getFavoriteId();

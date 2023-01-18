@@ -11,6 +11,9 @@
     <select id="selectFavoriteByUserId" resultType="com.foodhunter.DTO.Favorite">
         select * from like_table where userId = #{userId}
     </select>
+    <select id="selectFavoriteByStoreId" resultType="com.foodhunter.DTO.Favorite">
+        select * from like_table where storeId = #{storeId}
+    </select>
     <select id="selectOne" resultType="com.foodhunter.DTO.Favorite">
         select * from like_table where storeId = #{storeId} and userId = #{userId}
     </select>

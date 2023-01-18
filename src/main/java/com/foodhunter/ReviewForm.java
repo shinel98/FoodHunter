@@ -3,6 +3,17 @@ package com.foodhunter;
 public class ReviewForm {
     String content;
     String photo;
+    Long storeId;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    Long userId;
 
     public String getPhoto() {
         return photo;
@@ -19,8 +30,6 @@ public class ReviewForm {
     public void setStoreId(Long storeId) {
         this.storeId = storeId;
     }
-
-    Long storeId;
 
     public String getContent() {
         return content;

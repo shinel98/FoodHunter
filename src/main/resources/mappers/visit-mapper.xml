@@ -8,4 +8,7 @@
     <select id="selectVisitByUserId" resultType="com.foodhunter.DTO.Visit">
         select * from visited_table where userId = #{userId}
     </select>
+    <select id="selectVisitByStoreId" resultType="com.foodhunter.DTO.Visit">
+        select * from visited_table where storeId = #{storeId}
+    </select>
 </mapper>
