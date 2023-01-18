@@ -62,6 +62,11 @@ public class StoreServiceImpl implements StoreService {
         return result.getCategoryId();
     }
 
+    public long deleteMainStore(long id) {
+        long result = storeDAO.deleteMainStore(id);
+        return result;
+    }
+
     @Override
     public List<Store> getStoresByUserId(long userId) {
         List<Store> stores = storeDAO.getStoresByUserId(userId);

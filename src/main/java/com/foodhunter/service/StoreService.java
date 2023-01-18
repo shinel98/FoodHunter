@@ -17,6 +17,7 @@ public interface StoreService {
     public List<Likes> readLikes();
 
     public long reportStore(Store store);
+    public long deleteMainStore(long id);
 
     public List<Store> getStoresByUserId(long userId);
     public void deleteStore(int id);
