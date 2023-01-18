@@ -807,5 +807,4 @@
     function confirm(){
         location.href = "/main"
     }
-
 </script>
