@@ -18,7 +18,6 @@ public class StoreController {
     private final ReviewService reviewService;
     private final FavoriteService favoriteService;
     private final StoreServiceImpl storeService;
-
     private final CategoryServiceImpl categoryService;
     private final VisitService visitService;
     private final OpenDayService openDayService;
@@ -33,7 +32,7 @@ public class StoreController {
         this.openDayService = openDayService;
     }
 
-    /**가게 로드 -> 가게, 리뷰 정보 가져오기**/
+    /**가게 로드**/
     @RequestMapping("/store")
     public String store(VisitForm form, Model model) {
         System.out.println("form-storeId : " + form.getStoreId());
@@ -102,6 +101,7 @@ public class StoreController {
         return "redirect:/main";
     }
 
+    /**리뷰 삭제**/
     @RequestMapping("/store/review-delete")
     public String reviewDelete(ReviewForm form, Model model){
         long storeId = form.getStoreId();
@@ -117,6 +117,7 @@ public class StoreController {
     }
 
 
+    /**가게 즐겨찾기(좋아요) 등록**/
     @RequestMapping("/store/like")
     public String like(VisitForm form, Model model){
         Favorite favorite = new Favorite();
@@ -128,6 +129,7 @@ public class StoreController {
         return "review-deleteForm";
     }
 
+    /**가게 즐겨찾기(등록) 취소**/
     @RequestMapping("/store/unlike")
     public String unlike(VisitForm form, Model model){
         Favorite favorite = new Favorite();
