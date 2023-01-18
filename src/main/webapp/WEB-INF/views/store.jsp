@@ -1000,7 +1000,7 @@
             <button type="button" class="btn" onclick="reviewCancel();"><i id="review-cancel" class="bi bi-x-lg"></i></button>
             <form id="review-form" action="/store/review" enctype="multipart/form-data" method="post" style="position: relative;">
 
-                <input type="hidden" name="usrId" value=3>
+                <input type="hidden" name="usrId" value=1>
                 <input type="hidden" name="storeId" value=${store.id}>
                 <input type="hidden" name="score" id="score">
                 <div id="review-score">
