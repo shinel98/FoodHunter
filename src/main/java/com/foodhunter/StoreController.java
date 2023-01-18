@@ -89,8 +89,15 @@ public class StoreController {
     }
 
     /**가게 삭제 요청**/
-    @RequestMapping("/store/delete")
-    public String delete(ReviewForm form, Model model){
+    @RequestMapping(value = "store/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") int id, Model model){
+        storeService.deleteStore(id);
+        model.addAttribute("delete", true);
+        return "redirect:/main";
+    }
+
+    @RequestMapping("/store/review-delete")
+    public String reviewDelete(ReviewForm form, Model model){
         long storeId = form.getStoreId();
         long userId = form.getUserId();
         Review review = new Review();
@@ -98,16 +105,6 @@ public class StoreController {
         review.setUsrId(userId);
         reviewService.delete(review);
         model.addAttribute("delete", true);
-        return "redirect:/store";
-    }
-
-    /**리뷰 삭제**/
-    @RequestMapping("/store/review-delete")
-    public String reviewDelete(){
-        Review review = new Review();
-        review.setUsrId(1);
-        review.setStoreId(1);
-        Long result = reviewService.delete(review);
         return "redirect:/store";
     }
 
