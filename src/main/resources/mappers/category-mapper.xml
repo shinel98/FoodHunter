@@ -22,6 +22,14 @@
         INSERT INTO category_table (categoryName, icon, requestStatus, requestCnt)
         VALUES (#{categoryName}, #{icon}, #{requestStatus}, #{requestCnt});
     </insert>
+    <insert id="applyCategory">
+        INSERT INTO category_table (categoryName, requestStatus, requestCnt)
+        VALUES (#{categoryName}, 1, 1);
+    </insert>
+    <insert id="duplicateApply">
+        INSERT INTO category_table (categoryName, requestStatus, requestCnt)
+        VALUES (#{categoryName}, 1, #{requestCnt}) on duplicate key update categoryName = categoryName;
+    </insert>
     <delete id="deleteCategory">
         DELETE FROM category_table
         WHERE id = #{categoryId};
