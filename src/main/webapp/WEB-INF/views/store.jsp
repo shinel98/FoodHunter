@@ -923,7 +923,7 @@
 <%--                                            <c:if test="${review.usrId == user.userId}">--%>
 <%--                                                <i class="bi bi-trash-fill col-2" style="margin: auto;"></i>--%>
 <%--                                            </c:if>--%>
-                                            <form action="/store/delete">
+                                            <form action="/store/review-delete">
                                                 <input type="hidden" name="storeId" value=${store.id}>
                                                 <input type="hidden" name="userId" value=1>
                                                 <button type="submit"><i class="bi bi-trash-fill col-2" style="margin: auto;"></i></button>

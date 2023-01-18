@@ -36,6 +36,7 @@ public class StoreController {
     /**가게 로드 -> 가게, 리뷰 정보 가져오기**/
     @RequestMapping("/store")
     public String store(VisitForm form, Model model) {
+        System.out.println("form-storeId : " + form.getStoreId());
         List<Review> reviews =reviewService.readByStoreId(form.getStoreId());
         List<Category> categoryList = categoryService.getCategoryList();
         Store store = new Store();
@@ -104,8 +105,10 @@ public class StoreController {
         review.setStoreId(storeId);
         review.setUsrId(userId);
         reviewService.delete(review);
-        model.addAttribute("delete", true);
-        return "redirect:/store";
+
+        model.addAttribute("storeId", storeId);
+
+        return "review-deleteForm";
     }
 
 
