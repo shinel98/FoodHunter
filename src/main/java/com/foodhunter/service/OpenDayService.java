@@ -5,6 +5,8 @@ import com.foodhunter.DAO.OpenDayDAOImpl;
 import com.foodhunter.DTO.OpenDay;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 public class OpenDayService {
     private final OpenDayDAO openDayDAO;
 
@@ -16,6 +18,12 @@ public class OpenDayService {
     public OpenDay save(OpenDay openDay){
         openDayDAO.save(openDay);
         return openDay;
+    }
+
+    public List<OpenDay> readByStoreId(long storeId){
+        List<OpenDay> result;
+        result = openDayDAO.readByStoreId(storeId);
+        return result;
     }
 
 

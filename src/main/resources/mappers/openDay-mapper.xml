@@ -5,4 +5,7 @@
         insert into openDay_table (storeId, openDay)
         values (#{storeId}, #{openDay})
     </insert>
+    <select id="readByStoreId" resultType="com.foodhunter.DTO.OpenDay">
+        select * from openDay_table where storeId = #{storeId}
+    </select>
 </mapper>
