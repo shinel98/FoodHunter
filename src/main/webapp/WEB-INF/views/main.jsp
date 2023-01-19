@@ -18,6 +18,7 @@
     <script src="https://kit.fontawesome.com/fc1b103f84.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"> <!--icon-->
 
 
 
@@ -256,6 +257,18 @@
         .rightContainer {
             display: none;
         }
+        #my-location{
+            top: -300px;
+            right: 50px;
+            width: 35px;
+            height: 35px;
+            position: absolute;
+            padding: 4px;
+            border-radius: 50px;
+            background-color: white;
+            border: 1px solid #f55425;
+            color: #f55425;
+        }
 
         @media (min-width: 992px) {
             /* 데스크탑에 최적화된 예외 CSS 코드*/
@@ -336,6 +349,18 @@
                 min-width: 400px;
                 margin-top: 7%;
             }
+            #my-location {
+                top: -80px;
+                right: 50px;
+                width: 35px;
+                height: 35px;
+                position: absolute;
+                padding: 4px;
+                border-radius: 50px;
+                background-color: white;
+                border: 1px solid #f55425;
+                color: #f55425;
+            }
         }
 
         #confirm{
@@ -374,23 +399,12 @@
                 left: 0;
             }
         }
-        #my-location {
-            position: absolute;
-            top: -40px;
-            width: 30px;
-            height: 30px;
-            padding: 4px;
-            border-radius: 50px;
-        }
 
-        #my-location{
-            right: 5px;
-            background-color: white;
-            border: 1px solid #f55425;
-        }
+
+
     </style>
     <script>
-        $(function(){
+    $(function(){
             const searchParams = new URLSearchParams(location.search);
             for (const param of searchParams) {
                 if(param.at(0) === "report"){
@@ -421,8 +435,7 @@
         <div class="row g-0 text-center min-vh-100">
             <div class="col mobile">
                 <div id="map" style="width:100%;height:100%;" class="mobileMap"></div>
-<%--                <button id="my-location" onclick="mylocation();" title="현재 내 위치로 이동"><i class="bi bi-geo-alt-fill"></i></button>--%>
-                <%--                <div id="clickLatlng"></div>--%>
+
 
                 <div id="searchContainer">
                     <div class="input-group rounded">
@@ -482,7 +495,7 @@
                     <div class="menuIcon">
                         <a href="/report"><i class="fas fa-pen fa-2x"></i><p>제보하기</p></a></div>
                     <div class="menuIcon"><a href="/mypage"><i class="fas fa-user fa-2x"></i><p>마이페이지</p></a></div>
-
+                    <button id="my-location"  title="현재 내 위치로 이동"><i class="bi bi-geo-alt-fill"></i></button>
 
                 </div>
 
@@ -569,67 +582,6 @@
 
         var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
 
-        // 마커를 표시할 위치와 title 객체 배열입니다
-        // var positions = [
-        //     {
-        //         title: '카카오',
-        //         latlng: new kakao.maps.LatLng(33.450705, 126.570677)
-        //     },
-        //     {
-        //         title: '생태연못',
-        //         latlng: new kakao.maps.LatLng(33.450936, 126.569477)
-        //     },
-        //     {
-        //         title: '텃밭',
-        //         latlng: new kakao.maps.LatLng(33.450879, 126.569940)
-        //     },
-        //     {
-        //         title: '근린공원',
-        //         latlng: new kakao.maps.LatLng(33.451393, 126.570738)
-        //     },
-        //     {
-        //         title: '참 붕어빵',
-        //         latlng: new kakao.maps.LatLng(36.082952670249654, 129.40151471459686)
-        //     },
-        //     {
-        //         title: '황금 붕어빵',
-        //         latlng: new kakao.maps.LatLng(36.084442828651305, 129.38510461130596)
-        //     },
-        //     {
-        //         title: '맛있는 붕어빵',
-        //         latlng: new kakao.maps.LatLng(36.084097839579634, 129.3897560855043)
-        //     },
-        //     {
-        //         title: '호떡 트럭',
-        //         latlng: new kakao.maps.LatLng(36.084732871079254, 129.39044130634628)
-        //     }
-        // ];
-
-
-
-<%--        <c:forEach items="${allMarkers}" var="location" varStatus="">--%>
-<%--            let temp = ${location.xLocation}--%>
-<%--            console.log(temp);--%>
-
-<%--        </c:forEach>--%>
-
-
-        // kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
-        //
-        //     // 클릭한 위도, 경도 정보를 가져옵니다
-        //     var latlng = mouseEvent.latLng;
-        //
-        //     // 마커 위치를 클릭한 위치로 옮깁니다
-        //     marker.setPosition(latlng);
-        //
-        //     var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-        //     message += '경도는 ' + latlng.getLng() + ' 입니다';
-        //
-        //     var resultDiv = document.getElementById('clickLatlng');
-        //     resultDiv.innerHTML = message;
-        //
-        // });
-        // 마커 이미지의 이미지 주소입니다
         var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
         var coordArr = [];
         var markers = [];
@@ -677,6 +629,42 @@
             }
 
             filtering();
+
+            <%--function moveMyLocation() {--%>
+            <%--    console.log("들어옴")--%>
+            <%--    const mapContainer = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스--%>
+
+            <%--    mapOption = {--%>
+            <%--        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표--%>
+            <%--        level: 3 // 지도의 확대 레벨--%>
+            <%--    };--%>
+
+            <%--    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다--%>
+
+            <%--    // 마커 이미지의 이미지 주소입니다--%>
+            <%--    const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";--%>
+
+            <%--    const imageSize = new kakao.maps.Size(24, 35);--%>
+            <%--    // 마커 이미지를 생성합니다--%>
+            <%--    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);--%>
+
+            <%--    new kakao.maps.Marker({--%>
+            <%--        map: map, // 마커를 표시할 지도--%>
+            <%--        position: new kakao.maps.LatLng(lat, lon), // 마커를 표시할 위치--%>
+            <%--        &lt;%&ndash;title: "${store.name}", // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다&ndash;%&gt;--%>
+            <%--        image: markerImage // 마커 이미지--%>
+            <%--    });--%>
+            <%--}--%>
+                function panTo() {
+                    // 이동할 위도 경도 위치를 생성합니다
+                    var moveLatLon = new kakao.maps.LatLng(latitude, longitude);
+
+                    // 지도 중심을 부드럽게 이동시킵니다
+                    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+                    map.panTo(moveLatLon);
+
+                }
+
 
 
 
@@ -737,6 +725,7 @@
             setCenter(locPosition);
         }
 
+
         function success({ coords, timestamp }) {
             latitude = coords.latitude;   // 위도
             longitude = coords.longitude; // 경도
@@ -744,7 +733,6 @@
             let webSearchbar = document.getElementById('webSearch_bar');
             let coord = new kakao.maps.LatLng(latitude, longitude);
             let geocoder = new kakao.maps.services.Geocoder();
-            console.log("현재 위치 불러오기 성공");
             let callback = function(result, status) {
                 if (status === kakao.maps.services.Status.OK) {
 
@@ -755,7 +743,7 @@
             }
             var position = new kakao.maps.LatLng(latitude, longitude);
             var message = '<div style="padding:5px;">현위치</div>';
-            myLocation(position, message)
+            myLocation(position, message);
             geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
         }
 
@@ -765,13 +753,14 @@
             timeout: Infinity
         };
 
+
         function error(error) {
             error.code;    // 에러 코드: 1 = PERMISSION_DENIED, 2 = POSITION_UNAVAILABLE, 3 = TIMEOUT
             error.message; // 메시지
         }
         function getUserLocation() {
             if (!navigator.geolocation) {
-                throw "위치 정보가 지원되지 않습니다.";
+                console.log("안되는데");
             }
             navigator.geolocation.watchPosition(success, error ,options);
         }
@@ -788,20 +777,14 @@
 
                     console.log("ajax 성공!");
                     let storeDistance = document.getElementsByClassName("storesDistance");
-                    // console.log(data);
 
                     for(let i=0; i<storeDistance.length/2; i++){
-                        // console.log("0부터 절반까지: " + data[i]);
-                        // console.log(storeDistance[i].innerHTML);
                         storeDistance[i].innerHTML = '<img src="img/location.png"' +  ' style="width:25px; height:25px;">' + data[i] + 'km';
                     }
                     for(let i=storeDistance.length/2; i<storeDistance.length; i++){
-                        // console.log("절반부터 0까지: " + data[i%(storeDistance.length/2)]);
-                        // console.log(storeDistance[i].innerHTML);
                         storeDistance[i].innerHTML = '<img src="img/location.png"' +  ' style="width:25px; height:25px;">' + data[i%(storeDistance.length/2)] + 'km';
                     }
 
-                    // console.log(storeDistance);
                 },
                 error:function(){
                     console.log("ajax 실패ㅠ");
@@ -812,7 +795,6 @@
             for (var i = 0; i < reportBtns.length; i++){
                 reportBtns[i].addEventListener('click', deleteStore);
             }
-            // document.getElementsByClassName("reportButton").addEventListener("click", deleteStore());
             function deleteStore(){
                 let check = 0;
                 if (!confirm("정말 신고하시겠습니까? (신고하시면 삭제 처리됩니다.)")) {
@@ -847,6 +829,8 @@
                 }
             }
 
+            let loca = document.getElementById("my-location");
+            loca.addEventListener("click", panTo);
 
         function getSearchLocation(){
             latitude = '${searchLat}';
@@ -867,13 +851,6 @@
         function calculateDistance(){
 
             var myLat, myLon;
-            // var destLat, destLon;   // Todo : DB 연동해서 목적지 주소 넣기
-            // 목적지 -> 임의로 테스트
-            // destLat =  36.08618059199135;
-            // destLon = 129.41260195413844;
-            // var destLatSec = destLat.toFixed(15)*60*60;
-            // var destLonSec = destLon.toFixed(15)*60*60;
-            // var element = document.getElementsByClassName("storesDistance");
 
             setInterval(function(){
                 if (navigator.geolocation) {
@@ -889,8 +866,6 @@
                     });
                 }
 
-
-                // element.innerHTML = distance + "m";
             }, 1000);
 
 
@@ -930,39 +905,7 @@
         for (var i = 0; i < menuLinks.length; i++){    /* 단점: 메뉴가 백만개라면....? 또한 addEventListener는 시스템 성능에 악영향을 끼친다고 함 */
             menuLinks[i].addEventListener('click', clickMenuHandler);
         }
-            function mylocation(){
-                const container = document.getElementById('map-section'); //지도를 담을 영역의 DOM 레퍼런스
-                // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
-                if (navigator.geolocation) {
-                    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-                    navigator.geolocation.getCurrentPosition(function(position) {
 
-                        const lat = position.coords.latitude; // 위도
-                        const lon = position.coords.longitude; // 경도
-
-                        const options = { //지도를 생성할 때 필요한 기본 옵션
-                            center: new kakao.maps.LatLng(lat, lon), //지도의 중심좌표.
-                            level: 3 //지도의 레벨(확대, 축소 정도)
-                        };
-                        const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
-                        // 마커 이미지의 이미지 주소입니다
-                        const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-
-                        const imageSize = new kakao.maps.Size(24, 35);
-
-                        // 마커 이미지를 생성합니다
-                        const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
-                        new kakao.maps.Marker({
-                            map: map, // 마커를 표시할 지도
-                            position: new kakao.maps.LatLng(lat, lon), // 마커를 표시할 위치
-                            title: "내 위치", // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                            image: markerImage // 마커 이미지
-                        });
-                    });
-                }
-            }
         }
     </script>
 </body>

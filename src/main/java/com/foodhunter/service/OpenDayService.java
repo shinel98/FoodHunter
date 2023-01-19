@@ -28,5 +28,7 @@ public class OpenDayService {
         return result;
     }
 
-
+    public void deleteByStoreId(long storeId) {
+        openDayDAO.deleteByStoreId(storeId);
+    }
 }

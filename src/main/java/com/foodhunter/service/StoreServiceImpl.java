@@ -29,11 +29,10 @@ public class StoreServiceImpl implements StoreService {
 
     /**가게 하나 조회 -> 상세 페이지로 이동**/
     @Override
-    public Store readOneStore(long storeId) {
-        Store store = storeDAO.readOneStore(storeId);
+    public Store readOneStore(long id) {
+        Store store = storeDAO.readOneStore(id);
         return store;
     }
-
     @Override
     public List<Store> readStoresById() {
         List<Store> stores = storeDAO.readStoresDescById();
@@ -85,5 +84,10 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public void deleteStore(int id) {
         storeDAO.deleteStore(id);
+    }
+
+    @Override
+    public void updateStoreName(Store store) {
+        storeDAO.updateStoreName(store);
     }
 }

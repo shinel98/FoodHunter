@@ -471,6 +471,21 @@
             text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
         }
 
+        #dark-div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 500%;
+            height: 500%;
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1031;
+        }
+        #storeNameBox {
+            border: none;
+            outline: none;
+        }
+
         @media screen and (max-width: 800px) {
             body{
                 overflow: visible;
@@ -517,6 +532,7 @@
 <script>
     $(function (){
         calculateDistance();
+        getOpenDay();
         openDay();
 
         if(${favorite.userId != -1}){
@@ -610,18 +626,6 @@
 
     });
 
-    <%--function getAddressName(){--%>
-    <%--    // 주소-좌표 변환 객체를 생성합니다--%>
-    <%--    var geocoder = new kakao.maps.services.Geocoder();--%>
-    <%--    // 좌표로 법정동 상세 주소 정보를 요청합니다--%>
-    <%--    geocoder.coord2Address(${storeMarker.xLocation}, ${storeMarker.yLocation}, function(result, status) {--%>
-    <%--        if (status === kakao.maps.services.Status.OK) {--%>
-    <%--            addressName = result[0].address.address_name;--%>
-    <%--        }--%>
-    <%--    });--%>
-
-    <%--}--%>
-
     function storeLocation(){
 
         // 처음 위치는 가게 table에 저장된 위도, 경도로 설정
@@ -683,17 +687,50 @@
         }, 10);
     }
 
-    function openDay(){
-        var list = document.getElementById("dayList");
+    let openDayList = [ false, false, false, false, false, false, false ];
+
+    function getOpenDay() {
         <c:forEach var="day" items="${openDayList}">
-            list.children.item(${day.openDay}-1).style.color = "red";
-            list.children.item(${day.openDay}-1).style.borderColor = "red";
+            openDayList[${day.openDay}-1] = true;
         </c:forEach>
+        for (let i = 0; i < 7; i++) {
+            if (openDayList[i] === true) {
+                $('#day' + (i + 1)).attr('value', 'true');
+            } else {
+                $('#day' + (i + 1)).attr('value', 'false');
+            }
+        }
+    }
+
+    function openDay(){
+        let list = document.getElementById("dayList");
+        for (let i = 0; i < 7; i++) {
+            if ($('#day' + (i + 1)).attr('value') === "true") {
+                list.children.item(i).style.color = "red";
+                list.children.item(i).style.borderColor = "red";
+                console.log(true);
+            } else {
+                list.children.item(i).style.color = "";
+                list.children.item(i).style.borderColor = "";
+                console.log(false);
+            }
+        }
+    }
+
+    function editOpenDay(day) {
+        let dayNode = $('#day' + day);
+        if (dayNode.attr('value') === 'true') {
+            dayNode.attr('value', 'false');
+        } else {
+            dayNode.attr('value', 'true');
+        }
+        console.log(day);
+        openDay();
     }
 
     /** footer: 즐겨찾기 버튼 클릭 **/
     /** Todo : icon의 초기 값을 DB와 연동 및 수정 **/
-    function favorite(){
+    function favorite() {
         console.log("favorite()");
         let favoriteBtn =  document.getElementsByClassName("favoriteBtn");
         let favoriteIcon = favoriteBtn.item(0).classList.item(2);
@@ -740,7 +777,46 @@
 
     /** 정보 수정하기 **/
     function infoEdit() {
+        let d = document.createElement("div");
+        let list = document.getElementById("dayList");
+        $(d).attr('id', 'dark-div');
+        $(d).attr('onclick', 'resetEdit(); openDay()');
+        $('#edit-info').append(d);
+        $('#content-main-board').css('z-index', '1032');
+        $('#btn-edit').css('z-index', '1032');
+        $('#info-card').css('z-index', '1032');
+        for (let i = 0; i < 7; i++) {
+            list.children.item(i).setAttribute('onclick', 'editOpenDay(' + (i + 1) + ')');
+        }
+        $('#storeNameBox').attr('readonly', false);
+        $('#storeNameBox').css('outline', 'solid');
+        $('#btn-edit').attr('onclick', 'submitEdit()');
+    }
 
+    function resetEdit() {
+        document.getElementById('edit-info').reset();
+        for (let i = 0; i < 7; i++) {
+            if (openDayList[i] === true) {
+                $('#day' + (i + 1)).attr('value', 'true');
+            } else {
+                $('#day' + (i + 1)).attr('value', 'false');
+            }
+        }
+        let list = document.getElementById("dayList");
+        $('#dark-div').remove();
+        $('#content-main-board').css('z-index', '');
+        $('#btn-edit').css('z-index', '');
+        $('#info-card').css('z-index', '');
+        for (let i = 0; i < 7; i++) {
+            list.children.item(i).setAttribute('onclick', '');
+        }
+        $('#storeNameBox').attr('readonly', true);
+        $('#storeNameBox').css('outline', 'none');
+        $('#btn-edit').attr('onclick', 'infoEdit()');
+    }
+
+    function submitEdit() {
+        document.getElementById('edit-info').submit();
     }
 
     function mylocation(){
