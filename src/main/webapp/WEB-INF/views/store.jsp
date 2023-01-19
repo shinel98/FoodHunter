@@ -274,7 +274,7 @@
         }
         .btn-review-finished{
             position: absolute;
-            bottom: -120px;
+            bottom: 0;
             right: 0;
             color: white;
             background-color: #ffb700;
@@ -371,7 +371,7 @@
         #review-write-container{
             z-index: 100;
             width: 80%;
-            height: 65%;
+            min-height: 65%;
             position: absolute;
             border-radius: 20px;
             bottom: 0;
