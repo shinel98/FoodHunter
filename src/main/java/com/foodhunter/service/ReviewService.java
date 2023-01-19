@@ -26,7 +26,7 @@ public class ReviewService {
             return -1L;
         }
         reviewDAO.save(review);
-        return review.getReviewId();
+        return review.getId();
     }
 
     /** review를 이미 작성한 가게에 똑같은 유저가 중복 작성을 하는 경우 validation check **/
@@ -34,7 +34,7 @@ public class ReviewService {
         List<Review> storeReview = reviewDAO.findByStoreId(review.getStoreId());
         storeReview.stream()
                 .forEach(rv -> {
-                    if(rv.getUsrId() == review.getUsrId()){
+                    if(rv.getUserId() == review.getUserId()){
                         throw new IllegalStateException("이미 리뷰를 작성했습니다. 새로 작성하고 싶으시다면 기존 리뷰를 삭제해주세요.");
                     }
                 });

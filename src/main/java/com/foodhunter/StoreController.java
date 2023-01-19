@@ -76,15 +76,21 @@ public class StoreController {
     }
 
     /**리뷰 생성**/
-    @PostMapping(value = "/store/review")
-    public String create(HttpServletRequest request, Model model){
+//    @PostMapping(value = "/store/review")
+    @RequestMapping(value="/store/review")
+    public String create(HttpServletRequest request, Model model ){
         ReviewFileUpload fileUpload = new ReviewFileUpload();
         Review review = fileUpload.uploadPhoto(request);
-        System.out.println("storeId: " + review.getStoreId());
-        Long result = reviewService.write(review);
-        if(result == -1L) { // 에러 발생
-            model.addAttribute("reviewError", true);
-        }
+
+        System.out.println("review = " + review);
+        System.out.println("request = " +review.getId());
+
+//        System.out.println("storeId: " + review.getStoreId());
+
+//        Long result = reviewService.write(review);
+//        if(result == -1L) { // 에러 발생
+//            model.addAttribute("reviewError", true);
+//        }
         return "redirect:/store";                  // 정상
     }
 
@@ -102,7 +108,7 @@ public class StoreController {
         long userId = form.getUserId();
         Review review = new Review();
         review.setStoreId(storeId);
-        review.setUsrId(userId);
+        review.setUserId(userId);
         reviewService.delete(review);
         model.addAttribute("delete", true);
         return "redirect:/store";
