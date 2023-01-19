@@ -958,7 +958,7 @@
                                             <input class="col" type="hidden" name="userId" value=1>
                                         </div>
                                         </form>
-                                        <c:if test="${review.photo != null}">
+                                        <c:if test="${review.photo.length() > 0}">
                                             <div class="row">
                                                 <!--Todo: 이미지 존재 여부에 따라 img 태그 삽입-->
 <%--                                                <img class="review-img" src="/img/review-img-sample.jpg" height="300" width="300">--%>
