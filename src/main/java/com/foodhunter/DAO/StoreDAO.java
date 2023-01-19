@@ -10,7 +10,8 @@ import java.util.Map;
 
 public interface StoreDAO {
     public List<Store> readStores();
-    public Store readOneStore(long storeId);
+//    public Store readOneStore(long storeId);
+    public Store readOneStore(long id);
     public List<Store> readStoresDescById();
     public List<Category> readAllCategories();
     public List<StoreMarker> readAllMarkers();
