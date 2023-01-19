@@ -941,21 +941,21 @@
                                                         <li><i class="bi bi-star"></i></li>
                                                     </c:otherwise>
                                                 </c:choose>
-                                                <li style="color: black;">${review.usrId}</li>
+                                                <li style="color: black;">jyj9747</li>
                                             </ul>
                                         </div>
+                                        <form action="/store/review-delete">
                                         <div class="row">
-                                            <p class="review-text col">${review.reviewContent}</p>
+                                            <p class="review-text col" style="float: left; width: 80%; overflow: scroll;">${review.reviewContent}</p>
                                             <!--Todo : user 정보 가져와서 작성한 사람만 삭제할 수 있도록 수정하기-->
 <%--                                            <c:if test="${review.usrId == user.userId}">--%>
 <%--                                                <i class="bi bi-trash-fill col-2" style="margin: auto;"></i>--%>
 <%--                                            </c:if>--%>
-                                            <form action="/store/review-delete">
-                                                <input type="hidden" name="storeId" value=${store.id}>
-                                                <input type="hidden" name="userId" value=1>
-                                                <button type="submit"><i class="bi bi-trash-fill col-2" style="margin: auto;"></i></button>
-                                            </form>
+                                                <button type="submit" style="border: 0; outline: 0; display:inline; float: left; background-color: white; width: 30px; margin-right: 20px;"><i class="bi bi-trash-fill col-2" style="margin: auto;"></i></button>
+                                            <input class="col" type="hidden" name="storeId" value=${store.id}>
+                                            <input class="col" type="hidden" name="userId" value=1>
                                         </div>
+                                        </form>
                                         <c:if test="${review.photo != null}">
                                             <div class="row">
                                                 <!--Todo: 이미지 존재 여부에 따라 img 태그 삽입-->
