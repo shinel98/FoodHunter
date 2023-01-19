@@ -1318,7 +1318,7 @@
             document.getElementById("scoreTwo").classList.remove("bi-star");
             document.getElementById("scoreTwo").classList.add("bi-star-fill");
         }
-        scoreIcon =  document.getElementById("scoreThree").classList.item(1);
+        scoreIcon =  document.getElementById("scoreThree").classList .item(1);
         if(scoreIcon == "bi-star") {
             document.getElementById("scoreThree").classList.remove("bi-star");
             document.getElementById("scoreThree").classList.add("bi-star-fill");
