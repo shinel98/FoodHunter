@@ -579,8 +579,9 @@
                 title: '${store.name}',      // 가게 이름
                 description: <c:forEach var="cat" items="${categoryList}">
                     <c:if test="${cat.id == representCategoryId}">"#${cat.categoryName}"</c:if></c:forEach>,
-                imageUrl: <c:forEach var="cat" items="${categoryList}">
-                <c:if test="${cat.id == representCategoryId}">"http://localhost:8080/resources${cat.icon}"</c:if></c:forEach>,
+                <%--imageUrl: <c:forEach var="cat" items="${categoryList}">--%>
+                <%--<c:if test="${cat.id == representCategoryId}">"http://localhost:8080/resources${cat.icon}"</c:if></c:forEach>,--%>
+                imageUrl:"https://tohomeimage.thehyundai.com/PD/PDImages/S/3/6/2/8809611390263_00.jpg?RS=720x864",
                 link: {
                     // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
                     mobileWebUrl: 'https://developers.kakao.com',
