@@ -104,7 +104,7 @@
       </form>
         <div>
             <button class="btn btn-dark" onclick="recreate();">랜덤생성</button>
-<%--            <button class="btn btn-dark" onclick="use();">사용하기</button>--%>
+            <button class="btn btn-dark" onclick="use();">사용하기</button>
         </div>
     </div>
     <div class="col rightContainer"></div>

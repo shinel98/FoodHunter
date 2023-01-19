@@ -19,7 +19,6 @@ public class StoreController {
     private final ReviewService reviewService;
     private final FavoriteService favoriteService;
     private final StoreServiceImpl storeService;
-
     private final CategoryServiceImpl categoryService;
     private final VisitService visitService;
     private final OpenDayService openDayService;
@@ -45,7 +44,7 @@ public class StoreController {
         System.out.println("store name : " + store.getName());
         Favorite favorite = new Favorite();
         favorite.setStoreId(form.getStoreId());
-        favorite.setUserId(1L);
+        favorite.setUserId(31L);
         Long currentLike = favoriteService.current(favorite);
         if(currentLike > 0L) {
             System.out.println("좋아요 여부 : true");

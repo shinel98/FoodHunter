@@ -32,12 +32,12 @@
     </insert>
     <delete id="deleteCategory">
         DELETE FROM category_table
-        WHERE id = #{categoryId};
+        WHERE id = #{id};
     </delete>
     <update id="updateCategory">
             UPDATE category_table
             SET categoryName = #{categoryName}, icon = #{icon}, requestStatus = #{requestStatus}, requestCnt = #{requestCnt}
-            WHERE id = #{categoryId};
+            WHERE id = #{id};
     </update>
     <select id="getCategory" resultType="category" resultMap="CategoryResultMap">
         <![CDATA[
