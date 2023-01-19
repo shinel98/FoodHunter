@@ -29,13 +29,14 @@ public class ReviewFileUpload {
         int sizeLimit = 15 * 1024 * 1024; // 15MB
 
         //String savePath = request.getServletContext().getRealPath("/resources/upload");
-
+        String savePath = request.getSession().getServletContext().getRealPath("/resources/upload");
+        System.out.println("savePath: " + savePath);
         //File dir = new File(savePath);
         //if (!dir.exists()) dir.mkdirs();
 
         MultipartRequest multipartRequest = null;
         try {
-            //multipartRequest = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
+            multipartRequest = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
 
             for (int i = 0; multipartRequest.getFilesystemName("photo" + i) != null; i++) {
                 filenameList.add(multipartRequest.getFilesystemName("photo" + i));
