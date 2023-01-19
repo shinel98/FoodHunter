@@ -31,8 +31,8 @@ public class ReviewFileUpload {
         //String savePath = request.getServletContext().getRealPath("/resources/upload");
         String savePath = request.getSession().getServletContext().getRealPath("/resources/upload");
         System.out.println("savePath: " + savePath);
-        //File dir = new File(savePath);
-        //if (!dir.exists()) dir.mkdirs();
+        File dir = new File(savePath);
+        if (!dir.exists()) dir.mkdirs();
 
         MultipartRequest multipartRequest = null;
         try {
