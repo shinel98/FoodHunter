@@ -834,11 +834,12 @@
                                 </div>
                             </div>
                             <div>
+                                <form name="favoriteForm" id="favoriteForm" action="/store/like">
                                 <button id="kakaotalk-sharing-btn" href="javascript:;" type="button" class="btn">
                                     <i class="bi bi-share"></i>
                                     공유하기
                                 </button>
-                                <form name="favoriteForm" id="favoriteForm" action="/store/like">
+                                    <form name="favoriteForm" id="favoriteForm" action="/store/like">
                                     <input type="hidden" name="userId" value=1>
                                     <input type="hidden" name="storeId" value=${store.id}>
                                     <button type="button" class="btn favorite" onclick="favorite();">
