@@ -61,4 +61,10 @@
     <select id="getStoresByUserId" resultType="com.foodhunter.DTO.Store">
         select * from stores_table where userId = #{userId};
     </select>
+
+    <update id="updateStoreName">
+        update stores_table
+        set name = #{name}
+        where id = #{id};
+    </update>
 </mapper>

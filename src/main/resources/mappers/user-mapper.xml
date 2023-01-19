@@ -22,7 +22,7 @@
 
     <update id="updateProfile">
         UPDATE user_table
-        set nickName = '#{nickName}'
+        set nickname = #{nickname}
         where id = #{id};
     </update>
 </mapper>

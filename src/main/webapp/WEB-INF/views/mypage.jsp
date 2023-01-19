@@ -16,7 +16,8 @@
 <%--제이쿼리--%>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <%--    fontawesome--%>
-    <script src="https://kit.fontawesome.com/221ffbaa00.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+<%--    <script src="https://kit.fontawesome.com/221ffbaa00.js" crossorigin="anonymous"></script>--%>
 <%--    swipper slider css--%>
     <link
             rel="stylesheet"
@@ -40,16 +41,14 @@
 
         }
         .idBox{
-
             width: auto;
-            height: auto;
+            height: 3rem;
             border: none;
             outline: none;
         }
         .idBoxbutton{
-
-            /*border: none;*/
-            /*background-color: #1A1A1A;*/
+            height: 3rem;
+            min-width: 3rem;
         }
         .summeryBox {
             width: 25%;
@@ -220,18 +219,8 @@
         #summery {
             width: 100%;
         }
-        .fa-home:before {
-            content: "\f015";
-            font-size: smaller;
-            color: gray;
-        }
-        .fa-pen:before {
-            content: "\f304";
-            font-size: smaller;
-            color: gray;
-        }
-        .fa-user:before {
-            content: "\f007";
+        .bottomBarMenuIcon:before {
+            /*content: "\f015";*/
             font-size: smaller;
             color: gray;
         }
@@ -262,10 +251,16 @@
 <%--                        </c:otherwise>--%>
 <%--                    </c:choose>--%>
                 </div>
-                <div class ='nicktext'>
-                    <input id="nickname" class='idBox bg-lightbeige border fs-4 fw-bold text-center mt-3' value="${user.nickname}" disabled >
-                    <button class="idBoxbutton"><i class="fa-regular fa-pen-to-square"></i></button>
-                    <button class="idBoxbutton" onclick="randomName();">랜덤생성</button>
+                <div class ='nicktext mt-3'>
+                    <form name="nicknameForm" action="/my/nickname-edit" method="post">
+                        <div class="align-middle d-flex">
+                            <input id="nickname" name="nickname" class='idBox bg-lightbeige border fs-4 fw-bold text-center' value="${user.nickname}" readonly >
+                            <button type="button" id="nicknameEditButton" class="btn btn-info idBoxbutton ms-1" onclick="editNickname()"><i class="fa-solid fa-pen"></i></button>
+                            <button type="submit" id="nicknameOkButton" class="btn btn-success idBoxbutton ms-1"><i class="fa-solid fa-check"></i></button>
+                            <button type="reset" id="nicknameResetButton" class="btn btn-warning idBoxbutton ms-1" onclick="resetNickname()"><i class="fa-solid fa-xmark"></i></button>
+                            <button type="button" class="btn btn-primary idBoxbutton ms-1" onclick="randomName();">랜덤생성</button>
+                        </div>
+                    </form>
                 </div>
                 <div id ='summery' class=" mt-5 row d-flex justify-content-around ">
 
@@ -383,24 +378,24 @@
                         </c:otherwise>
                     </c:choose>
                 </div>
-        <div class ='navigationBar bg-dark d-flex flex-row justify-content-around text-white'>
+        <div class ='navigationBar bg-white d-flex flex-row justify-content-around text-white'>
         <div>
             <a href="/main">
-                <i class="fas fa-home fa-2x"></i>
+                <i class="fas fa-home fa-2x bottomBarMenuIcon"></i>
                 <br>
                 <label class="menu-label">홈 </label>
             </a>
         </div>
         <div>
             <a href="/report">
-                <i class="fas fa-pen fa-2x"></i>
+                <i class="fas fa-pen fa-2x bottomBarMenuIcon"></i>
                 <br>
                 <label class="menu-label">제보 하기</label>
             </a>
         </div>
         <div>
             <a href="/my">
-                <i class="fas fa-user fa-2x"></i><br>
+                <i class="fas fa-user fa-2x bottomBarMenuIcon"></i><br>
                 <label class="menu-label">마이페이지</label>
             </a>
         </div>
@@ -418,44 +413,26 @@
 
 
 </body>
-<!--   자바스크립트 -->
-
 
 <script>
-    let defaltName = $('.idBox').val();
-    var swiper = new Swiper(".mySwiper", {});
-    $(function() {
-        $(".idBoxbutton").on("click", function() {
-
-            let changeName = $('.idBox').val();
-            if(!(changeName == "")){
-
-                if( defaltName == changeName){
-                    $(".idBox").attr('disabled',false);
-                    $('.idBox').focus();
-                }
-                else {
-
-                    $(".idBox").attr('disabled',true);
-
-                    // $(".idBox").css("width","20%");
-                    defaltName = $('.idBox').val();
-                }
-            }
-
-        });
-
-
+    $(document).ready(function () {
+        $("#nicknameEditButton").css("display", "");
+        $("#nicknameOkButton").css("display", "none");
+        $("#nicknameResetButton").css("display", "none");
     });
-    var swiper = new Swiper(".mySwiper", {
-        slidesPerView: "auto",
 
-        spaceBetween: 20,
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-    });
+    function editNickname() {
+        $("#nickname").attr("readonly", false);
+        $("#nicknameEditButton").css("display", "none");
+        $("#nicknameOkButton").css("display", "");
+        $("#nicknameResetButton").css("display", "");
+    }
+    function resetNickname() {
+        $("#nickname").attr("readonly", true);
+        $("#nicknameEditButton").css("display", "");
+        $("#nicknameOkButton").css("display", "none");
+        $("#nicknameResetButton").css("display", "none");
+    }
 </script>
 
 <!--랜덤 닉네임 생성 api

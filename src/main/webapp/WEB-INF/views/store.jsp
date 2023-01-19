@@ -470,6 +470,21 @@
             text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
         }
 
+        #dark-div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 500%;
+            height: 500%;
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1031;
+        }
+        #storeNameBox {
+            border: none;
+            outline: none;
+        }
+
         @media screen and (max-width: 800px) {
             body{
                 overflow: visible;
@@ -515,6 +530,7 @@
 
     $(function (){
         calculateDistance();
+        getOpenDay();
         openDay();
 
         const searchParams = new URLSearchParams(location.search);
@@ -658,17 +674,50 @@
         }, 10);
     }
 
-    function openDay(){
-        var list = document.getElementById("dayList");
+    let openDayList = [ false, false, false, false, false, false, false ];
+
+    function getOpenDay() {
         <c:forEach var="day" items="${openDayList}">
-            list.children.item(${day.openDay}-1).style.color = "red";
-            list.children.item(${day.openDay}-1).style.borderColor = "red";
+            openDayList[${day.openDay}-1] = true;
         </c:forEach>
+        for (let i = 0; i < 7; i++) {
+            if (openDayList[i] === true) {
+                $('#day' + (i + 1)).attr('value', 'true');
+            } else {
+                $('#day' + (i + 1)).attr('value', 'false');
+            }
+        }
+    }
+
+    function openDay(){
+        let list = document.getElementById("dayList");
+        for (let i = 0; i < 7; i++) {
+            if ($('#day' + (i + 1)).attr('value') === "true") {
+                list.children.item(i).style.color = "red";
+                list.children.item(i).style.borderColor = "red";
+                console.log(true);
+            } else {
+                list.children.item(i).style.color = "";
+                list.children.item(i).style.borderColor = "";
+                console.log(false);
+            }
+        }
+    }
+
+    function editOpenDay(day) {
+        let dayNode = $('#day' + day);
+        if (dayNode.attr('value') === 'true') {
+            dayNode.attr('value', 'false');
+        } else {
+            dayNode.attr('value', 'true');
+        }
+        console.log(day);
+        openDay();
     }
 
     /** footer: 즐겨찾기 버튼 클릭 **/
     /** Todo : icon의 초기 값을 DB와 연동 및 수정 **/
-    function favorite(){
+    function favorite() {
         console.log("favorite()");
         let favoriteBtn =  document.getElementsByClassName("favoriteBtn");
         let favoriteIcon = favoriteBtn.item(0).classList.item(2);
@@ -715,7 +764,46 @@
 
     /** 정보 수정하기 **/
     function infoEdit() {
+        let d = document.createElement("div");
+        let list = document.getElementById("dayList");
+        $(d).attr('id', 'dark-div');
+        $(d).attr('onclick', 'resetEdit(); openDay()');
+        $('#edit-info').append(d);
+        $('#content-main-board').css('z-index', '1032');
+        $('#btn-edit').css('z-index', '1032');
+        $('#info-card').css('z-index', '1032');
+        for (let i = 0; i < 7; i++) {
+            list.children.item(i).setAttribute('onclick', 'editOpenDay(' + (i + 1) + ')');
+        }
+        $('#storeNameBox').attr('readonly', false);
+        $('#storeNameBox').css('outline', 'solid');
+        $('#btn-edit').attr('onclick', 'submitEdit()');
+    }
 
+    function resetEdit() {
+        document.getElementById('edit-info').reset();
+        for (let i = 0; i < 7; i++) {
+            if (openDayList[i] === true) {
+                $('#day' + (i + 1)).attr('value', 'true');
+            } else {
+                $('#day' + (i + 1)).attr('value', 'false');
+            }
+        }
+        let list = document.getElementById("dayList");
+        $('#dark-div').remove();
+        $('#content-main-board').css('z-index', '');
+        $('#btn-edit').css('z-index', '');
+        $('#info-card').css('z-index', '');
+        for (let i = 0; i < 7; i++) {
+            list.children.item(i).setAttribute('onclick', '');
+        }
+        $('#storeNameBox').attr('readonly', true);
+        $('#storeNameBox').css('outline', 'none');
+        $('#btn-edit').attr('onclick', 'infoEdit()');
+    }
+
+    function submitEdit() {
+        document.getElementById('edit-info').submit();
     }
 
     function mylocation(){
@@ -775,174 +863,176 @@
 
                     </div>
                 </hearder>
-                <div id="content">
-                    <div id="large-left">
-                        <!--지도-->
-                        <div id="map-section" class="border-bottom"></div>
-                        <!--메인 보드-->
-                        <div id="content-main-board" class="border card shadow">
-                            <!--카카오 지도 열기 & 길찾기-->
-                            <a id="kakao-location" href="https://map.kakao.com/link/to/${store.name},${storeMarker.xLocation},${storeMarker.yLocation}" title="길찾기"><i class="bi bi-map-fill"></i></a>
-                            <!--현재 내 위치로 이동 버튼-->
-                            <button id="my-location" onclick="mylocation();" title="현재 내 위치로 이동"><i class="bi bi-geo-alt-fill"></i></button>
-                            <!--가게 위치로 이동 버튼-->
-                            <button id="store-location" onclick="storeLocation();" title="가게 위치로 이동"><i class="bi bi-shop"></i></button>
-                            000 님의 제보
-                            <h2>${store.name}</h2>
-                            <div class="center">
-                                <div id="distance" type="button">
-                                    <i class="bi bi-compass"></i>
-                                    <span id="distance-text" class="smallTxt"></span>
-                                </div>
-                                <div id="stars">
-                                    <i class="bi bi-star-fill"></i>
-                                    <c:set var = "sum" value = "0" />
-                                    <c:forEach var="review" items="${reviews}">
-                                        <c:set var= "sum" value="${sum + review.score}"/>
-                                    </c:forEach>
-                                    <span class="smallTxt">
-                                        <c:choose>
-                                            <c:when test="${sum != 0}">
-                                                <c:out value="${sum / (reviews.size()*1.0)}"/>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <c:out value="0"/>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </span>
-                                </div>
-                            </div>
-                            <div>
-                                <button id="kakaotalk-sharing-btn" href="javascript:;" type="button" class="btn">
-                                    <i class="bi bi-share"></i>
-                                    공유하기
-                                </button>
-                                <button type="button" class="btn favorite" onclick="favorite();">
-                                    <i class="bi favoriteBtn bi-heart"></i>
-                                    즐겨찾기
-                                </button>
-                            </div>
-                            <!-- Todo: 방문인증한 사람 수 DB 연동 -->
-                            <div id="monthly">
-                                <p>한 달 동안 ${visitList.size()}명이 다녀간 가게에요!</p>
-                            </div>
-                            <!--삭제 요청 버튼-->
-                            <button type="button" id="ask-deletion" class="btn" onclick="deletion();">
-                                <i class="bi bi-exclamation-circle"></i>
-                                <span class="smallTxt">삭제 요청</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div id="large-right">
-                        <!--상세 정보-->
-                        <div id="content-information">
-                            <!--수정하기 버튼-->
-                            <button id="btn-edit" type="button" class="btn" onclick="location.href='http://localhost:8080/report'";>정보수정하기</button>
-                            <!--가게 정보 update 날짜-->
-                            <!--Todo : 업데이트 날짜 DB 연동-->
-                            <span id="updateInfo"><fmt:formatDate pattern="yyyy-MM-dd" value="${store.regDate}"></fmt:formatDate> 업데이트</span>
-                            <h4>가게 정보</h4>
-                            <div class="shadow border card" id="info-card">
-                                <div class="row">
-                                    <div class="col-3 subtitle" style="margin: auto 0;font-weight: 600">출몰 시기</div>
-                                    <div class="col-8" style="padding: 0;">
-                                        <ul id="dayList">
-                                            <li>일</li>
-                                            <li>월</li>
-                                            <li>화</li>
-                                            <li>수</li>
-                                            <li>목</li>
-                                            <li>금</li>
-                                            <li>토</li>
-                                        </ul>
+                <form id="edit-info" name="edit-info" method="post" action="/store/edit-info">
+                    <div id="content">
+                        <div id="large-left">
+                            <!--지도-->
+                            <div id="map-section" class="border-bottom"></div>
+                            <!--메인 보드-->
+                            <div id="content-main-board" class="border card shadow">
+                                <!--카카오 지도 열기 & 길찾기-->
+                                <a id="kakao-location" href="https://map.kakao.com/link/to/${store.name},${storeMarker.xLocation},${storeMarker.yLocation}" title="길찾기"><i class="bi bi-map-fill"></i></a>
+                                <!--현재 내 위치로 이동 버튼-->
+                                <button id="my-location" onclick="mylocation();" title="현재 내 위치로 이동"><i class="bi bi-geo-alt-fill"></i></button>
+                                <!--가게 위치로 이동 버튼-->
+                                <button id="store-location" onclick="storeLocation();" title="가게 위치로 이동"><i class="bi bi-shop"></i></button>
+                                000 님의 제보
+                                <input id="storeNameBox" class="h2 text-center" name="storeName" value="${store.name}" readonly>
+                                <input type="hidden" name="storeId" value=${store.id}>
+<%--                                <h2>${store.name}</h2>--%>
+                                <div class="center">
+                                    <div id="distance" type="button">
+                                        <i class="bi bi-compass"></i>
+                                        <span id="distance-text" class="smallTxt"></span>
+                                    </div>
+                                    <div id="stars">
+                                        <i class="bi bi-star-fill"></i>
+                                        <c:set var = "sum" value = "0" />
+                                        <c:forEach var="review" items="${reviews}">
+                                            <c:set var= "sum" value="${sum + review.score}"/>
+                                        </c:forEach>
+                                        <span class="smallTxt">
+                                            <c:choose>
+                                                <c:when test="${sum != 0}">
+                                                    <c:out value="${sum / (reviews.size()*1.0)}"/>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:out value="0"/>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </span>
                                     </div>
                                 </div>
+                                <div>
+                                    <button id="kakaotalk-sharing-btn" href="javascript:;" type="button" class="btn">
+                                        <i class="bi bi-share"></i>
+                                        공유하기
+                                    </button>
+                                    <button type="button" class="btn favorite" onclick="favorite();">
+                                        <i class="bi favoriteBtn bi-heart"></i>
+                                        즐겨찾기
+                                    </button>
+                                </div>
+                                <!-- Todo: 방문인증한 사람 수 DB 연동 -->
+                                <div id="monthly">
+                                    <p>한 달 동안 ${visitList.size()}명이 다녀간 가게에요!</p>
+                                </div>
+                                <!--삭제 요청 버튼-->
+                                <button type="button" id="ask-deletion" class="btn" onclick="deletion();">
+                                    <i class="bi bi-exclamation-circle"></i>
+                                    <span class="smallTxt">삭제 요청</span>
+                                </button>
                             </div>
                         </div>
-
-                        <!--리뷰-->
-                        <div id="content-review">
-                            <!--리뷰 작성하기 버튼-->
-                            <a href="#main-row">
-                                <button id="btn-review" type="button" class="btn" onclick="reviewWrite();" >리뷰작성하기</button>
-                            </a>
-                            <h4>리뷰 ${reviews.size()}개</h4>
-                            <div id="review-container">
-
-                                <c:forEach var="review" items="${reviews}">
-                                    <div class="shadow border card review">
-                                        <span class="createDate-review"><fmt:formatDate pattern="yyyy-MM-dd" value="${review.regiDate}"></fmt:formatDate></span>
-                                        <div class="row">
-                                            <ul class="review-star-list">
-                                                <c:choose>
-                                                    <c:when test="${review.score >= 1}">
-                                                        <li><i class="bi bi-star-fill"></i></li>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <li><i class="bi bi-star"></i></li>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${review.score >= 2}">
-                                                        <li><i class="bi bi-star-fill"></i></li>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <li><i class="bi bi-star"></i></li>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${review.score >= 3}">
-                                                        <li><i class="bi bi-star-fill"></i></li>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <li><i class="bi bi-star"></i></li>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${review.score >= 4}">
-                                                        <li><i class="bi bi-star-fill"></i></li>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <li><i class="bi bi-star"></i></li>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:choose>
-                                                    <c:when test="${review.score >= 5}">
-                                                        <li><i class="bi bi-star-fill"></i></li>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <li><i class="bi bi-star"></i></li>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <li style="color: black;">${review.usrId}</li>
+                        <div id="large-right">
+                            <!--상세 정보-->
+                            <div id="content-information">
+                                <!--수정하기 버튼-->
+                                <button id="btn-edit" type="button" class="btn" onclick="infoEdit()">정보수정하기</button>
+                                <!--가게 정보 update 날짜-->
+                                <!--Todo : 업데이트 날짜 DB 연동-->
+                                <span id="updateInfo"><fmt:formatDate pattern="yyyy-MM-dd" value="${store.regDate}"></fmt:formatDate> 업데이트</span>
+                                <h4>가게 정보</h4>
+                                <div class="shadow border card" id="info-card">
+                                    <div class="row">
+                                        <div class="col-3 subtitle" style="margin: auto 0;font-weight: 600">출몰 시기</div>
+                                        <div class="col-8" style="padding: 0;">
+                                            <ul id="dayList">
+                                                <li>일<input id="day1" name="day1" type="hidden" value=false></li>
+                                                <li>월<input id="day2" name="day2" type="hidden" value=false></li>
+                                                <li>화<input id="day3" name="day3" type="hidden" value=false></li>
+                                                <li>수<input id="day4" name="day4" type="hidden" value=false></li>
+                                                <li>목<input id="day5" name="day5" type="hidden" value=false></li>
+                                                <li>금<input id="day6" name="day6" type="hidden" value=false></li>
+                                                <li>토<input id="day7" name="day7" type="hidden" value=false></li>
                                             </ul>
                                         </div>
-                                        <div class="row">
-                                            <p class="review-text col">${review.reviewContent}</p>
-                                            <!--Todo : user 정보 가져와서 작성한 사람만 삭제할 수 있도록 수정하기-->
-<%--                                            <c:if test="${review.usrId == user.userId}">--%>
-<%--                                                <i class="bi bi-trash-fill col-2" style="margin: auto;"></i>--%>
-<%--                                            </c:if>--%>
-                                            <form action="/store/delete">
-                                                <input type="hidden" name="storeId" value=${store.id}>
-                                                <input type="hidden" name="userId" value=1>
-                                                <button type="submit"><i class="bi bi-trash-fill col-2" style="margin: auto;"></i></button>
-                                            </form>
-                                        </div>
-                                        <c:if test="${review.photo != null}">
-                                            <div class="row">
-                                                <!--Todo: 이미지 존재 여부에 따라 img 태그 삽입-->
-                                                <img class="review-img" src="/img/review-img-sample.jpg" height="300" width="300">
-                                            </div>
-                                        </c:if>
-
                                     </div>
-                                </c:forEach>
+                                </div>
                             </div>
 
+                            <!--리뷰-->
+                            <div id="content-review">
+                                <!--리뷰 작성하기 버튼-->
+                                <a href="#main-row">
+                                    <button id="btn-review" type="button" class="btn" onclick="reviewWrite();" >리뷰작성하기</button>
+                                </a>
+                                <h4>리뷰 ${reviews.size()}개</h4>
+                                <div id="review-container">
+                                    <c:forEach var="review" items="${reviews}">
+                                        <div class="shadow border card review">
+                                            <span class="createDate-review"><fmt:formatDate pattern="yyyy-MM-dd" value="${review.regiDate}"></fmt:formatDate></span>
+                                            <div class="row">
+                                                <ul class="review-star-list">
+                                                    <c:choose>
+                                                        <c:when test="${review.score >= 1}">
+                                                            <li><i class="bi bi-star-fill"></i></li>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <li><i class="bi bi-star"></i></li>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    <c:choose>
+                                                        <c:when test="${review.score >= 2}">
+                                                            <li><i class="bi bi-star-fill"></i></li>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <li><i class="bi bi-star"></i></li>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    <c:choose>
+                                                        <c:when test="${review.score >= 3}">
+                                                            <li><i class="bi bi-star-fill"></i></li>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <li><i class="bi bi-star"></i></li>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    <c:choose>
+                                                        <c:when test="${review.score >= 4}">
+                                                            <li><i class="bi bi-star-fill"></i></li>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <li><i class="bi bi-star"></i></li>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    <c:choose>
+                                                        <c:when test="${review.score >= 5}">
+                                                            <li><i class="bi bi-star-fill"></i></li>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <li><i class="bi bi-star"></i></li>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    <li style="color: black;">${review.usrId}</li>
+                                                </ul>
+                                            </div>
+                                            <div class="row">
+                                                <p class="review-text col">${review.reviewContent}</p>
+                                                <!--Todo : user 정보 가져와서 작성한 사람만 삭제할 수 있도록 수정하기-->
+    <%--                                            <c:if test="${review.usrId == user.userId}">--%>
+    <%--                                                <i class="bi bi-trash-fill col-2" style="margin: auto;"></i>--%>
+    <%--                                            </c:if>--%>
+                                                <form action="/store/delete">
+                                                    <input type="hidden" name="storeId" value=${store.id}>
+                                                    <input type="hidden" name="userId" value=1>
+                                                    <button type="submit"><i class="bi bi-trash-fill col-2" style="margin: auto;"></i></button>
+                                                </form>
+                                            </div>
+                                            <c:if test="${review.photo != null}">
+                                                <div class="row">
+                                                    <!--Todo: 이미지 존재 여부에 따라 img 태그 삽입-->
+                                                    <img class="review-img" src="/img/review-img-sample.jpg" height="300" width="300">
+                                                </div>
+                                            </c:if>
+
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
                 <!--footer-->
                 <footer id="footer" class="fixed-bottom border border-black mobile-view bg-white shadow">
                     <!--즐겨찾기-->
@@ -965,9 +1055,9 @@
                     <!--방문인증하기-->
                 </footer>
                 <!--footer-->
+                </div>
             </div>
         </div>
-    </div>
     // TODO: 파일 업로드 구현
     <div id="black-bg" style="z-index: 99;">
         <div id="review-write-container" class="card shadow bg-white" style="visibility: hidden;">

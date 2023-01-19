@@ -91,4 +91,9 @@ public class StoreDAOImpl implements StoreDAO{
     public void deleteStore(int id) {
         sqlSession.delete(namespace + ".deleteStore", id);
     }
+
+    @Override
+    public void updateStoreName(Store store) {
+        sqlSession.update(namespace + ".updateStoreName", store);
+    }
 }

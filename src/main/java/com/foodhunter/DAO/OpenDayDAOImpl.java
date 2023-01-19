@@ -27,4 +27,9 @@ public class OpenDayDAOImpl implements OpenDayDAO{
         result = sqlSession.selectList("openDay.readByStoreId", storeId);
         return result;
     }
+
+    @Override
+    public void deleteByStoreId(long storeId) {
+        sqlSession.delete("openDay.deleteByStoreId", storeId);
+    }
 }
