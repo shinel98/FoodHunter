@@ -8,21 +8,22 @@
 
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <c:set var="representCategoryId" value="${store.categoryId}" />
+<c:set var="contextPath" value="${request.getContextPath()}"/>
 <html>
 <head>
-    <title>가게 상세 페이지</title>
+    <title>${store.name}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"> <!--icon-->
     <link rel="canonical" href="https://nickname.hwanmoo.kr" />
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=453d03fdea794867e41a9d927cff2cac"></script>
+    <!--<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892&libraries=services"></script>-->
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js" integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
     <style>
         body {
-            overflow: hidden;
+            overflow: scroll;
+            overflow-x: hidden;
             overscroll-behavior-x: none;
             position: relative;
         }
@@ -273,7 +274,7 @@
         }
         .btn-review-finished{
             position: absolute;
-            bottom: -120px;
+            bottom: 0;
             right: 0;
             color: white;
             background-color: #ffb700;
@@ -370,7 +371,7 @@
         #review-write-container{
             z-index: 100;
             width: 80%;
-            height: 65%;
+            min-height: 65%;
             position: absolute;
             border-radius: 20px;
             bottom: 0;
@@ -422,7 +423,7 @@
             border-radius: 15px;
             padding: 20px;
             width: 100%;
-            height: 100%;
+            height: 200px;
             font-size: 20px;
             line-height: 150%;
             margin-bottom: 20px;
@@ -527,12 +528,23 @@
     </style>
 </head>
 <body>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892&libraries=services,clusterer,drawing"></script>
+<%--<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892&libraries=services"></script>--%>
 <script>
-
     $(function (){
         calculateDistance();
         getOpenDay();
         openDay();
+
+        if(${favorite.userId != -1}){
+            let buttons = document.getElementsByClassName("favoriteBtn");
+            //let icon = buttons.item(0).classList.item(2);
+            for(let i=0; i<buttons.length; i++){
+                buttons[i].classList.remove('bi-heart');
+                buttons.item(i).classList.add('bi-heart-fill');
+            }
+            document.getElementById("favoriteForm").action = "/store/unlike";
+        }
 
         const searchParams = new URLSearchParams(location.search);
         for (const param of searchParams) {
@@ -581,14 +593,15 @@
         Kakao.Share.createDefaultButton({
             container: '#kakaotalk-sharing-btn',
             objectType: 'location',
-            address: '경상북도 포항시 흥해읍 558', // Todo : 좌표 주소를 가지고 도로명 주소로 바꿔서 넣어주어야 함.
+            address: '${store.addressName}',
             addressTitle:'${store.name}', // 카카오 지도 내 지도 뷰에서 사용될 타이틀
             content: {
                 title: '${store.name}',      // 가게 이름
                 description: <c:forEach var="cat" items="${categoryList}">
                     <c:if test="${cat.id == representCategoryId}">"#${cat.categoryName}"</c:if></c:forEach>,
-                imageUrl: <c:forEach var="cat" items="${categoryList}">
-                <c:if test="${cat.id == representCategoryId}">"http://localhost:8080/resources${cat.icon}"</c:if></c:forEach>,
+                <%--imageUrl: <c:forEach var="cat" items="${categoryList}">--%>
+                <%--<c:if test="${cat.id == representCategoryId}">"http://localhost:8080/resources${cat.icon}"</c:if></c:forEach>,--%>
+                imageUrl:"https://tohomeimage.thehyundai.com/PD/PDImages/S/3/6/2/8809611390263_00.jpg?RS=720x864",
                 link: {
                     // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
                     mobileWebUrl: 'https://developers.kakao.com',
@@ -728,7 +741,7 @@
                 favoriteBtn[i].classList.remove('bi-heart');
                 favoriteBtn.item(i).classList.add('bi-heart-fill');
             }
-            location.href = "/store/like";
+            document.favoriteForm.submit();
         } // 즐겨찾기 해제한 경우
         else {
             for(let i=0; i<favoriteBtn.length; i++){
@@ -736,7 +749,7 @@
                 favoriteBtn.item(i).classList.add('bi-heart');
 
             }
-            location.href = "/store/unlike";
+            document.favoriteForm.submit();
         }
     }
 
@@ -746,10 +759,42 @@
     }
 
     /** 삭제 요청 **/
-    function deletion() {
-        location.href = "/store/delete";
-    }
+    function deletion(storeid) {
+        // let a = confirm("정말로 삭제하시겠습니까?");
+        // if(a) location.href = '/store/delete/' + storeid;
 
+        // let check = 0;
+        // if (!confirm("삭제를 요청하시겠습니까?")) {
+        //     // 아니오 버튼 클릭 시
+        //     check = 0;
+        // } else {
+        //     // 예 버튼 클릭 시
+        //     check = 1;
+        // }
+        // if(check == 1) {
+        //     let id = this.classList.item(2);
+        //     // console.log(reportBtns);
+        //     $.ajax({
+        //         url: "/store/delete/" + storeid, // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+        //         data: {
+        //             storeId: id
+        //         }, // HTTP 요청과 함께 서버로 보낼 데이터
+        //         method: "GET", // HTTP 요청 메소드(GET, POST 등)
+        //         // dataType: "int", // 서버에서 보내줄 데이터의 타입
+        //         success: function (data) {
+        //             console.log("ajax 성공!");
+        //             location.reload();
+        //         },
+        //         error: function () {
+        //             console.log("ajax 실패ㅠ");
+        //             location.reload();
+        //         }
+        //     });
+        // } else {
+        //     location.reload();
+        // }
+        location.href = "/store/delete/" + storeid;
+    }
 
     /** 리뷰 작성하기 **/
     function reviewWrite() {
@@ -1072,10 +1117,9 @@
             <button type="button" class="btn" onclick="reviewCancel();"><i id="review-cancel" class="bi bi-x-lg"></i></button>
             <form id="review-form" action="/store/review" enctype="multipart/form-data" method="post" style="position: relative;">
 
-                <input type="hidden" name="usrId" value=3>
-                <input type="hidden" name="id" value=${store.id}>
-                console.log(${store.id});
-                <input type="hidden" name="score" id="score">
+                <input type="hidden" name="usrId" value=2>
+                <input type="hidden" name="storeId" value=${store.id}>
+                <input type="hidden" name="score" id="score" value=3>
                 <div id="review-score">
                     <ul class="review-star-list">
                         <li><i id="scoreOne" class="bi bi-star-fill" onclick="scoreOne();"></i></li>

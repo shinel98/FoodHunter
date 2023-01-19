@@ -11,6 +11,16 @@ public class Store {
 
     private Date regDate;
 
+    public String getAddressName() {
+        return addressName;
+    }
+
+    public void setAddressName(String addressName) {
+        this.addressName = addressName;
+    }
+
+    private String addressName;
+
     public long getId() {
         return id;
     }

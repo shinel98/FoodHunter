@@ -7,8 +7,7 @@ import java.sql.Date;
 
 public class Review {
 
-//    private long reviewId;  // primary key
-private long id;  // primary key
+    private long reviewId;  // primary key
 
     private long storeId;
     private String reviewContent;
@@ -18,31 +17,6 @@ private long id;  // primary key
 
     private long userId;
 
-    public long getId() {
-
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Date getRegDate() {
-        return regDate;
-    }
-
-    public void setRegDate(Date regDate) {
-        this.regDate = regDate;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
     public String getPhoto() {
         return photo;
     }
@@ -51,13 +25,13 @@ private long id;  // primary key
         this.photo = photo;
     }
 
-//    public long getReviewId() {
-//        return reviewId;
-//    }
-//
-//    public void setReviewId(long reviewId) {
-//        this.reviewId = reviewId;
-//    }
+    public long getReviewId() {
+        return reviewId;
+    }
+
+    public void setReviewId(long reviewId) {
+        this.reviewId = reviewId;
+    }
 
     public long getStoreId() {
         return storeId;
@@ -83,30 +57,32 @@ private long id;  // primary key
         this.score = score;
     }
 
+    public Date getRegiDate() {
+        return regDate;
+    }
 
+    public void setRegiDate(Date regDate) {
+        this.regDate = regDate;
+    }
 
-//    @Override
-//    public String toString() {
-//        return "Review{" +
-//                "reviewId=" + reviewId +
-//                ", storeId=" + storeId +
-//                ", reviewContent='" + reviewContent + '\'' +
-//                ", score=" + score +
-//                ", regDate=" + regDate +
-//                ", photo='" + photo + '\'' +
-//                ", userId=" + userId +
-//                '}';
-//    }
-@Override
-public String toString() {
-    return "Review{" +
-            "id=" + id +
-            ", storeId=" + storeId +
-            ", reviewContent='" + reviewContent + '\'' +
-            ", score=" + score +
-            ", regDate=" + regDate +
-            ", photo='" + photo + '\'' +
-            ", userId=" + userId +
-            '}';
-}
+    public long getUsrId() {
+        return userId;
+    }
+
+    public void setUsrId(long userId) {
+        this.userId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "reviewId=" + reviewId +
+                ", storeId=" + storeId +
+                ", reviewContent='" + reviewContent + '\'' +
+                ", score=" + score +
+                ", regDate=" + regDate +
+                ", photo='" + photo + '\'' +
+                ", userId=" + userId +
+                '}';
+    }
 }

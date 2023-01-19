@@ -13,7 +13,6 @@ import java.util.List;
 
 @Controller
 public class ReportController {
-
     private final MarkerService markerService;
     private final CategoryServiceImpl categoryService;
     private final StoreService storeService;
@@ -29,12 +28,13 @@ public class ReportController {
         this.openDayService = openDayService;
     }
 
+    /**위치 설정 페이지로 이동**/
     @RequestMapping("/report")
     public String report() {
         return "report";
     }
 
-
+    /**상세 정보 등록 페이지로 이동**/
     @PostMapping("/report/detail")
     public String categorySelect(MarkerForm form, Model model) {
         List<Category> categoryList = categoryService.getCategoryList();
@@ -47,6 +47,7 @@ public class ReportController {
         return "report-detail";
     }
 
+    /**가게 정보 제보 완료**/
     @PostMapping("/report/finish")
     public String reportFinished(ReportForm form, Model model){
         // store 생성
@@ -56,6 +57,7 @@ public class ReportController {
         String[] category = categories.split(",");
         store.setCategoryId(Long.parseLong(category[0]));   // 대표 카테고리 id 설정
         store.setUserId(form.getUserId());
+        store.setAddressName(form.getAddressName());
         storeService.reportStore(store);
 
         // 마커 생성 -> setStoreId를 해줘야 하기 때문에 나중에 생성
@@ -90,16 +92,13 @@ public class ReportController {
         return "redirect:/main";
     }
 
+    /**카테고리 추가 신청**/
     @RequestMapping("/report/category-apply")
-    public String categoryApply(CategoryApplyForm form){
+    public String categoryApply(ReportForm form, Model model){
         Category category = new Category();
-        category.setCategoryName(form.getCategoryName());
+        category.setCategoryName(form.getCategoryApplyName());
         categoryService.applyCategory(category);
-        return "redirect:/report";
-    }
-
-    @RequestMapping("/category-request")
-    public String categoryRequest() {
-        return "category-request";
+        model.addAttribute("reportForm", form);
+        return "category-applyForm";
     }
 }
