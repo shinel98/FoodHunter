@@ -2,6 +2,8 @@ package com.foodhunter;
 
 
 import com.foodhunter.DTO.*;
+import com.foodhunter.service.OpenDayService;
+import com.mysql.cj.x.protobuf.MysqlxCursor;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,10 +22,12 @@ import java.util.Objects;
 @Controller
 public class MainController {
     private StoreService storeService;
+    private OpenDayService openDayService;
 
     @Autowired
-    public MainController(StoreService storeService) {
+    public MainController(StoreService storeService, OpenDayService openDayService) {
         this.storeService = storeService;
+        this.openDayService = openDayService;
     }
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
@@ -131,7 +135,8 @@ public class MainController {
     @ResponseBody
     public String reportStore(@RequestParam("storeId") long id) {
         System.out.println("id = " + id);
-         long result = storeService.deleteMainStore(id);
+        openDayService.deleteOpenDay((int)id);
+        long result = storeService.deleteMainStore(id);
         System.out.println("result = " + result);
          if(result == 0){
              System.out.println("가게 삭제 실패");
