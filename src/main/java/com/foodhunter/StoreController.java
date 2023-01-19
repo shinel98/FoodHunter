@@ -98,6 +98,7 @@ public class StoreController {
     /**가게 삭제 요청**/
     @RequestMapping(value = "store/delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable("id") int id, Model model){
+        openDayService.deleteOpenDay(id);
         storeService.deleteStore(id);
         model.addAttribute("delete", true);
         return "redirect:/main";
@@ -149,7 +150,7 @@ public class StoreController {
         long storeId = Long.parseLong(request.getParameter("storeId"));
         Store beforeStore = storeService.readOneStore(storeId);
 
-        String newStoreName = request.getParameter("storeName");
+        String newStoreName = request.getParameter("newStoreName");
 
         Store newStore = new Store();
         newStore.setId(storeId);

@@ -246,7 +246,7 @@
             <!--footer-->
             <footer id="footer" class="fixed-bottom border border-black mobile-view bg-white shadow">
                 <form action="/visit/authenticate" onsubmit="return validateForm();">
-                    <input type="hidden" name="userId" value=1>
+                    <input type="hidden" name="userId" value=31>
                     <input type="hidden" name="storeId" value=${visitForm.storeId}>
 
                     <p>5m 이내에 접근하면 붕어빵 아이콘을 눌러서 인증하세요.</p>
@@ -332,8 +332,8 @@
     function validateForm(){
         var element = document.getElementById("left-distance");
         var str = element.innerText.split(" ");
-        if(str[1] > 5){
-            alert("5m 이내에 접근해야 인증이 가능합니다.")
+        if(str[1] > 200){
+            alert("200m 이내에 접근해야 인증이 가능합니다.")
             return false;
         }
     }

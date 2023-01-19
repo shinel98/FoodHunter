@@ -494,7 +494,7 @@
                     </div>
                     <div class="menuIcon">
                         <a href="/report"><i class="fas fa-pen fa-2x"></i><p>제보하기</p></a></div>
-                    <div class="menuIcon"><a href="/mypage"><i class="fas fa-user fa-2x"></i><p>마이페이지</p></a></div>
+                    <div class="menuIcon"><a href="/my"><i class="fas fa-user fa-2x"></i><p>마이페이지</p></a></div>
                     <button id="my-location"  title="현재 내 위치로 이동"><i class="bi bi-geo-alt-fill"></i></button>
 
                 </div>

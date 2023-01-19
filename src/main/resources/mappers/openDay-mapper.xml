@@ -13,4 +13,7 @@
         from openDay_table
         where storeId = #{storeId};
     </delete>
+    <delete id="deleteOpenDay">
+        delete from openDay_table where storeId=#{storeId};
+    </delete>
 </mapper>
