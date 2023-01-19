@@ -28,6 +28,9 @@ public class OpenDayService {
         return result;
     }
 
+    public void deleteOpenDay(int id) {
+        openDayDAO.deleteOpenDay(id);
+    }
     public void deleteByStoreId(long storeId) {
         openDayDAO.deleteByStoreId(storeId);
     }

@@ -758,10 +758,42 @@
     }
 
     /** 삭제 요청 **/
-    function deletion() {
-        location.href = "/store/delete";
-    }
+    function deletion(storeid) {
+        // let a = confirm("정말로 삭제하시겠습니까?");
+        // if(a) location.href = '/store/delete/' + storeid;
 
+        // let check = 0;
+        // if (!confirm("삭제를 요청하시겠습니까?")) {
+        //     // 아니오 버튼 클릭 시
+        //     check = 0;
+        // } else {
+        //     // 예 버튼 클릭 시
+        //     check = 1;
+        // }
+        // if(check == 1) {
+        //     let id = this.classList.item(2);
+        //     // console.log(reportBtns);
+        //     $.ajax({
+        //         url: "/store/delete/" + storeid, // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+        //         data: {
+        //             storeId: id
+        //         }, // HTTP 요청과 함께 서버로 보낼 데이터
+        //         method: "GET", // HTTP 요청 메소드(GET, POST 등)
+        //         // dataType: "int", // 서버에서 보내줄 데이터의 타입
+        //         success: function (data) {
+        //             console.log("ajax 성공!");
+        //             location.reload();
+        //         },
+        //         error: function () {
+        //             console.log("ajax 실패ㅠ");
+        //             location.reload();
+        //         }
+        //     });
+        // } else {
+        //     location.reload();
+        // }
+        location.href = "/store/delete/" + storeid;
+    }
 
     /** 리뷰 작성하기 **/
     function reviewWrite() {
@@ -934,7 +966,7 @@
                                 <p>한 달 동안 ${visitList.size()}명이 다녀간 가게에요!</p>
                             </div>
                             <!--삭제 요청 버튼-->
-                            <button type="button" id="ask-deletion" class="btn" onclick="deletion();">
+                            <button type="button" id="ask-deletion" class="btn" onclick="deletion('${store.id}');">
                                 <i class="bi bi-exclamation-circle"></i>
                                 <span class="smallTxt">삭제 요청</span>
                             </button>
@@ -1077,6 +1109,7 @@
             </div>
         </div>
     </div>
+    // TODO: 파일 업로드 구현
     <div id="black-bg" style="z-index: 99;">
         <div id="review-write-container" class="card shadow bg-white" style="visibility: hidden;">
             <!--취소 버튼-->
@@ -1284,7 +1317,7 @@
             document.getElementById("scoreTwo").classList.remove("bi-star");
             document.getElementById("scoreTwo").classList.add("bi-star-fill");
         }
-        scoreIcon =  document.getElementById("scoreThree").classList.item(1);
+        scoreIcon =  document.getElementById("scoreThree").classList .item(1);
         if(scoreIcon == "bi-star") {
             document.getElementById("scoreThree").classList.remove("bi-star");
             document.getElementById("scoreThree").classList.add("bi-star-fill");

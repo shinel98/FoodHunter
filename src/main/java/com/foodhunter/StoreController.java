@@ -19,6 +19,7 @@ public class StoreController {
     private final ReviewService reviewService;
     private final FavoriteService favoriteService;
     private final StoreServiceImpl storeService;
+
     private final CategoryServiceImpl categoryService;
     private final VisitService visitService;
     private final OpenDayService openDayService;
@@ -98,6 +99,7 @@ public class StoreController {
     /**가게 삭제 요청**/
     @RequestMapping(value = "store/delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable("id") int id, Model model){
+        openDayService.deleteOpenDay(id);
         storeService.deleteStore(id);
         model.addAttribute("delete", true);
         return "redirect:/main";

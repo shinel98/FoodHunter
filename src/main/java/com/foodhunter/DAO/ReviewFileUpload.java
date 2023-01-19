@@ -56,7 +56,7 @@ public class ReviewFileUpload {
 //                review.setReviewId(Long.parseLong(reviewId));
 //            }
             review.setStoreId(Long.parseLong(multipartRequest.getParameter("storeId")));
-            review.setReviewContent(multipartRequest.getParameter("reviewContent"));
+            review.setReviewContent(multipartRequest.getParameter("content"));
             review.setScore(Integer.parseInt(multipartRequest.getParameter("score")));
             review.setUsrId(Long.parseLong(multipartRequest.getParameter("usrId")));
             review.setPhoto(filenames);

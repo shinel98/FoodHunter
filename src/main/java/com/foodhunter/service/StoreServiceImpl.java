@@ -33,6 +33,7 @@ public class StoreServiceImpl implements StoreService {
         Store store = storeDAO.readOneStore(id);
         return store;
     }
+
     @Override
     public List<Store> readStoresById() {
         List<Store> stores = storeDAO.readStoresDescById();
