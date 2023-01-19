@@ -206,7 +206,7 @@
     <form id="form-main" method="post">
       <input type="hidden" name="lat" value="${markerForm.lat}">
       <input type="hidden" name="lon" value="${markerForm.lon}">
-      <input type="hidden" value="1" name="userId">
+      <input type="hidden" value="31" name="userId">
       <div id="location" class="form-section">
           <div><h5>가게 위치</h5></div>
           <div><input id="addressName" class="form-control form-control-lg" type="text" aria-label=".form-control-lg example" name="addressName" readonly></div>

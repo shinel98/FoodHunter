@@ -1061,6 +1061,7 @@
                             </div>
                         </div>
                         <div id="large-right">
+                            <!--상세 정보-->
                             <form id="edit-info" name="edit-info" method="post" action="/store/edit-info">
                                 <input type="hidden" id="newStoreName" name="newStoreName">
                                 <input type="hidden" name="storeId" value=${store.id}>
@@ -1163,7 +1164,7 @@
                                                         <i class="bi bi-trash-fill col-2" style="margin: auto;"></i>
                                                     </button>
                                                     <input class="col" type="hidden" name="storeId" value=${store.id}>
-                                                    <input class="col" type="hidden" name="userId" value=2>
+                                                    <input class="col" type="hidden" name="userId" value=31>
                                                 </div>
                                             </form>
                                             <c:if test="${review.photo.length() > 0}">
@@ -1216,7 +1217,7 @@
                 <form id="review-form" action="/store/review" enctype="multipart/form-data" method="post"
                       style="position: relative;">
 
-                    <input type="hidden" name="usrId" value=2>
+                    <input type="hidden" name="usrId" value=31>
                     <input type="hidden" name="storeId" value=${store.id}>
                     <input type="hidden" name="score" id="score" value=3>
                     <div id="review-score">
