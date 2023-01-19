@@ -483,6 +483,7 @@
         #storeNameBox {
             border: none;
             outline: none;
+            width: 100%;
         }
 
         @media screen and (max-width: 800px) {
@@ -768,7 +769,7 @@
         let list = document.getElementById("dayList");
         $(d).attr('id', 'dark-div');
         $(d).attr('onclick', 'resetEdit(); openDay()');
-        $('#edit-info').append(d);
+        $('body').append(d);
         $('#content-main-board').css('z-index', '1032');
         $('#btn-edit').css('z-index', '1032');
         $('#info-card').css('z-index', '1032');
@@ -781,6 +782,7 @@
     }
 
     function resetEdit() {
+        document.getElementById('storeNameBoxForm').reset();
         document.getElementById('edit-info').reset();
         for (let i = 0; i < 7; i++) {
             if (openDayList[i] === true) {
@@ -803,6 +805,8 @@
     }
 
     function submitEdit() {
+        let storeName = $('#storeNameBox').val();
+        $('#newStoreName').attr('value', storeName);
         document.getElementById('edit-info').submit();
     }
 
@@ -863,7 +867,6 @@
 
                     </div>
                 </hearder>
-                <form id="edit-info" name="edit-info" method="post" action="/store/edit-info">
                     <div id="content">
                         <div id="large-left">
                             <!--지도-->
@@ -877,8 +880,9 @@
                                 <!--가게 위치로 이동 버튼-->
                                 <button id="store-location" onclick="storeLocation();" title="가게 위치로 이동"><i class="bi bi-shop"></i></button>
                                 000 님의 제보
-                                <input id="storeNameBox" class="h2 text-center" name="storeName" value="${store.name}" readonly>
-                                <input type="hidden" name="storeId" value=${store.id}>
+                                <form id="storeNameBoxForm">
+                                    <input id="storeNameBox" class="h2 text-center" name="storeName" value="${store.name}" readonly>
+                                </form>
 <%--                                <h2>${store.name}</h2>--%>
                                 <div class="center">
                                     <div id="distance" type="button">
@@ -926,30 +930,34 @@
                         </div>
                         <div id="large-right">
                             <!--상세 정보-->
-                            <div id="content-information">
-                                <!--수정하기 버튼-->
-                                <button id="btn-edit" type="button" class="btn" onclick="infoEdit()">정보수정하기</button>
-                                <!--가게 정보 update 날짜-->
-                                <!--Todo : 업데이트 날짜 DB 연동-->
-                                <span id="updateInfo"><fmt:formatDate pattern="yyyy-MM-dd" value="${store.regDate}"></fmt:formatDate> 업데이트</span>
-                                <h4>가게 정보</h4>
-                                <div class="shadow border card" id="info-card">
-                                    <div class="row">
-                                        <div class="col-3 subtitle" style="margin: auto 0;font-weight: 600">출몰 시기</div>
-                                        <div class="col-8" style="padding: 0;">
-                                            <ul id="dayList">
-                                                <li>일<input id="day1" name="day1" type="hidden" value=false></li>
-                                                <li>월<input id="day2" name="day2" type="hidden" value=false></li>
-                                                <li>화<input id="day3" name="day3" type="hidden" value=false></li>
-                                                <li>수<input id="day4" name="day4" type="hidden" value=false></li>
-                                                <li>목<input id="day5" name="day5" type="hidden" value=false></li>
-                                                <li>금<input id="day6" name="day6" type="hidden" value=false></li>
-                                                <li>토<input id="day7" name="day7" type="hidden" value=false></li>
-                                            </ul>
+                            <form id="edit-info" name="edit-info" method="post" action="/store/edit-info">
+                                <input type="hidden" id="newStoreName" name="newStoreName">
+                                <input type="hidden" name="storeId" value=${store.id}>
+                                <div id="content-information">
+                                    <!--수정하기 버튼-->
+                                    <button id="btn-edit" type="button" class="btn" onclick="infoEdit()">정보수정하기</button>
+                                    <!--가게 정보 update 날짜-->
+                                    <!--Todo : 업데이트 날짜 DB 연동-->
+                                    <span id="updateInfo"><fmt:formatDate pattern="yyyy-MM-dd" value="${store.regDate}"></fmt:formatDate> 업데이트</span>
+                                    <h4>가게 정보</h4>
+                                    <div class="shadow border card" id="info-card">
+                                        <div class="row">
+                                            <div class="col-3 subtitle" style="margin: auto 0;font-weight: 600">출몰 시기</div>
+                                            <div class="col-8" style="padding: 0;">
+                                                <ul id="dayList">
+                                                    <li>일<input id="day1" name="day1" type="hidden" value=false></li>
+                                                    <li>월<input id="day2" name="day2" type="hidden" value=false></li>
+                                                    <li>화<input id="day3" name="day3" type="hidden" value=false></li>
+                                                    <li>수<input id="day4" name="day4" type="hidden" value=false></li>
+                                                    <li>목<input id="day5" name="day5" type="hidden" value=false></li>
+                                                    <li>금<input id="day6" name="day6" type="hidden" value=false></li>
+                                                    <li>토<input id="day7" name="day7" type="hidden" value=false></li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
 
                             <!--리뷰-->
                             <div id="content-review">
@@ -1032,7 +1040,6 @@
                             </div>
                         </div>
                     </div>
-                </form>
                 <!--footer-->
                 <footer id="footer" class="fixed-bottom border border-black mobile-view bg-white shadow">
                     <!--즐겨찾기-->
