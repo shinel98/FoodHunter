@@ -53,6 +53,6 @@
 <!--        select * from BOARD order by seq desc-->
 <!--    </select>-->
         <delete id="deleteStore">
-            delete from stores_table where id=#{id}
+            delete from stores_table where id=#{id};
         </delete>
 </mapper>

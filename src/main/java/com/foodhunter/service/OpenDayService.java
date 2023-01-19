@@ -26,5 +26,7 @@ public class OpenDayService {
         return result;
     }
 
-
+    public void deleteOpenDay(int id) {
+        openDayDAO.deleteOpenDay(id);
+    }
 }

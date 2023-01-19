@@ -8,4 +8,7 @@
     <select id="readByStoreId" resultType="com.foodhunter.DTO.OpenDay">
         select * from openDay_table where storeId = #{storeId}
     </select>
+    <delete id="deleteOpenDay">
+        delete from openDay_table where storeId=#{storeId};
+    </delete>
 </mapper>
