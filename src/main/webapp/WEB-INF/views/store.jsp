@@ -8,9 +8,10 @@
 
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <c:set var="representCategoryId" value="${store.categoryId}" />
+<c:set var="contextPath" value="${request.getContextPath()}"/>
 <html>
 <head>
-    <title>가게 상세 페이지</title>
+    <title>${store.name}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"> <!--icon-->
@@ -840,7 +841,7 @@
                                     <i class="bi bi-share"></i>
                                     공유하기
                                 </button>
-                                    <form name="favoriteForm" id="favoriteForm" action="/store/like">
+                                    <!--<form name="favoriteForm" id="favoriteForm" action="/store/like">-->
                                     <input type="hidden" name="userId" value=1>
                                     <input type="hidden" name="storeId" value=${store.id}>
                                     <button type="button" class="btn favorite" onclick="favorite();">
@@ -960,7 +961,8 @@
                                         <c:if test="${review.photo != null}">
                                             <div class="row">
                                                 <!--Todo: 이미지 존재 여부에 따라 img 태그 삽입-->
-                                                <img class="review-img" src="/img/review-img-sample.jpg" height="300" width="300">
+<%--                                                <img class="review-img" src="/img/review-img-sample.jpg" height="300" width="300">--%>
+                                                <img class="review-img" src="${contextPath}/resources/upload/${review.photo}" height="300" width="300">
                                             </div>
                                         </c:if>
 
