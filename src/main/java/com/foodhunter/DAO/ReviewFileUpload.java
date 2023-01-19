@@ -29,13 +29,14 @@ public class ReviewFileUpload {
         int sizeLimit = 15 * 1024 * 1024; // 15MB
 
         //String savePath = request.getServletContext().getRealPath("/resources/upload");
-
-        //File dir = new File(savePath);
-        //if (!dir.exists()) dir.mkdirs();
+        String savePath = request.getSession().getServletContext().getRealPath("/resources/upload");
+        System.out.println("savePath: " + savePath);
+        File dir = new File(savePath);
+        if (!dir.exists()) dir.mkdirs();
 
         MultipartRequest multipartRequest = null;
         try {
-            //multipartRequest = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
+            multipartRequest = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
 
             for (int i = 0; multipartRequest.getFilesystemName("photo" + i) != null; i++) {
                 filenameList.add(multipartRequest.getFilesystemName("photo" + i));
@@ -55,9 +56,9 @@ public class ReviewFileUpload {
 //                review.setReviewId(Long.parseLong(reviewId));
 //            }
             review.setStoreId(Long.parseLong(multipartRequest.getParameter("storeId")));
-            review.setReviewContent(multipartRequest.getParameter("content"));
+            review.setReviewContent(multipartRequest.getParameter("reviewContent"));
             review.setScore(Integer.parseInt(multipartRequest.getParameter("score")));
-            review.setUserId(Long.parseLong(multipartRequest.getParameter("usrId")));
+            review.setUsrId(Long.parseLong(multipartRequest.getParameter("usrId")));
             review.setPhoto(filenames);
             review.toString();
 

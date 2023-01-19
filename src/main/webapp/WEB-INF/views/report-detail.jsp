@@ -203,13 +203,13 @@
   </hearder>
   <!--main-->
   <div id="main" style="width: 500px; height: 100%; margin: auto;">
-    <form id="form-main" method="post" onsubmit="return validate();">
+    <form id="form-main" method="post">
       <input type="hidden" name="lat" value="${markerForm.lat}">
       <input type="hidden" name="lon" value="${markerForm.lon}">
       <input type="hidden" value="1" name="userId">
       <div id="location" class="form-section">
           <div><h5>가게 위치</h5></div>
-          <div><input class="form-control form-control-lg" type="text" value="위도 : ${markerForm.lat}, 경도 : ${markerForm.lon}" aria-label=".form-control-lg example" name="location" readonly></div>
+          <div><input id="addressName" class="form-control form-control-lg" type="text" aria-label=".form-control-lg example" name="addressName" readonly></div>
       </div>
       <div id="name" class="form-section">
         <div style="position: relative;"><h5>가게 이름</h5><button id="randomButton" onclick="randomName();" type="button">랜덤생성</button></div>
@@ -259,31 +259,31 @@
         </div>
       </div>
       <div id="finish">
-        <button formaction="/report/finish" id="btn-report" type="submit" class="btn btn-category-apply shadow">제보하기</button>
+        <button formaction="/report/finish" onsubmit="return validate();" id="btn-report" type="submit" class="btn btn-category-apply shadow">제보하기</button>
       </div>
-    </form>
-
   </div>
   <div id="add" class="fixed-bottom border border-black bg-white shadow">
-    <form id="form-category" action="/report/category-apply" method="post">
-      <div id="category-name">
-        <input type="text" placeholder="새로운 카테고리 이름을 작성해주세요" id="form-category-name" name="categoryName">
+      <div id="form-category">
+        <div id="category-name">
+          <input type="text" placeholder="새로운 카테고리 이름을 작성해주세요" id="form-category-name" name="categoryApplyName">
+        </div>
+        <div style="margin-left: 12%;">
+          <button type="submit" formaction="/report/category-apply" onsubmit="return validateCategory();"  class="text-white btn btn-category-apply-modal float-right">추가신청</button>
+          <button type="button" class="text-white btn btn-category-apply-modal float-right" onclick="cancel();">취소</button>
+        </div>
       </div>
-      <div style="margin-left: 12%;">
-        <button type="submit" class="text-white btn btn-category-apply-modal float-right">추가신청</button>
-        <button type="button" class="text-white btn btn-category-apply-modal float-right" onclick="cancel();">취소</button>
-      </div>
+
       </form>
   </div>
 </div>
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892&libraries=services"></script>
 <script>
   function add(){
     document.getElementById("add").style.display = "block";
   }
 
   function cancel() {
-    document.getElementById("form-category").reset();
+    document.getElementById("form-category-name").value="";
     document.getElementById("add").style.display = "none";
   }
 
@@ -298,6 +298,7 @@
 <script>
   $(function(){
       randomName();
+      getAddressName();
   });
 
   function randomName(){
@@ -317,6 +318,19 @@
     } catch(err) {
       alert(err); // TypeError: Failed to fetch
     }
+  }
+
+  function getAddressName(){
+    // 주소-좌표 변환 객체를 생성합니다
+    var geocoder = new kakao.maps.services.Geocoder();
+    // 좌표로 법정동 상세 주소 정보를 요청합니다
+    geocoder.coord2Address(${markerForm.lon}, ${markerForm.lat}, function(result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        var detailAddr =result[0].address.address_name;
+        document.getElementById("addressName").value = detailAddr;
+      }
+    });
+
   }
 
   function validate(){
@@ -345,6 +359,11 @@
       }
       else return true;
     }
+  }
+
+
+  function validateCategory(){
+    return true;
   }
 </script>
 </body>

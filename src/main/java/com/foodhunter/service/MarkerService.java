@@ -13,6 +13,7 @@ public class MarkerService {
         this.markerDAO = markerDAO;
     }
 
+    /**마커 정보 생성 -> report**/
     public void createMarker(StoreMarker storeMarker){
         markerDAO.save(storeMarker);
     }
