@@ -1066,7 +1066,8 @@
             <form id="review-form" action="/store/review" enctype="multipart/form-data" method="post" style="position: relative;">
 
                 <input type="hidden" name="usrId" value=3>
-                <input type="hidden" name="storeId" value=${store.id}>
+                <input type="hidden" name="id" value=${store.id}>
+                console.log(${store.id});
                 <input type="hidden" name="score" id="score">
                 <div id="review-score">
                     <ul class="review-star-list">

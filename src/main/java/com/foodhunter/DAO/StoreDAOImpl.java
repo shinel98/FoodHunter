@@ -30,12 +30,17 @@ public class StoreDAOImpl implements StoreDAO{
         return stores;
     }
 
+//    @Override
+//    public Store readOneStore(long storeId) {
+//        Store result = sqlSession.selectOne(namespace + ".getOneStore", storeId);
+//        return result;
+//    }
+
     @Override
-    public Store readOneStore(long storeId) {
-        Store result = sqlSession.selectOne(namespace + ".getOneStore", storeId);
+    public Store readOneStore(long id) {
+        Store result = sqlSession.selectOne(namespace + ".getOneStore", id);
         return result;
     }
-
     @Override
     public List<Store> readStoresDescById() {
         List<Store> stores = new ArrayList<Store>();

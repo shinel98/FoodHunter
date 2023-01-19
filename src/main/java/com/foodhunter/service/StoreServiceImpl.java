@@ -26,12 +26,17 @@ public class StoreServiceImpl implements StoreService {
         return stores;
     }
 
+//    @Override
+//    public Store readOneStore(long storeId) {
+//        Store store = storeDAO.readOneStore(storeId);
+//        return store;
+//    }
+
     @Override
-    public Store readOneStore(long storeId) {
-        Store store = storeDAO.readOneStore(storeId);
+    public Store readOneStore(long id) {
+        Store store = storeDAO.readOneStore(id);
         return store;
     }
-
     @Override
     public List<Store> readStoresById() {
         List<Store> stores = storeDAO.readStoresDescById();
