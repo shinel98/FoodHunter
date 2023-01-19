@@ -90,7 +90,8 @@ public class StoreController {
         if(result == -1L) { // 에러 발생
             model.addAttribute("reviewError", true);
         }
-        return "redirect:/store";                  // 정상
+        model.addAttribute("storeId", review.getStoreId());
+        return "review-deleteForm";                  // 정상
     }
 
     /**가게 삭제 요청**/
