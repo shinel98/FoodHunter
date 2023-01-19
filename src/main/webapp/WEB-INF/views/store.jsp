@@ -961,10 +961,11 @@
                                         </div>
                                         </form>
                                         <c:if test="${review.photo.length() > 0}">
-                                            <div class="row">
-                                                <!--Todo: 이미지 존재 여부에 따라 img 태그 삽입-->
-<%--                                                <img class="review-img" src="/img/review-img-sample.jpg" height="300" width="300">--%>
-                                                <img class="review-img" src="${contextPath}/resources/upload/${review.photo}" height="300" width="300">
+                                            <c:set var="token" value="${review.photo}"></c:set>
+                                            <div class="row" style="height: 300px;overflow-y: scroll;">
+                                                <c:forTokens var="image" items="${token}" delims=";">
+                                                    <img class="review-img" src="${contextPath}/resources/upload/${image}" height="300" width="300" style="margin-bottom: 10px">
+                                                </c:forTokens>
                                             </div>
                                         </c:if>
 
