@@ -6,7 +6,7 @@
         values (#{storeId}, #{usrId}, #{score}, NOW(), #{photo}, #{reviewContent})
     </insert>
     <delete id="deleteComment">
-        delete from comment_table where storeId = #{storeId} and userId = #{usrId}
+        delete from comment_table where storeId = #{storeId}집and userId = #{usrId}
     </delete>
     <select id="selectCommentByStoreId" resultType="com.foodhunter.DTO.Review">
         select * from comment_table where storeId = #{storeId}

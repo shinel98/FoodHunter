@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 public class SpringConfig {
     private SqlSession sqlSession;
 
-    //DataSource dataSource;
     @Autowired
     public SpringConfig(SqlSession sqlSession) {
         this.sqlSession = sqlSession;

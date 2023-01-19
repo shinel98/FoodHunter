@@ -12,6 +12,7 @@ public class StoreCategoryService {
         this.storeCategoryDAOImpl = storeCategoryDAOImpl;
     }
 
+    /**카테고리 추가 신청(requestStatus = 1)**/
     public StoreCategory save(StoreCategory storeCategory){
         storeCategoryDAOImpl.save(storeCategory);
         return storeCategory;

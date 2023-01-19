@@ -46,13 +46,25 @@
             values (#{storeId}, #{url}, #{xLocation}, #{yLocation}, NOW());
         </insert>
         <select id="insertStore">
-            insert into stores_table (name, categoryId, userId, visitCnt, regDate)
-            values (#{name}, #{categoryId}, #{userId}, 0, NOW())
+            insert into stores_table (name, categoryId, userId, visitCnt, regDate, addressName)
+            values (#{name}, #{categoryId}, #{userId}, 0, NOW(), #{addressName})
         </select>
 <!--    <select id="getBoardList" resultType="board">-->
 <!--        select * from BOARD order by seq desc-->
 <!--    </select>-->
         <delete id="deleteStore">
-            delete from stores_table where id=#{id};
+            delete from stores_table where id=#{id}
         </delete>
+    <!--    <select id="getBoardList" resultType="board">-->
+    <!--        select * from BOARD order by seq desc-->
+    <!--    </select>-->
+    <select id="getStoresByUserId" resultType="com.foodhunter.DTO.Store">
+        select * from stores_table where userId = #{userId};
+    </select>
+
+    <update id="updateStoreName">
+        update stores_table
+        set name = #{name}
+        where id = #{id};
+    </update>
 </mapper>

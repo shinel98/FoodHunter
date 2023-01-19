@@ -17,7 +17,6 @@ import java.util.List;
 
 @Controller
 public class VisitController {
-
     private final VisitService visitService;
     private final StoreServiceImpl storeService;
     private final CategoryServiceImpl categoryService;
@@ -29,6 +28,7 @@ public class VisitController {
         this.categoryService = categoryService;
     }
 
+    /**방문인증 페이지 로드**/
     @GetMapping("/visit")
     public String visit(VisitForm form, Model model) {
         List<StoreMarker> allMarkers = storeService.readMarkerInfo();
@@ -49,8 +49,10 @@ public class VisitController {
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("storeMarker", storeMarker);
         model.addAttribute("visitForm", form);
-        return "visit";}
+        return "visit";
+    }
 
+    /**방문인증 등록**/
     @RequestMapping("/visit/authenticate")
     public String authenticate(VisitForm form, Model model){
         Visit visit = new Visit();
@@ -68,12 +70,4 @@ public class VisitController {
         return "redirect:/store";
     }
 
-    /**마이페이지에서 사용할 "방문인증한 visit 리스트 읽어오기" 테스트**/
-    /**Todo: 마이페이지에서 사용 -> storeId로 가게 리스트 불러와서 보여주기**/
-    @RequestMapping("/visit/read-test")
-    public String readTest(){
-        List<Visit> result = visitService.read(1L);
-        System.out.println(result.size());
-        return "redirect:/store";
-    }
 }

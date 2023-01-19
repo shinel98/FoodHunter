@@ -62,7 +62,7 @@
 <%--                            <i class="fab xi-kakaotalk xi-x me-2"></i>카카오 계정으로 로그인--%>
 <%--                        </button>--%>
 <%--    <div class="login-btn w-100 p-3 mb-3 rounded border-secondary"><img style="width: 20px;" src="resources/img/teamProject/kakao.png"/><a class="w-100" href="javascript:kakaoLogin();"  >카카오로 로그인하기  </a></div>--%>
-    <div class="btn btn-kakao btn-login text-uppercase fw-bold"><i class="fab xi-kakaotalk xi-x me-2"></i><a class="w-100 login_text" href="javascript:kakaoLogin();"  >카카오로 로그인하기  </a></div>
+    <div class="btn btn-kakao btn-login text-uppercase fw-bold" onClick="kakaoLogin();"><i class="fab xi-kakaotalk xi-x me-2"></i><btn class="w-100 login_text" >카카오로 로그인하기  </btn></div>
                     </div>
 <%--                    <div class="d-grid mb-2">--%>
 <%--                        <button class="btn btn-google btn-login text-uppercase fw-bold" type="submit" onclick="test();">--%>

@@ -8,21 +8,22 @@
 
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <c:set var="representCategoryId" value="${store.categoryId}" />
+<c:set var="contextPath" value="${request.getContextPath()}"/>
 <html>
 <head>
-    <title>가게 상세 페이지</title>
+    <title>${store.name}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"> <!--icon-->
     <link rel="canonical" href="https://nickname.hwanmoo.kr" />
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=453d03fdea794867e41a9d927cff2cac"></script>
+    <!--<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892&libraries=services"></script>-->
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js" integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
     <style>
         body {
-            overflow: hidden;
+            overflow: scroll;
+            overflow-x: hidden;
             overscroll-behavior-x: none;
             position: relative;
         }
@@ -273,7 +274,7 @@
         }
         .btn-review-finished{
             position: absolute;
-            bottom: -120px;
+            bottom: 0;
             right: 0;
             color: white;
             background-color: #ffb700;
@@ -370,7 +371,7 @@
         #review-write-container{
             z-index: 100;
             width: 80%;
-            height: 65%;
+            min-height: 65%;
             position: absolute;
             border-radius: 20px;
             bottom: 0;
@@ -422,7 +423,7 @@
             border-radius: 15px;
             padding: 20px;
             width: 100%;
-            height: 100%;
+            height: 200px;
             font-size: 20px;
             line-height: 150%;
             margin-bottom: 20px;
@@ -470,6 +471,21 @@
             text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
         }
 
+        #dark-div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 500%;
+            height: 500%;
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1031;
+        }
+        #storeNameBox {
+            border: none;
+            outline: none;
+        }
+
         @media screen and (max-width: 800px) {
             body{
                 overflow: visible;
@@ -511,11 +527,23 @@
     </style>
 </head>
 <body>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892&libraries=services,clusterer,drawing"></script>
+<%--<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6427a2da1670b1b5f26b5608136a6892&libraries=services"></script>--%>
 <script>
-
     $(function (){
         calculateDistance();
+        getOpenDay();
         openDay();
+
+        if(${favorite.userId != -1}){
+            let buttons = document.getElementsByClassName("favoriteBtn");
+            //let icon = buttons.item(0).classList.item(2);
+            for(let i=0; i<buttons.length; i++){
+                buttons[i].classList.remove('bi-heart');
+                buttons.item(i).classList.add('bi-heart-fill');
+            }
+            document.getElementById("favoriteForm").action = "/store/unlike";
+        }
 
         const searchParams = new URLSearchParams(location.search);
         for (const param of searchParams) {
@@ -564,14 +592,15 @@
         Kakao.Share.createDefaultButton({
             container: '#kakaotalk-sharing-btn',
             objectType: 'location',
-            address: '경상북도 포항시 흥해읍 558', // Todo : 좌표 주소를 가지고 도로명 주소로 바꿔서 넣어주어야 함.
+            address: '${store.addressName}',
             addressTitle:'${store.name}', // 카카오 지도 내 지도 뷰에서 사용될 타이틀
             content: {
                 title: '${store.name}',      // 가게 이름
                 description: <c:forEach var="cat" items="${categoryList}">
                     <c:if test="${cat.id == representCategoryId}">"#${cat.categoryName}"</c:if></c:forEach>,
-                imageUrl: <c:forEach var="cat" items="${categoryList}">
-                <c:if test="${cat.id == representCategoryId}">"http://localhost:8080/resources${cat.icon}"</c:if></c:forEach>,
+                <%--imageUrl: <c:forEach var="cat" items="${categoryList}">--%>
+                <%--<c:if test="${cat.id == representCategoryId}">"http://localhost:8080/resources${cat.icon}"</c:if></c:forEach>,--%>
+                imageUrl:"https://tohomeimage.thehyundai.com/PD/PDImages/S/3/6/2/8809611390263_00.jpg?RS=720x864",
                 link: {
                     // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
                     mobileWebUrl: 'https://developers.kakao.com',
@@ -658,17 +687,50 @@
         }, 10);
     }
 
-    function openDay(){
-        var list = document.getElementById("dayList");
+    let openDayList = [ false, false, false, false, false, false, false ];
+
+    function getOpenDay() {
         <c:forEach var="day" items="${openDayList}">
-            list.children.item(${day.openDay}-1).style.color = "red";
-            list.children.item(${day.openDay}-1).style.borderColor = "red";
+            openDayList[${day.openDay}-1] = true;
         </c:forEach>
+        for (let i = 0; i < 7; i++) {
+            if (openDayList[i] === true) {
+                $('#day' + (i + 1)).attr('value', 'true');
+            } else {
+                $('#day' + (i + 1)).attr('value', 'false');
+            }
+        }
+    }
+
+    function openDay(){
+        let list = document.getElementById("dayList");
+        for (let i = 0; i < 7; i++) {
+            if ($('#day' + (i + 1)).attr('value') === "true") {
+                list.children.item(i).style.color = "red";
+                list.children.item(i).style.borderColor = "red";
+                console.log(true);
+            } else {
+                list.children.item(i).style.color = "";
+                list.children.item(i).style.borderColor = "";
+                console.log(false);
+            }
+        }
+    }
+
+    function editOpenDay(day) {
+        let dayNode = $('#day' + day);
+        if (dayNode.attr('value') === 'true') {
+            dayNode.attr('value', 'false');
+        } else {
+            dayNode.attr('value', 'true');
+        }
+        console.log(day);
+        openDay();
     }
 
     /** footer: 즐겨찾기 버튼 클릭 **/
     /** Todo : icon의 초기 값을 DB와 연동 및 수정 **/
-    function favorite(){
+    function favorite() {
         console.log("favorite()");
         let favoriteBtn =  document.getElementsByClassName("favoriteBtn");
         let favoriteIcon = favoriteBtn.item(0).classList.item(2);
@@ -678,7 +740,7 @@
                 favoriteBtn[i].classList.remove('bi-heart');
                 favoriteBtn.item(i).classList.add('bi-heart-fill');
             }
-            location.href = "/store/like";
+            document.favoriteForm.submit();
         } // 즐겨찾기 해제한 경우
         else {
             for(let i=0; i<favoriteBtn.length; i++){
@@ -686,7 +748,7 @@
                 favoriteBtn.item(i).classList.add('bi-heart');
 
             }
-            location.href = "/store/unlike";
+            document.favoriteForm.submit();
         }
     }
 
@@ -747,7 +809,46 @@
 
     /** 정보 수정하기 **/
     function infoEdit() {
+        let d = document.createElement("div");
+        let list = document.getElementById("dayList");
+        $(d).attr('id', 'dark-div');
+        $(d).attr('onclick', 'resetEdit(); openDay()');
+        $('#edit-info').append(d);
+        $('#content-main-board').css('z-index', '1032');
+        $('#btn-edit').css('z-index', '1032');
+        $('#info-card').css('z-index', '1032');
+        for (let i = 0; i < 7; i++) {
+            list.children.item(i).setAttribute('onclick', 'editOpenDay(' + (i + 1) + ')');
+        }
+        $('#storeNameBox').attr('readonly', false);
+        $('#storeNameBox').css('outline', 'solid');
+        $('#btn-edit').attr('onclick', 'submitEdit()');
+    }
 
+    function resetEdit() {
+        document.getElementById('edit-info').reset();
+        for (let i = 0; i < 7; i++) {
+            if (openDayList[i] === true) {
+                $('#day' + (i + 1)).attr('value', 'true');
+            } else {
+                $('#day' + (i + 1)).attr('value', 'false');
+            }
+        }
+        let list = document.getElementById("dayList");
+        $('#dark-div').remove();
+        $('#content-main-board').css('z-index', '');
+        $('#btn-edit').css('z-index', '');
+        $('#info-card').css('z-index', '');
+        for (let i = 0; i < 7; i++) {
+            list.children.item(i).setAttribute('onclick', '');
+        }
+        $('#storeNameBox').attr('readonly', true);
+        $('#storeNameBox').css('outline', 'none');
+        $('#btn-edit').attr('onclick', 'infoEdit()');
+    }
+
+    function submitEdit() {
+        document.getElementById('edit-info').submit();
     }
 
     function mylocation(){
@@ -845,14 +946,20 @@
                                 </div>
                             </div>
                             <div>
+                                <form name="favoriteForm" id="favoriteForm" action="/store/like">
                                 <button id="kakaotalk-sharing-btn" href="javascript:;" type="button" class="btn">
                                     <i class="bi bi-share"></i>
                                     공유하기
                                 </button>
-                                <button type="button" class="btn favorite" onclick="favorite();">
-                                    <i class="bi favoriteBtn bi-heart"></i>
-                                    즐겨찾기
-                                </button>
+                                    <!--<form name="favoriteForm" id="favoriteForm" action="/store/like">-->
+                                    <input type="hidden" name="userId" value=1>
+                                    <input type="hidden" name="storeId" value=${store.id}>
+                                    <button type="button" class="btn favorite" onclick="favorite();">
+                                        <i class="bi favoriteBtn bi-heart"></i>
+                                        즐겨찾기
+                                    </button>
+                                </form>
+
                             </div>
                             <!-- Todo: 방문인증한 사람 수 DB 연동 -->
                             <div id="monthly">
@@ -946,25 +1053,27 @@
                                                         <li><i class="bi bi-star"></i></li>
                                                     </c:otherwise>
                                                 </c:choose>
-                                                <li style="color: black;">${review.usrId}</li>
+                                                <li style="color: black;">jyj9747</li>
                                             </ul>
                                         </div>
+                                        <form action="/store/review-delete">
                                         <div class="row">
-                                            <p class="review-text col">${review.reviewContent}</p>
+                                            <p class="review-text col" style="float: left; width: 80%; overflow: scroll;">${review.reviewContent}</p>
                                             <!--Todo : user 정보 가져와서 작성한 사람만 삭제할 수 있도록 수정하기-->
 <%--                                            <c:if test="${review.usrId == user.userId}">--%>
 <%--                                                <i class="bi bi-trash-fill col-2" style="margin: auto;"></i>--%>
 <%--                                            </c:if>--%>
-                                            <form action="/store/delete">
-                                                <input type="hidden" name="storeId" value=${store.id}>
-                                                <input type="hidden" name="userId" value=1>
-                                                <button type="submit"><i class="bi bi-trash-fill col-2" style="margin: auto;"></i></button>
-                                            </form>
+                                                <button type="submit" style="border: 0; outline: 0; display:inline; float: left; background-color: white; width: 30px; margin-right: 20px;"><i class="bi bi-trash-fill col-2" style="margin: auto;"></i></button>
+                                            <input class="col" type="hidden" name="storeId" value=${store.id}>
+                                            <input class="col" type="hidden" name="userId" value=1>
                                         </div>
-                                        <c:if test="${review.photo != null}">
-                                            <div class="row">
-                                                <!--Todo: 이미지 존재 여부에 따라 img 태그 삽입-->
-                                                <img class="review-img" src="/img/review-img-sample.jpg" height="300" width="300">
+                                        </form>
+                                        <c:if test="${review.photo.length() > 0}">
+                                            <c:set var="token" value="${review.photo}"></c:set>
+                                            <div class="row" style="height: 300px;overflow-y: scroll;">
+                                                <c:forTokens var="image" items="${token}" delims=";">
+                                                    <img class="review-img" src="${contextPath}/resources/upload/${image}" height="300" width="300" style="margin-bottom: 10px">
+                                                </c:forTokens>
                                             </div>
                                         </c:if>
 
@@ -1007,9 +1116,9 @@
             <button type="button" class="btn" onclick="reviewCancel();"><i id="review-cancel" class="bi bi-x-lg"></i></button>
             <form id="review-form" action="/store/review" enctype="multipart/form-data" method="post" style="position: relative;">
 
-                <input type="hidden" name="usrId" value=3>
+                <input type="hidden" name="usrId" value=2>
                 <input type="hidden" name="storeId" value=${store.id}>
-                <input type="hidden" name="score" id="score">
+                <input type="hidden" name="score" id="score" value=3>
                 <div id="review-score">
                     <ul class="review-star-list">
                         <li><i id="scoreOne" class="bi bi-star-fill" onclick="scoreOne();"></i></li>

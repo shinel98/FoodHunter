@@ -32,4 +32,9 @@ public class OpenDayDAOImpl implements OpenDayDAO{
     public void deleteOpenDay(int id) {
         sqlSession.delete("openDay.deleteOpenDay", id);
     }
+
+    @Override
+    public void deleteByStoreId(long storeId) {
+        sqlSession.delete("openDay.deleteByStoreId", storeId);
+    }
 }

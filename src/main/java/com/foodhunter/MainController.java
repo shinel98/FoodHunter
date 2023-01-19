@@ -2,16 +2,13 @@ package com.foodhunter;
 
 
 import com.foodhunter.DTO.*;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import com.foodhunter.service.StoreService;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -129,5 +126,21 @@ public class MainController {
         // distance = distance.toFixed(2);
         return values;
     }
+
+    @RequestMapping(value="/deleteStore", method= RequestMethod.GET)
+    @ResponseBody
+    public String reportStore(@RequestParam("storeId") long id) {
+        System.out.println("id = " + id);
+         long result = storeService.deleteMainStore(id);
+        System.out.println("result = " + result);
+         if(result == 0){
+             System.out.println("가게 삭제 실패");
+             return "main";
+         }
+         else
+             return "main";
+
+    }
+
 }
 
