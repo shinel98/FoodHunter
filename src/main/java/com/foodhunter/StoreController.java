@@ -172,4 +172,31 @@ public class StoreController {
 
         return "redirect:/store?storeId=" + storeId;
     }
+
+    @RequestMapping(value = "/store/edit-info", method = RequestMethod.POST)
+    public String editInfo(HttpServletRequest request, Model model) {
+        long storeId = Long.parseLong(request.getParameter("storeId"));
+        Store beforeStore = storeService.readOneStore(storeId);
+
+        String newStoreName = request.getParameter("newStoreName");
+
+        Store newStore = new Store();
+        newStore.setId(storeId);
+        newStore.setName(newStoreName);
+
+        storeService.updateStoreName(newStore);
+
+        openDayService.deleteByStoreId(storeId);
+
+        for (int i = 1; i <= 7; i++) {
+            if (Objects.equals(request.getParameter("day" + i), "true")) {
+                OpenDay openDay = new OpenDay();
+                openDay.setStoreId(storeId);
+                openDay.setOpenDay(i);
+                openDayService.save(openDay);
+            }
+        }
+
+        return "redirect:/store?storeId=" + storeId;
+    }
 }
